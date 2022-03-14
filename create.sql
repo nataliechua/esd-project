@@ -6,7 +6,7 @@ use patient;
 
 CREATE TABLE patient (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(255),
+  name VARCHAR(255) NOT NULL,
   age INT NOT NULL,
   allergies VARCHAR(255),
   hp VARCHAR(15) NOT NULL,
@@ -38,11 +38,11 @@ use prescription;
 
 CREATE TABLE prescription (
   id INT NOT NULL AUTO_INCREMENT,
-  doctor_id INT,
-  patient_id INT,
+  doctor_id INT NOT NULL,
+  patient_id INT NOT NULL,
   description TEXT,
-  medicines TEXT,
-  status VARCHAR(255),
+  medicines TEXT NOT NULL,
+  status VARCHAR(255) NOT NULL,
   PRIMARY KEY (id)
 );
 INSERT INTO prescription
@@ -76,8 +76,8 @@ use inventory;
 
 CREATE TABLE inventory (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(255),
-  price FLOAT,
+  name VARCHAR(255) NOT NULL,
+  price FLOAT NOT NULL,
   stock INT
 );
 INSERT INTO inventory
@@ -156,12 +156,12 @@ use payment;
 
 CREATE TABLE payment (
   id INT NOT NULL AUTO_INCREMENT,
-  prescription_id INT,
-  patient_id INT,
+  prescription_id INT NOT NULL,
+  patient_id INT NOT NULL,
   medicines TEXT,
-  total FLOAT,
+  total FLOAT NOT NULL,
   order_id VARCHAR(255),
-  status VARCHAR(255),
+  status VARCHAR(255) NOT NULL,
   PRIMARY KEY (id)
 );
 INSERT INTO payment
