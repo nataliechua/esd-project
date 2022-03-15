@@ -1,0 +1,91 @@
+<!-- Navigation-->
+<!-- <script src="https://unpkg.com/vue@next"></script> -->
+<!-- Favicon-->
+<link rel="icon" type="image/x-icon" href="../favicon.ico" />
+<div class="container" id="navApp">
+    <!-- <a class="navbar-brand" href="#page-top"><img src="assets/img/navbar-logo.svg" alt="..." /></a> -->
+    <a class="navbar-brand" href="./"><img src="assets/img/logo-edited.png" alt="..." />WeCare</a>
+    <!-- <a class="navbar-brand" href="#page-top">WeCare</a> -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
+        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <!-- <i class="fas fa-bars ms-1"></i> -->
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+
+            <li class="nav-item"><a class="nav-link" href="./" id="home">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="./forums.html" id="forums">Forums</a></li>
+            <li class="nav-item"><a class="nav-link" href="./overall.html" id="motivations">Motivations</a></li>
+            <!--Logged In-->
+            <li class="nav-item" v-if="loggedin">
+                <a class="nav-link" href="./profileSettings.html" id="settings">
+                    Settings
+                </a>
+            </li>
+            <li class="nav-item" v-if="loggedin"><a class="nav-link" v-on:click="logout" href="#">Log out</a></li>
+            <!--Before logged In-->
+            <li class="nav-item py-xs-md-2" v-if="loggedin==false"><a class="btn btn-primary btn-md text-uppercase" href="./login.html">Log In</a></li>
+            <li class="nav-item py-xs-md-2" v-if="loggedin==false"><a class="btn btn-primary btn-md text-uppercase" href="./signup.html">Sign Up</a></li>
+
+        </ul>
+    </div>
+</div>
+<script>
+    Vue.createApp({
+        data() {
+            return {
+                loggedin: false, 
+            }
+        },
+        created() { // created is a hook that executes as soon as Vue instance is created
+            // check if there's session
+            // console.log("nav's user id: " + getCookie('user_id'))
+            // console.log("navbar.html: getCookie('username') -> " ,getCookie('username'));
+            // console.log("navbar.html: getCookie('user_email') -> ", getCookie('user_email'));
+            
+            // check credentials  
+            if (getCookie('user_id') == null) {
+                this.loggedin = false;
+            }
+            else {
+                this.loggedin = true;
+            }
+
+            // cookie function
+            function getCookie(cname) {
+                let name = cname + "=";
+                let decodedCookie = decodeURIComponent(document.cookie);
+                let ca = decodedCookie.split(';');
+                for(let i = 0; i <ca.length; i++) {
+                    let c = ca[i];
+                    while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                    }
+                    if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                    }
+                }
+                return null;
+            }
+        },
+        methods: {
+            logout() {
+                sessionStorage.clear();
+                //localStorage.clear();
+                var cookies = document.cookie.split(";");
+
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i];
+                    var eqPos = cookie.indexOf("=");
+                    var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                    document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+                }
+                window.location.href = "./login.html";
+            }
+
+        },
+        computed: {
+        }
+    }).mount('#navApp')
+</script>
