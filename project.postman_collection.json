@@ -1,0 +1,179 @@
+{
+	"info": {
+		"_postman_id": "3f12d041-9eef-41fb-a3ae-dd56e1605c27",
+		"name": "project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "create prescription (everytime change input a bit)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"doctor_id\": 3,\r\n    \"patient_id\": 8,\r\n    \"description\": \"Cough\",\r\n    \"medicines\": \"Gabapentin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5001/prescription/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"prescription",
+						"create"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "create prescription",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"doctor_id\": 3,\r\n    \"patient_id\": 8,\r\n    \"description\": \"Cough\",\r\n    \"medicines\": \"Gabapentin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5001/prescription/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"prescription",
+								"create"
+							]
+						}
+					},
+					"status": "CREATED",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "179"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/2.0.2 Python/3.8.1"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 16 Mar 2022 12:58:22 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 201,\n    \"data\": {\n        \"description\": \"Cough\",\n        \"doctor_id\": 3,\n        \"id\": 20,\n        \"medicines\": \"Gabapentin\",\n        \"patient_id\": 8,\n        \"status\": \"pending\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "update prescription (everytime change id and status)",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"status\": \"confirmed\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5001/prescription/20",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"prescription",
+						"20"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "update prescription (everytime change id and status)",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\": \"confirmed\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5001/prescription/20",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"prescription",
+								"20"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "181"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/2.0.2 Python/3.8.1"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 16 Mar 2022 15:08:20 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"description\": \"Cough\",\n        \"doctor_id\": 3,\n        \"id\": 20,\n        \"medicines\": \"Gabapentin\",\n        \"patient_id\": 8,\n        \"status\": \"confirmed\"\n    }\n}"
+				}
+			]
+		}
+	]
+}
