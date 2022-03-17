@@ -5,7 +5,7 @@
 eg. http://localhost:5000/patient/Adele
 
 ## prescription MS
-* GET - get prescriptions by status: http://localhost:5000/prescription/<status>
+* GET - get prescriptions by status: http://localhost:5001/prescription/<status>
 eg.http://localhost:5001/prescription/pending
 * POST - create prescription: http://localhost:5001/prescription/create
 example input see postman
@@ -13,4 +13,8 @@ example input see postman
 eg: http://localhost:5001/prescription/20
 example input see postman
 
+## inventory MS
+* GET - get medicine by name: http://localhost:5002/inventory/<name>
+eg.http://localhost:5002/inventory/Amlodipine
+* Put - still working on this
 
