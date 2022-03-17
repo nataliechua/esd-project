@@ -15,7 +15,7 @@ CREATE TABLE patient (
 INSERT INTO patient
   (name,age,allergies,hp,email)
 VALUES
-  ('Kim Kardashian',41,'Amoxicillin, ampicillin',91234567,'hello@gmail.com'),
+  ('Kim Kardashian',41,'Amoxicillin, ampicillin',98443918,'hello@gmail.com'),
   ('Dwayne Johnson',49,'Aspirin',92345643,'hello@gmail.com'),
   ('Cardi B',29,'Ibuprofen',91345675,'hello@gmail.com'),
   ('Ben Affleck',49,'',91345675,'hello@gmail.com'),
@@ -37,34 +37,33 @@ create database prescription;
 use prescription;
 
 CREATE TABLE prescription (
-  id INT NOT NULL AUTO_INCREMENT,
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   doctor_id INT NOT NULL,
   patient_id INT NOT NULL,
-  description TEXT,
-  medicines TEXT NOT NULL,
-  status VARCHAR(255) NOT NULL,
-  PRIMARY KEY (id)
+  description VARCHAR(65535),
+  medicines VARCHAR(65535) NOT NULL,
+  status VARCHAR(255) NOT NULL
 );
 INSERT INTO prescription
   (doctor_id,patient_id,description,medicines,status)
 VALUES
-  (1,1,'Runny nose, sore throat','Cymbalta, Omeprazole, Fentanyl','pending'),
-  (2,2,'Covid','Ibuprofen','pending'),
-  (3,3,'Diarrhea','Methotrexate, Wellbutrin','confirmed'),
-  (6,4,'Fever','Xanax, Azithromycin','pending'),
-  (4,5,'Headache','Clonazepam','completed'),
-  (3,6,'Runny nose, sore throat','Citalopram','pending'),
-  (2,7,'Flu','Imbruvica, Gabapentin','pending'),
-  (5,8,'Dry cough','Naloxone','confirmed'),
-  (3,9,'Dizzy','Naproxen, Metoprolol, Gabapentin','completed'),
-  (4,10,'Flu','Amitriptyline','pending'),
-  (4,11,'Nausea','Cyclobenzaprine, Lexapro, Amlodipine','completed'),
-  (2,12,'Fatigue','Acetaminophen','completed'),
-  (4,13,'Knee pain','Omeprazole','completed'),
-  (2,11,'Dizzy spells, nauseous','Januvia','confirmed'),
-  (5,1,'Flu symptoms','Entresto, Benzonatate, Hydroxychloroquine, Gabapentin','confirmed'),
-  (5,2,'Food poisoning','Methadone, Loratadine','confirmed'),
-  (6,3,'Stomach flu','Adderall','pending');
+  (1,1,'Runny nose, sore throat','{''Cymbalta'':1, ''Omeprazole'':2, ''Fentanyl'':1}','confirmed'),
+  (2,2,'Covid','{''Ibuprofen'':2}','pending'),
+  (3,3,'Diarrhea','{''Methotrexate'':1, ''Wellbutrin'':1}','confirmed'),
+  (6,4,'Fever','{''Xanax'':1, ''Azithromycin'':1}','pending'),
+  (4,5,'Headache','{''Clonazepam'':1}','completed'),
+  (3,6,'Runny nose, sore throat','{''Citalopram'':1}','pending'),
+  (2,7,'Flu','{''Imbruvica'':2, ''Gabapentin'':1}','pending'),
+  (5,8,'Dry cough','{''Naloxone'':3}','confirmed'),
+  (3,9,'Dizzy','{''Naproxen'':2, ''Metoprolol'':4, ''Gabapentin'':2}','completed'),
+  (4,10,'Flu','{''Amitriptyline'':3}','pending'),
+  (4,11,'Nausea','{''Cyclobenzaprine'':2, ''Lexapro'':1, ''Amlodipine'':3}','completed'),
+  (2,12,'Fatigue','{''Acetaminophen'':2}','completed'),
+  (4,13,'Knee pain','{''Omeprazole'':1}','completed'),
+  (2,11,'Dizzy spells, nauseous','{''Januvia'':3}','confirmed'),
+  (5,1,'Flu symptoms','{''Entresto'':2, ''Benzonatate'':1, ''Hydroxychloroquine'':2, ''Gabapentin'':3}','confirmed'),
+  (5,2,'Food poisoning','{''Methadone'':1, ''Loratadine'':2}','confirmed'),
+  (6,3,'Stomach flu','{''Adderall'':4}','pending');
   
 
 
@@ -167,7 +166,7 @@ CREATE TABLE payment (
 INSERT INTO payment
   (prescription_id,patient_id,medicines,total,order_id,status)
 VALUES
-  (1,1,'Cymbalta, Omeprazole, Fentanyl',13.12,'dummy','paid'),
+  (1,1,'Cymbalta, Omeprazole, Fentanyl',13.12,'dummy','unpaid'),
   (2,2,'Ibuprofen',1.90,'dummy','paid'),
   (3,3,'Methotrexate, Wellbutrin',24.12,'dummy','paid'),
   (4,4,'Xanax, Azithromycin',15.00,'dummy','paid'),
