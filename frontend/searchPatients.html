@@ -8,7 +8,7 @@
     <title>Patient's Record</title>
 
     <!-- CSS Stylesheet -->
-    <link href="./css/styles.css" type="text/css" rel="stylesheet" />
+    <link href="./css/style.css" type="text/css" rel="stylesheet" />
     <!-- Navbar CSS -->
     <link rel="stylesheet" type="text/css" href="./css/navBarStyle.css">
     <!-- Bootstrap CSS -->
@@ -39,31 +39,44 @@
         <!-- Search Function - STARTS -->
         <div class="row p-4">
             <div class="input-group">
-                <input type="search" class="form-control rounded" placeholder="Search for a patient record"
+                <input id="name" type="search" class="form-control rounded" placeholder="Search for a patient record"
                     aria-label="Search" aria-describedby="search-addon" />
-                <button type="button" class="btn btn-outline-primary" @click="getPatientRecord();clearInputs()">Search</button>
+                <button type="button" class="btn btn-outline-primary"
+                    @click="getPatientRecord();clearInputs()">Search</button>
             </div>
         </div>
         <!-- Search Function - ENDS -->
-        <!-- Prescription Added Modal - STARTS-->
-        <div class="modal fade" id="submitModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLongTitle">Success</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="closeModal">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
+        <!-- Show Err Msg - STARTS -->
+        <div v-if="err" class="row p-4">
+            <div class="col-12 col-md-6 mx-auto">
+                <div class="card border-danger">
+                    <div class="card-body">
+                        <p class="card-text" v-html="errMsg"></p>
+                    </div>
                 </div>
-                <div class="modal-body">
-                  Prescription Successfully Added!
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-primary" @click="closeModal">Close</button>
-                </div>
-              </div>
             </div>
-          </div>
+        </div>
+        <!-- Show Err Msg - ENDS -->
+        <!-- Prescription Added Modal - STARTS-->
+        <div class="modal fade" id="submitModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+            aria-hidden="true" data-backdrop="static">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Success</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="closeModal">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Prescription Successfully Added!
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" @click="closeModal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Prescription Added Modal - ENDS-->
         <!-- Patient Record - STARTS -->
         <div v-if="searched" class="row p-4">
@@ -120,17 +133,7 @@
             </div>
         </div>
         <!-- Patient Record - STARTS -->
-        <!-- Show Err Msg - STARTS -->
-        <div v-if="err" class="row p-4">
-            <div class="col-6">
-                <div class="card border-danger">
-                    <div class="card-body">
-                        <p class="card-text">{{errMsg}}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Show Err Msg - ENDS -->
+
     </div>
     <!--<footer id="footer"></footer>-->
     <!-- Bootstrap Javascript; at the end of the <body> -->
@@ -154,34 +157,84 @@
             },
             methods: {
                 getPatientRecord() {
-                    this.searched = true
-                    fetch("http://localhost/frontend/patients.json")
-                        .then(response => {
-                            return response.json();
-                        })
-                        .then(jsondata => {
-                            this.details = jsondata
-                            this.searched = true
-                            console.log(this.details)
-                        });
+                    var name = document.getElementById('name').value
+                    if (name.length != 0) {
+                        $(async () => {
+                            // Change serviceURL to your own
+                            this.err = false
+                            this.errMsg = ""
+                            var serviceURL = "http://localhost:5000/patient/" + name;
+                            try {
+                                const response =
+                                    await fetch(
+                                        serviceURL, { method: 'GET' }
+                                    );
+                                const result = await response.json();
+                                if (response.status === 200) {
+                                    // success case
+                                    this.searched = true
+                                    this.err = false
+                                    this.details = result.data;
 
-                    /*
+                                } else if (response.status == 404) {
+                                    // No Such Patient Found
+                                    this.err = true
+                                    this.searched = false
+                                    this.errMsg = result.message;
+                                } else {
+                                    // unexpected outcome, throw the error
+                                    throw response.status;
+                                }
+                            } catch (error) {
+                                // Errors when calling the service; such as network error, 
+                                // service offline, etc
+                                this.err = true
+                                this.searched = false
+                                this.errMsg = 'There is a problem retrieving patients data, please try again later.<br />' + error;
+                            } // error
+                        });
+                    } else {
+                        this.err = true
+                        this.errMsg = "Please enter a patient name."
+                    }
+
+
+                },
+                addPrescription() {
                     $(async () => {
+                        this.err = false
+                        this.errMsg = ""
+                        var doctorId = 3 //hard coded
+                        var patientId = 9 //hard coded
+                        var medDescription = document.getElementById("description").value
+                        var meds = document.getElementById("medicines").value
                         // Change serviceURL to your own
-                        //var serviceURL = "http://127.0.0.1:5000/book";
+                        var name = document.getElementById('name').value
+                        var serviceURL = "http://localhost:5001/prescription/create";
                         try {
                             const response =
                                 await fetch(
-                                    serviceURL, { method: 'GET' }
+                                    serviceURL,
+                                    {
+                                        method: 'POST',
+                                        headers: {
+                                            'Accept': 'application/json', 'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify({
+                                            doctor_id: doctorId,
+                                            patient_id: patientId,
+                                            description: medDescription,
+                                            medicines: meds
+                                        })
+                                    }
                                 );
                             const result = await response.json();
-                            if (response.status === 200) {
+                            if (response.status === 201) {
                                 // success case
                                 this.err = false
-                                this.details = result.data.patient; 
-                                
-                            } else if (response.status == 404) {
-                                // No books
+                                $('#submitModal').modal('show')
+
+                            } else if (response.status == 500) {
                                 this.err = true
                                 this.errMsg = result.message;
                             } else {
@@ -192,20 +245,18 @@
                             // Errors when calling the service; such as network error, 
                             // service offline, etc
                             this.err = true
-                            this.errMsg = 'There is a problem retrieving books data, please try again later.<br />' + error;
+                            this.errMsg = 'There is a problem creating new prescription, please try again later.<br />' + error;
                         } // error
                     });
-                    */
-                },
-                addPrescription() {
-                    var description = document.getElementById("description").value
-                    var medicine = document.getElementById("medicines").value
-                    $('#submitModal').modal('show')
-                    $('#submitModal').modal({backdrop: 'static', keyboard: false})  
+
                 },
                 clearInputs() {
-                    document.getElementById("description").value = ""
-                    document.getElementById("medicines").value = ""
+                    if (document.getElementById("description").value != "") {
+                        document.getElementById("description").value = ""
+                    }
+                    if (document.getElementById("medicines").value != "") {
+                        document.getElementById("medicines").value = ""
+                    }
                 },
                 closeModal() {
                     this.clearInputs()
