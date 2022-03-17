@@ -154,35 +154,31 @@ create database payment;
 use payment;
 
 CREATE TABLE payment (
-  id INT NOT NULL AUTO_INCREMENT,
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   prescription_id INT NOT NULL,
   patient_id INT NOT NULL,
-  medicines TEXT,
+  medicines VARCHAR(65535) NOT NULL,
   total FLOAT NOT NULL,
   order_id VARCHAR(255),
-  status VARCHAR(255) NOT NULL,
-  PRIMARY KEY (id)
+  status VARCHAR(255) NOT NULL
 );
 INSERT INTO payment
   (prescription_id,patient_id,medicines,total,order_id,status)
 VALUES
-  (1,1,'Cymbalta, Omeprazole, Fentanyl',13.12,'dummy','unpaid'),
-  (2,2,'Ibuprofen',1.90,'dummy','paid'),
-  (3,3,'Methotrexate, Wellbutrin',24.12,'dummy','paid'),
-  (4,4,'Xanax, Azithromycin',15.00,'dummy','paid'),
-  (5,5,'Cephalexin',7.05,'dummy','paid'),
-  (6,6,'Cyclobenzaprine',3.49,'dummy','paid'),
-  (7,7,'Imbruvica, Gabapentin',25.68,'dummy','unpaid'),
-  (8,8,'Naloxone',1.32,'dummy','unpaid'),
-  (9,9,'Naproxen, Metoprolol, Gabapentin',37.03,NULL,'paid'),
-  (10,10,'Amitriptyline',6.18,NULL,'unpaid'),
-  (11,11,'Cyclobenzaprine, Lexapro, Amlodipine',17.99,NULL,'unpaid'),
-  (12,12,'Acetaminophen',11.56,NULL,'unpaid'),
-  (13,13,'Omeprazole',3.71,NULL,'unpaid'),
-  (14,11,'Januvia',14.32,NULL,'unpaid'),
-  (15,1,'Entresto, Benzonatate, Hydroxychloroquine, Gabapentin',41.66,NULL,'unpaid'),
-  (16,2,'Methadone, Loratadine',16.33,NULL,'unpaid'),
-  (17,3,'Adderall',0.81,NULL,'unpaid');
-
-  
-
+  (1,1,'{''Cymbalta'':1, ''Omeprazole'':2, ''Fentanyl'':1}',13.12,'dummy','unpaid'),
+  (2,2,'{''Ibuprofen'':2}',1.90,'dummy','paid'),
+  (3,3,'{''Methotrexate'':1, ''Wellbutrin'':1}',24.12,'dummy','paid'),
+  (4,4,'{''Xanax'':1, ''Azithromycin'':1}',15.00,'dummy','paid'),
+  (5,5,'{''Clonazepam'':1}',7.05,'dummy','paid'),
+  (6,6,'{''Citalopram'':1}',3.49,'dummy','paid'),
+  (7,7,'{''Imbruvica'':2, ''Gabapentin'':1}',25.68,'dummy','unpaid'),
+  (8,8,'{''Naloxone'':3}',1.32,'dummy','unpaid'),
+  (9,9,'{''Naproxen'':2, ''Metoprolol'':4, ''Gabapentin'':2}',37.03,NULL,'paid'),
+  (10,10,'{''Amitriptyline'':3}',6.18,NULL,'unpaid'),
+  (11,11,'{''Cyclobenzaprine'':2, ''Lexapro'':1, ''Amlodipine'':3}',17.99,NULL,'unpaid'),
+  (12,12,'{''Acetaminophen'':2}',11.56,NULL,'unpaid'),
+  (13,13,'{''Omeprazole'':1}',3.71,NULL,'unpaid'),
+  (14,11,'{''Januvia'':3}',14.32,NULL,'unpaid'),
+  (15,1,'{''Entresto'':2, ''Benzonatate'':1, ''Hydroxychloroquine'':2, ''Gabapentin'':3}',41.66,NULL,'unpaid'),
+  (16,2,'{''Methadone'':1, ''Loratadine'':2}',16.33,NULL,'unpaid'),
+  (17,3,'{''Adderall'':4}',0.81,NULL,'unpaid');
