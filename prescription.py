@@ -19,8 +19,8 @@ class Prescription(db.Model):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     doctor_id = db.Column(db.Integer, nullable=False)
     patient_id = db.Column(db.Integer, nullable=False)
-    description = db.Column(db.Text) #text
-    medicines = db.Column(db.Text, nullable=False) #text
+    description = db.Column(db.String(65535))
+    medicines = db.Column(db.String(65535), nullable=False)
     status = db.Column(db.String(255), nullable=False)
 
     def __init__(self, id, doctor_id, patient_id, description, medicines, status):
@@ -124,15 +124,6 @@ def update_prescription(id):
                 "message": "An error occurred while updating the prescription. " + str(e)
             }
         ), 500
-
-
-
-
-
-
-
-
-
 
 
 if __name__ == '__main__':

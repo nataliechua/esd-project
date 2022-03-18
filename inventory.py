@@ -51,26 +51,26 @@ def find_medicine_by_name(name):
         }
     ), 404
 
-# still working on this, dont call
+
 @app.route("/inventory/<string:name>", methods=['PUT'])
 def update_medicine_inventory(name):
     try:
-        medicine = Inventory.query.filter_by(name=name).first()
+        medicine = Inventory.query.filter_by(name=name).first() #here assume no duplicated names
         if not medicine:
             return jsonify(
                 {
                     "code": 404,
                     "data": {
-                        "id": id
+                        "name": name
                     },
                     "message": "Medicine not found."
                 }
             ), 404
 
-        # update status
+        # update inventory
         data = request.get_json()
-        if data['stock']:
-            medicine.stock = data['stock']
+        if data['used_quantity']:
+            medicine.stock -= data['used_quantity']
             db.session.commit()
             return jsonify(
                 {
@@ -92,3 +92,5 @@ def update_medicine_inventory(name):
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5002, debug=True)
+
+    

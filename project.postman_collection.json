@@ -12,7 +12,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"doctor_id\": 3,\r\n    \"patient_id\": 8,\r\n    \"description\": \"Cough\",\r\n    \"medicines\": \"Gabapentin\"\r\n}",
+					"raw": "{\r\n    \"doctor_id\": 3,\r\n    \"patient_id\": 8,\r\n    \"description\": \"Cough\",\r\n    \"medicines\": \"{'Januvia':1, 'Wellbutrin':1}\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -34,13 +34,13 @@
 			},
 			"response": [
 				{
-					"name": "create prescription",
+					"name": "create prescription (everytime change input a bit)",
 					"originalRequest": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"doctor_id\": 3,\r\n    \"patient_id\": 8,\r\n    \"description\": \"Cough\",\r\n    \"medicines\": \"Gabapentin\"\r\n}",
+							"raw": "{\r\n    \"doctor_id\": 3,\r\n    \"patient_id\": 8,\r\n    \"description\": \"Cough\",\r\n    \"medicines\": \"{'Januvia':1, 'Wellbutrin':1}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -70,7 +70,7 @@
 						},
 						{
 							"key": "Content-Length",
-							"value": "179"
+							"value": "250"
 						},
 						{
 							"key": "Access-Control-Allow-Origin",
@@ -82,11 +82,11 @@
 						},
 						{
 							"key": "Date",
-							"value": "Wed, 16 Mar 2022 12:58:22 GMT"
+							"value": "Fri, 18 Mar 2022 04:47:58 GMT"
 						}
 					],
 					"cookie": [],
-					"body": "{\n    \"code\": 201,\n    \"data\": {\n        \"description\": \"Cough\",\n        \"doctor_id\": 3,\n        \"id\": 20,\n        \"medicines\": \"Gabapentin\",\n        \"patient_id\": 8,\n        \"status\": \"pending\"\n    }\n}"
+					"body": "{\n    \"code\": 201,\n    \"data\": {\n        \"description\": \"Cough\",\n        \"doctor_id\": 3,\n        \"id\": 18,\n        \"medicines\": \"{'Januvia':1, 'Wellbutrin':1}\",\n        \"patient_id\": 8,\n        \"status\": \"pending\"\n    },\n    \"message\": \"Prescription created successfully.\"\n}"
 				}
 			]
 		},
@@ -105,7 +105,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:5001/prescription/20",
+					"raw": "http://localhost:5001/prescription/17",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -113,7 +113,7 @@
 					"port": "5001",
 					"path": [
 						"prescription",
-						"20"
+						"17"
 					]
 				}
 			},
@@ -133,7 +133,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:5001/prescription/20",
+							"raw": "http://localhost:5001/prescription/17",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -141,7 +141,7 @@
 							"port": "5001",
 							"path": [
 								"prescription",
-								"20"
+								"17"
 							]
 						}
 					},
@@ -155,7 +155,7 @@
 						},
 						{
 							"key": "Content-Length",
-							"value": "181"
+							"value": "191"
 						},
 						{
 							"key": "Access-Control-Allow-Origin",
@@ -167,11 +167,96 @@
 						},
 						{
 							"key": "Date",
-							"value": "Wed, 16 Mar 2022 15:08:20 GMT"
+							"value": "Fri, 18 Mar 2022 04:51:14 GMT"
 						}
 					],
 					"cookie": [],
-					"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"description\": \"Cough\",\n        \"doctor_id\": 3,\n        \"id\": 20,\n        \"medicines\": \"Gabapentin\",\n        \"patient_id\": 8,\n        \"status\": \"confirmed\"\n    }\n}"
+					"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"description\": \"Stomach flu\",\n        \"doctor_id\": 6,\n        \"id\": 17,\n        \"medicines\": \"{'Adderall':4}\",\n        \"patient_id\": 3,\n        \"status\": \"confirmed\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "update inventory",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"used_quantity\": 4\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5002/inventory/Adderall",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5002",
+					"path": [
+						"inventory",
+						"Adderall"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "update inventory",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"used_quantity\": 4\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5002/inventory/Adderall",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5002",
+							"path": [
+								"inventory",
+								"Adderall"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "111"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/2.0.2 Python/3.8.1"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 18 Mar 2022 05:19:43 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"id\": 2,\n        \"name\": \"Adderall\",\n        \"price\": 14,\n        \"stock\": 63\n    }\n}"
 				}
 			]
 		}

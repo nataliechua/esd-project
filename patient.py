@@ -38,6 +38,7 @@ class Patient(db.Model):
         "hp": self.hp, 
         "email": self.email}
 
+
 @app.route("/patient/<string:name>")
 def find_patient_by_name(name):
     patient = Patient.query.filter_by(name=name).first() #here assume no duplicated names
@@ -54,6 +55,7 @@ def find_patient_by_name(name):
             "message": "Patient not found."
         }
     ), 404
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
