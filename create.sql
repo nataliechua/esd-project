@@ -47,23 +47,23 @@ CREATE TABLE prescription (
 INSERT INTO prescription
   (doctor_id,patient_id,description,medicines,status)
 VALUES
-  (1,1,'Runny nose, sore throat','{''Cymbalta'':1, ''Omeprazole'':2, ''Fentanyl'':1}','confirmed'),
-  (2,2,'Covid','{''Ibuprofen'':2}','pending'),
-  (3,3,'Diarrhea','{''Methotrexate'':1, ''Wellbutrin'':1}','confirmed'),
-  (6,4,'Fever','{''Xanax'':1, ''Azithromycin'':1}','pending'),
-  (4,5,'Headache','{''Clonazepam'':1}','completed'),
-  (3,6,'Runny nose, sore throat','{''Citalopram'':1}','pending'),
-  (2,7,'Flu','{''Imbruvica'':2, ''Gabapentin'':1}','pending'),
-  (5,8,'Dry cough','{''Naloxone'':3}','confirmed'),
-  (3,9,'Dizzy','{''Naproxen'':2, ''Metoprolol'':4, ''Gabapentin'':2}','completed'),
-  (4,10,'Flu','{''Amitriptyline'':3}','pending'),
-  (4,11,'Nausea','{''Cyclobenzaprine'':2, ''Lexapro'':1, ''Amlodipine'':3}','completed'),
-  (2,12,'Fatigue','{''Acetaminophen'':2}','completed'),
-  (4,13,'Knee pain','{''Omeprazole'':1}','completed'),
-  (2,11,'Dizzy spells, nauseous','{''Januvia'':3}','confirmed'),
-  (5,1,'Flu symptoms','{''Entresto'':2, ''Benzonatate'':1, ''Hydroxychloroquine'':2, ''Gabapentin'':3}','confirmed'),
-  (5,2,'Food poisoning','{''Methadone'':1, ''Loratadine'':2}','confirmed'),
-  (6,3,'Stomach flu','{''Adderall'':4}','pending');
+  (1,1,'Runny nose, sore throat','{"Cymbalta":1, "Omeprazole":2, "Fentanyl":1}','pending'),
+  (2,2,'Covid','{"Ibuprofen":2}','pending'),
+  (3,3,'Diarrhea','{"Methotrexate":1, "Wellbutrin":1}','confirmed'),
+  (6,4,'Fever','{"Xanax":1, "Azithromycin":1}','pending'),
+  (4,5,'Headache','{"Clonazepam":1}','completed'),
+  (3,6,'Runny nose, sore throat','{"Citalopram":1}','pending'),
+  (2,7,'Flu','{"Imbruvica":2, "Gabapentin":1}','pending'),
+  (5,8,'Dry cough','{"Naloxone":3}','confirmed'),
+  (3,9,'Dizzy','{"Naproxen":2, "Metoprolol":4, "Gabapentin":2}','completed'),
+  (4,10,'Flu','{"Amitriptyline":3}','pending'),
+  (4,11,'Nausea','{"Cyclobenzaprine":2, "Lexapro":1, "Amlodipine":3}','completed'),
+  (2,12,'Fatigue','{"Acetaminophen":2}','completed'),
+  (4,13,'Knee pain','{"Omeprazole":1}','completed'),
+  (2,11,'Dizzy spells, nauseous','{"Januvia":3}','confirmed'),
+  (5,1,'Flu symptoms','{"Entresto":2, "Benzonatate":1, "Hydroxychloroquine":2, "Gabapentin":3}','confirmed'),
+  (5,2,'Food poisoning','{"Methadone":1, "Loratadine":2}','confirmed'),
+  (6,3,'Stomach flu','{"Adderall":4}','pending');
   
 
 
@@ -165,20 +165,20 @@ CREATE TABLE payment (
 INSERT INTO payment
   (prescription_id,patient_id,medicines,total,order_id,status)
 VALUES
-  (1,1,'{''Cymbalta'':1, ''Omeprazole'':2, ''Fentanyl'':1}',13.12,'dummy','unpaid'),
-  (2,2,'{''Ibuprofen'':2}',1.90,'dummy','paid'),
-  (3,3,'{''Methotrexate'':1, ''Wellbutrin'':1}',24.12,'dummy','paid'),
-  (4,4,'{''Xanax'':1, ''Azithromycin'':1}',15.00,'dummy','paid'),
-  (5,5,'{''Clonazepam'':1}',7.05,'dummy','paid'),
-  (6,6,'{''Citalopram'':1}',3.49,'dummy','paid'),
-  (7,7,'{''Imbruvica'':2, ''Gabapentin'':1}',25.68,'dummy','unpaid'),
-  (8,8,'{''Naloxone'':3}',1.32,'dummy','unpaid'),
-  (9,9,'{''Naproxen'':2, ''Metoprolol'':4, ''Gabapentin'':2}',37.03,NULL,'paid'),
-  (10,10,'{''Amitriptyline'':3}',6.18,NULL,'unpaid'),
-  (11,11,'{''Cyclobenzaprine'':2, ''Lexapro'':1, ''Amlodipine'':3}',17.99,NULL,'unpaid'),
-  (12,12,'{''Acetaminophen'':2}',11.56,NULL,'unpaid'),
-  (13,13,'{''Omeprazole'':1}',3.71,NULL,'unpaid'),
-  (14,11,'{''Januvia'':3}',14.32,NULL,'unpaid'),
-  (15,1,'{''Entresto'':2, ''Benzonatate'':1, ''Hydroxychloroquine'':2, ''Gabapentin'':3}',41.66,NULL,'unpaid'),
-  (16,2,'{''Methadone'':1, ''Loratadine'':2}',16.33,NULL,'unpaid'),
-  (17,3,'{''Adderall'':4}',0.81,NULL,'unpaid');
+  (1,1,'{"Cymbalta":1, "Omeprazole":2, "Fentanyl":1}',13.12,'dummy','unpaid'),
+  (2,2,'{"Ibuprofen":2}',1.90,'dummy','paid'),
+  (3,3,'{"Methotrexate":1, "Wellbutrin":1}',24.12,'dummy','paid'),
+  (4,4,'{"Xanax":1, "Azithromycin":1}',15.00,'dummy','paid'),
+  (5,5,'{"Clonazepam":1}',7.05,'dummy','paid'),
+  (6,6,'{"Citalopram":1}',3.49,'dummy','paid'),
+  (7,7,'{"Imbruvica":2, "Gabapentin":1}',25.68,'dummy','unpaid'),
+  (8,8,'{"Naloxone":3}',1.32,'dummy','unpaid'),
+  (9,9,'{"Naproxen":2, "Metoprolol":4, "Gabapentin":2}',37.03,NULL,'paid'),
+  (10,10,'{"Amitriptyline":3}',6.18,NULL,'unpaid'),
+  (11,11,'{"Cyclobenzaprine":2, "Lexapro":1, "Amlodipine":3}',17.99,NULL,'unpaid'),
+  (12,12,'{"Acetaminophen":2}',11.56,NULL,'unpaid'),
+  (13,13,'{"Omeprazole":1}',3.71,NULL,'unpaid'),
+  (14,11,'{"Januvia":3}',14.32,NULL,'unpaid'),
+  (15,1,'{"Entresto":2, "Benzonatate":1, "Hydroxychloroquine":2, "Gabapentin":3}',41.66,NULL,'unpaid'),
+  (16,2,'{"Methadone":1, "Loratadine":2}',16.33,NULL,'unpaid'),
+  (17,3,'{"Adderall":4}',0.81,NULL,'unpaid');
