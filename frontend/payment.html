@@ -127,7 +127,8 @@
                             "amount": {
                                 "currency_code":"SGD",
                                 "value": total
-                            }
+                            },
+                            "invoice_id": "REFID-000-"+id
                         }]
                     });
                 },
@@ -139,12 +140,12 @@
                         
                         // Payment capture
                         // console.log(orderData);
-                        var orderId = orderData.id;
+                        //var orderId = orderData.id;
                         // console.log("orderData: "+ orderId);
                         // Do update 
                         const data ={
                             "id": id, // default id
-                            "order_id": orderId // order id from paypal 
+                            "order_id": "REFID-000-"+id// order id from paypal 
                         };
                         axios.post('http://localhost:5003/payment/update', data)
                         .then(response => {
