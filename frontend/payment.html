@@ -1,0 +1,182 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+    <link rel="stylesheet" href="css/paymentStyle.css">
+    <!-- VueJS -->
+    <script src="https://unpkg.com/vue@next"></script>
+    <!-- Axios -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <main id="cart-main">
+        <div class="site-title text-center">
+            <h1 class="font-title">Payment</h1>
+        </div>
+        <div class="container" id="app">
+            <div class="grid" v-if="containId">
+                <div class="col-1">
+                    <div class="flex item justify-content-between" v-for="(obj, key) in medicines">
+                        <div class="flex">
+                            <div class="title">
+                                <h3>{{key}}</h3>
+                            </div>
+                        </div>
+                        <div class="price">
+                            <h4>{{obj}}</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="subtotal text-center">
+                        <h3>Price Details</h3>
+                        <ul>
+                            <li class="flex justify-content-between">
+                                <label for="price">Total : </label>
+                                <span class="text-red font-title">$ {{total}}</span>
+                            </li>
+                        </ul>
+                        <div id="paypal-payment-button"></div>
+                    </div>
+                </div>
+            </div>
+            <div v-else>
+                <h1 class="text-center">{{errorMsg}}</h1>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://www.paypal.com/sdk/js?client-id=AXBHhz49264E_2aa5D6rUN-Sugu8nnWdXSwaDCtZVQ5pgGDCP7RbRr2CSzDYi6Nyjj8GOVEN8yhfii0H&currency=SGD&disable-funding=credit,card&locale=en_SG" data-sdk-integration-source="button-factory"></script>
+    <script>
+    
+    const app = Vue.createApp({
+        data() {
+            return {
+                total: 0,
+                medicines: {},
+                id: 0,
+                containId: true,
+                errorMsg: ""
+            }
+        },
+        created() {
+
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+
+            
+            if (urlParams.get('id') != null){ 
+
+                
+                this.id = urlParams.get('id');
+
+                // call by /frontend/payment.html?id=1
+                axios.get('http://localhost:5003/payment/' + this.id) 
+                .then(response => {
+                    console.log("data: "+ JSON.stringify(response.data.data) ); 
+                    // check payment status
+                    if (response.data.data.status == "paid") { // *** TODO: also validate if the logged in user is the billed user
+                        this.containId = false;
+                        this.errorMsg = "You have already made your payment. Thank you!";
+                    }
+                    else {
+                        
+                        this.total = response.data.data.total;
+                        const json = response.data.data.medicines;
+                        this.medicines = JSON.parse(json);
+
+                        this.initPayPalButton(this.total, this.id); // initialize paypal button
+                    }
+                })
+                .catch(error => {
+                    this.containId = false;
+                    this.errorMsg = "An error has occurred. Please try again.";
+                    console.log('There was an error: ' + error.message);
+                })
+                .finally(() => {
+                    
+                });
+            }
+            else {
+                this.containId = false;
+                this.errorMsg = "Invalid Payment Details";
+            }
+        },
+        computed: {
+            
+        },
+        methods: {
+            
+            initPayPalButton(total, id) {
+                paypal.Buttons({
+                style: {
+                    shape: 'rect',
+                    color: 'gold',
+                    layout: 'vertical',
+                    label: 'pay',
+                    containId: false,
+            
+                },
+                createOrder: function(data, actions) {
+                    
+                    // set up transaction
+                    return actions.order.create({
+                        purchase_units: [{
+                            "amount": {
+                                "currency_code":"SGD",
+                                "value": total
+                            }
+                        }]
+                    });
+                },
+
+                onApprove: function(data, actions) {
+
+                    // captures the funds from the transaction
+                    return actions.order.capture().then(function(orderData) {
+                        
+                        // Payment capture
+                        // console.log(orderData);
+                        var orderId = orderData.id;
+                        // console.log("orderData: "+ orderId);
+                        // Do update 
+                        const data ={
+                            "id": id, // default id
+                            "order_id": orderId // order id from paypal 
+                        };
+                        axios.post('http://localhost:5003/payment/update', data)
+                        .then(response => {
+                            let result = response.data;
+                            console.log("Success: "+ result);
+                        })
+                        .catch(error => {
+                            console.log('There was an error: ' + error.message);
+                        })
+                        .finally(()=>{
+                            window.location.replace("paymentSuccess.html"); 
+                        });
+                        
+                        
+                    });
+                },
+                onCancel: function(data) { // cancal payment
+                    // console.log(data);
+                    // this.containId = false;
+                    // this.errorMsg = "An error has occurred. Please try again.";
+                    // window.location.replace("OnCancel.html"); 
+                },
+                onError: function(err) { // prevents buyer checkout
+                
+                    console.log(err);
+                }
+                }).render('#paypal-payment-button');
+            }
+        }
+    })
+
+    const vm = app.mount('#app');
+    </script>
+</body>
+</html>
