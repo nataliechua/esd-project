@@ -6,10 +6,12 @@ import os, sys
 
 import requests
 # from invokes import invoke_http
+# import patient
 
 import amqp_setup
 import pika
 import json
+
 
 def send_message():
     message='info: +6598443918'

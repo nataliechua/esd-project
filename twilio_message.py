@@ -45,7 +45,7 @@ def twilio_send(number):
 
     message = client.messages \
                     .create(
-                        body="Hello this is twilio test.",
+                        body="Dear Patient, please note that you have an outstanding payment to be made to esd-team6 clinic from your last visit.",
                         from_='+17087251094',
                         to=number
                     )
