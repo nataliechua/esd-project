@@ -110,13 +110,13 @@ def get_payment(id):
         }
     ), 404
 
-@app.route("/payment/update", methods=['POST']) # update payment by order_id and status
-def update_payment():
+@app.route("/payment/update/<string:id>", methods=['PUT']) # update payment by order_id and status
+def update_payment(id):
     try:
 
         data = request.get_json()
 
-        id = data["id"]
+        # id = data["id"]
         order_id = data["order_id"]
 
         payment_details = Payment.query.filter_by(id=id).first() 

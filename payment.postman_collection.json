@@ -61,8 +61,8 @@
 		{
 			"name": "update payment by id and order_id",
 			"request": {
-				"url": "http://localhost:5003/payment/update",
-				"method": "POST",
+				"url": "http://localhost:5003/payment/update/1",
+				"method": "PUT",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -72,7 +72,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"id\": 1,\n\t\"order_id\": \"dummy\"\n}"
+					"raw": "{\n\t\"order_id\": \"dummy\"\n}"
 				},
 				"description": ""
 			},

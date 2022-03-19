@@ -26,4 +26,4 @@ example input see postman
 * POST - create payment: http://localhost:5003/payment/create
 * GET - get payment: http://localhost:5003/payment/<id>
 e.g. http://localhost:5003/payment/1
-* PUT - update payment details:  http://localhost:5003/payment/update
+* PUT - update payment status:  http://localhost:5003/payment/update/<id>
