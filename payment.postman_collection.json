@@ -1,134 +1,82 @@
 {
-	"id": "00973e86-a6fc-ac7d-504d-e521d697ece8",
-	"name": "payment",
-	"description": "",
-	"order": [
-		"2073832f-fbdf-25ff-ad43-458b3f26ee1b",
-		"9d6851a5-d15c-b371-b765-df84c31551e8",
-		"9ccae72e-4e80-97ed-d7c6-66050d18c976",
-		"09ed4e3c-debe-3391-807d-3c44f3eb0372"
-	],
-	"folders": [],
-	"folders_order": [],
-	"timestamp": 1647633085258,
-	"owner": "19475121",
-	"public": false,
-	"requests": [
+	"variables": [],
+	"info": {
+		"name": "payment",
+		"_postman_id": "00973e86-a6fc-ac7d-504d-e521d697ece8",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
 		{
-			"id": "09ed4e3c-debe-3391-807d-3c44f3eb0372",
-			"headers": "Content-Type: application/json\n",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"value": "application/json",
-					"description": "",
-					"enabled": true
-				}
-			],
-			"url": "http://localhost:5003/payment/update",
-			"queryParams": [],
-			"pathVariables": {},
-			"pathVariableData": [],
-			"preRequestScript": null,
-			"method": "POST",
-			"collectionId": "00973e86-a6fc-ac7d-504d-e521d697ece8",
-			"data": [],
-			"dataMode": "raw",
-			"name": "update payment by id and order_id",
-			"description": "",
-			"descriptionFormat": "html",
-			"time": 1647660053499,
-			"version": 2,
-			"responses": [],
-			"tests": null,
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"rawModeData": "{\n\t\"id\": 1,\n\t\"order_id\": \"dummy\"\n}"
-		},
-		{
-			"id": "2073832f-fbdf-25ff-ad43-458b3f26ee1b",
-			"headers": "Content-Type: application/json\n",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"value": "application/json",
-					"description": "",
-					"enabled": true
-				}
-			],
-			"url": "http://localhost:5003/payment/paid",
-			"queryParams": [],
-			"pathVariables": {},
-			"pathVariableData": [],
-			"preRequestScript": null,
-			"method": "POST",
-			"collectionId": "00973e86-a6fc-ac7d-504d-e521d697ece8",
-			"data": [],
-			"dataMode": "raw",
 			"name": "view payment by patient_id and status",
-			"description": "",
-			"descriptionFormat": "html",
-			"time": 1647659973341,
-			"version": 2,
-			"responses": [],
-			"tests": null,
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"rawModeData": "{\n\t\"patient_id\": 1\n}"
+			"request": {
+				"url": "http://localhost:5003/payment/paid",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"patient_id\": 1\n}"
+				},
+				"description": ""
+			},
+			"response": []
 		},
 		{
-			"id": "9ccae72e-4e80-97ed-d7c6-66050d18c976",
-			"headers": "",
-			"headerData": [],
-			"url": "http://localhost:5003/payment/1",
-			"queryParams": [],
-			"pathVariables": {},
-			"pathVariableData": [],
-			"preRequestScript": null,
-			"method": "GET",
-			"collectionId": "00973e86-a6fc-ac7d-504d-e521d697ece8",
-			"data": null,
-			"dataMode": "params",
-			"name": "get payment by id",
-			"description": "",
-			"descriptionFormat": "html",
-			"time": 1647660034583,
-			"version": 2,
-			"responses": [],
-			"tests": null,
-			"currentHelper": "normal",
-			"helperAttributes": {}
-		},
-		{
-			"id": "9d6851a5-d15c-b371-b765-df84c31551e8",
-			"headers": "Content-Type: application/json\n",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"value": "application/json",
-					"description": "",
-					"enabled": true
-				}
-			],
-			"url": "http://localhost:5003/payment/create",
-			"queryParams": [],
-			"pathVariables": {},
-			"pathVariableData": [],
-			"preRequestScript": "",
-			"method": "POST",
-			"collectionId": "00973e86-a6fc-ac7d-504d-e521d697ece8",
-			"data": [],
-			"dataMode": "raw",
 			"name": "create payment",
-			"description": "",
-			"descriptionFormat": "html",
-			"time": 1647660005986,
-			"version": 2,
-			"responses": [],
-			"tests": null,
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"rawModeData": "{\n\t\"prescription_id\": 1,\n\t\"patient_id\": 1,\n\t\"medicines\": \"{\\\"Cymbalta\\\":1, \\\"Omeprazole\\\":2, \\\"Fentanyl\\\":1}\",\n\t\"total\": 13.12,\n\t\"order_id\": \"dummy\"\n}"
+			"request": {
+				"url": "http://localhost:5003/payment/create",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"prescription_id\": 1,\n\t\"patient_id\": 1,\n\t\"medicines\": \"{\\\"Cymbalta\\\":1, \\\"Omeprazole\\\":2, \\\"Fentanyl\\\":1}\",\n\t\"total\": 13.12,\n\t\"order_id\": \"dummy\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "get payment by id",
+			"request": {
+				"url": "http://localhost:5003/payment/1",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "update payment by id and order_id",
+			"request": {
+				"url": "http://localhost:5003/payment/update",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": 1,\n\t\"order_id\": \"dummy\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
 		}
 	]
 }
