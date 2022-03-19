@@ -21,7 +21,7 @@ eg.http://localhost:5002/inventory/Adderall
 example input see postman
 
 ## payment MS
-* POST - get payment by status and id: http://localhost:5003/payment/<status>
+* POST - get payment by status and patient_id: http://localhost:5003/payment/<status>
 example input see postman
 * POST - create payment: http://localhost:5003/payment/create
 * GET - get payment: http://localhost:5003/payment/<id>
