@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prescription Record</title>
+
+    <!-- CSS Stylesheet -->
+    <link href="./css/style.css" type="text/css" rel="stylesheet" />
+    <!-- Navbar CSS -->
+    <link rel="stylesheet" type="text/css" href="./css/navBarStyle.css">
+    <!-- Bootstrap CSS -->
+    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css' rel='stylesheet'
+        integrity='sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC' crossorigin='anonymous'>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- VueJS -->
+    <script src="https://unpkg.com/vue@next"></script>
+    <!-- Header Component -->
+    <script>
+        $(function () {
+            $("#mainNav").load("./assets/components/navbar.html");
+            $("#header").load("./assets/components/header.html");
+            $("#footer").load("./assets/components/footer.html");
+        });
+        $(document).ready(function(){
+            $('button[data-bs-toggle="tab"]').on('show.bs.tab', function(e) {
+                localStorage.setItem('activeTab', $(e.target).attr('data-bs-target'));
+            });
+            var activeTab = localStorage.getItem('activeTab');
+            console.log(activeTab)
+            if(activeTab){
+                $('#myTab button[data-bs-target="' + activeTab + '"]').tab('show');
+            }
+        });
+</script>
+    </script>
+</head>
+
+<body>
+    <!--<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav"></nav>-->
+    <div class="container-fluid" id="prescription-record">
+        <div class="row bg-light py-5 mb-4">
+            <div class="col text-center ">
+                <h1 class="text-uppercase">PRESCRIPTION RECORD</h1>
+            </div>
+        </div>
+        
+        <!-- Prescription Added Modal - STARTS-->
+        <div class="modal fade" id="submitModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+            aria-hidden="true" data-backdrop="static">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Success</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="closeModal">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Prescription Successfully Updated!
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" @click="closeModal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Prescription Added Modal - ENDS-->
+    
+        <div class="row p-4">
+            <!-- Tabs - STARTS -->
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="pending-tab" data-bs-toggle="tab" data-bs-target="#pending"
+                        type="button" role="tab" aria-controls="pending" aria-selected="true" @click="getPendingPrescriptions">Pending</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="confirmed-tab" data-bs-toggle="tab" data-bs-target="#confirmed"
+                        type="button" role="tab" aria-controls="confirmed" aria-selected="false" @click="getPendingPrescriptions">Confirmed</button>
+                </li>
+            </ul>
+            <!-- Tabs - ENDS-->
+            <!-- Tabs Content - STARTS-->
+            <div class="tab-content px-0" id="myTabContent">
+                <div class="tab-pane fade show active" id="pending" role="tabpanel" aria-labelledby="pending-tab">
+                    <div class="border border-top-0">
+                        <br>
+                        <!--Spinner-->
+                        <div v-if="loading">
+                            <div class="d-flex justify-content-center mt-2">
+                                <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!--//Spinner-->
+                        <!-- Show Err Msg - STARTS -->
+                        <div v-if="err" class="row p-4">
+                            <div class="col-12 col-md-6 mx-auto">
+                                <div class="card border-danger">
+                                    <div class="card-body">
+                                        <p class="card-text" v-html="errMsg"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Show Err Msg - ENDS -->
+                        <!-- Pending Prescription Table - STARTS-->
+                        <div v-if="!err && !loading" class="table-responsive-md m-3">
+                            <table class="table table-hover">
+                            <thead>
+                              <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Patient ID</th>
+                                <th scope="col">Doctor ID</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Medicines</th>
+                                <th scope="col"></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr v-for="(item, index) in details" :key="index+1">
+                                <th scope="row" class="col-1">{{index+1}}</th>
+                                <td class="col-1">{{ item.patient_id}}</td>
+                                <td class="col-1">{{ item.doctor_id}}</td>
+                                <td class="col-4">{{ item.description}}</td>
+                                <td class="col-3" v-html="formatMedicineAndQuantity(item.medicines)"></td>
+                                <td class="col-2 align-middle"><button type="button" class="btn btn-primary" @click="updatePatient(item)">Confirm</button></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <!-- Pending Prescription Table - ENDS-->
+                        <br>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="confirmed" role="tabpanel" aria-labelledby="confirmed-tab">
+                    <div class="border border-top-0">
+                        <br>
+                        <!--Spinner-->
+                        <div v-if="loading">
+                            <div class="d-flex justify-content-center mt-2">
+                                <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!--//Spinner-->
+                        <!-- Show Err Msg - STARTS -->
+                        <div v-if="err" class="row p-4">
+                            <div class="col-12 col-md-6 mx-auto">
+                                <div class="card border-danger">
+                                    <div class="card-body">
+                                        <p class="card-text" v-html="errMsg"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Show Err Msg - ENDS -->
+                        <!-- Confirmed Prescription Table - STARTS-->
+                        <div v-if="!err && !loading" class="table-responsive-md m-3">
+                            <table class="table table-hover">
+                            <thead>
+                              <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Patient ID</th>
+                                <th scope="col">Doctor ID</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Medicines</th>
+                                <th scope="col"></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr v-for="(item, index) in details" :key="index+1">
+                                <th scope="row" class="col-1">{{index+1}}</th>
+                                <td class="col-1">{{ item.patient_id}}</td>
+                                <td class="col-1">{{ item.doctor_id}}</td>
+                                <td class="col-4">{{ item.description}}</td>
+                                <td class ="col-3" v-html="formatMedicineAndQuantity(item.medicines)"></td>
+                                <td class="col-2 align-middle"><button type="button" class="btn btn-primary" @click="updateStatusToCompleted(item)">Complete</button></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <!-- Confirmed Prescription Table - ENDS-->
+                        <br>
+                    </div>
+                </div>
+            </div>
+            <!--Tab Content - ENDS-->
+        </div>
+    </div>
+    <!--<footer id="footer"></footer>-->
+    <!-- Bootstrap Javascript; at the end of the <body> -->
+    <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js'
+        integrity='sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM'
+        crossorigin='anonymous'></script>
+    <!-- Core theme JS-->
+    <script src="./js/scripts.js"></script>
+
+    <!--GET PATIENT RECORD - STARTS-->
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    details:[],
+                    errMsg: "",
+                    err: false,
+                    type: "pending",
+                    loading: true
+                }
+            },
+            methods: {
+                getPendingPrescriptions() {
+                    $(async () => {
+                        // Change serviceURL to your own
+                        var serviceURL = "http://localhost:5001/prescription/" + $('.nav-tabs .active').text();
+                        try {
+                            const response =
+                                await fetch(
+                                    serviceURL, 
+                                    { 
+                                        method: 'GET',
+                                        headers: {'Accept': 'application/json', 'Content-Type': 'application/json'} 
+                                    }
+                                );
+                            const result = await response.json();
+                            if (response.status === 200) {
+                                // success case
+                                this.loading = false
+                                this.err = false
+                                this.details = result.data.prescriptions;
+                                
+                            } else if (response.status == 404) {
+                                // No records
+                                this.loading = false
+                                this.err = true
+                                this.errMsg = result.message;
+                            } else {
+                                // unexpected outcome, throw the error
+                                this.loading = false
+                                this.err = true
+                                throw response.status;
+                            }
+                        } catch (error) {
+                            // Errors when calling the service; such as network error, 
+                            // service offline, etc
+                            this.loading = false
+                            this.err = true
+                            this.errMsg = 'There is a problem retrieving prescription record, please try again later.<br />' + error;
+                        } // error
+                    });
+                }
+                ,
+                formatMedicineAndQuantity(text){
+                    var output = ""
+                    var medicineObj = JSON.parse(text);
+                    output += "<ul>"
+                    for(var name in medicineObj) {
+                        var value = medicineObj[name];
+                        output += "<li>" + value + 'x ' + name + "</li>"
+                    }
+                    output += "</ul>"
+                    return output
+                },
+                updatePatient(prescriptionDetails){
+                    $('#submitModal').modal({backdrop: 'static', keyboard: false})  
+                    $('#submitModal').modal('show')
+                },
+                updateStatusToCompleted(item){
+                    $(async () => {
+                        var id = item.id
+                        // Change serviceURL to your own
+                        var serviceURL = "http://localhost:5001/prescription/" + id;
+                        try {
+                            const response =
+                                await fetch(
+                                    serviceURL,
+                                    {
+                                        method: 'PUT',
+                                        headers: {
+                                            'Accept': 'application/json', 'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify({
+                                            status: "completed"
+                                        })
+                                    }
+                                );
+                            const result = await response.json();
+                            if (response.status === 200) {
+                                // success case
+                                this.loading = false
+                                this.err = false
+                                $('#submitModal').modal('show')
+
+                            } else if (response.status == 500) {
+                                this.loading = false
+                                this.err = true
+                                this.errMsg = result.message;
+                            } else {
+                                // unexpected outcome, throw the error
+                                this.loading = false
+                                this.err = true
+                                throw response.status;
+                            }
+                        } catch (error) {
+                            // Errors when calling the service; such as network error, 
+                            // service offline, etc
+                            this.loading = false
+                            this.err = true
+                            this.errMsg = 'There is a problem update prescription status to completed, please try again later.<br />' + error;
+                        } // error
+                    });
+                },
+                closeModal() {
+                    $('#submitModal').modal('hide')
+                    location.reload();
+                }
+            },
+            created() {
+                this.getPendingPrescriptions()
+            }
+        });
+        const vm = app.mount("#prescription-record");
+    </script>
+
+</body>
+
+</html>
