@@ -115,19 +115,39 @@
                     <div class="card-body">
                         <h5 class="card-title">Add a new prescription</h5>
                         <hr>
-                        <form>
-                            <div class="form-group mt-2">
-                                <label for="exampleFormControlTextarea1">Description:</label>
-                                <textarea class="form-control mt-2" id="description" rows="3"></textarea>
+                        <div class="row">
+                            <div class="col-12">
+                                <strong>Description</strong>
+                                <textarea class="mt-2 w-100" id="description" rows="3"></textarea>
                             </div>
-                            <div class="form-group mt-2">
-                                <label for="exampleFormControlTextarea1">Medicines:</label>
-                                <textarea class="form-control mt-2" id="medicines" rows="3"></textarea>
+                            <div class="col-12 table-responsive-md">
+                                <table class="table table-bordered mt-2">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Medicine</th>
+                                            <th scope="col">Quantity</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="(item,index) in items">
+                                            <td>{{Object.keys(item)[0]}}</th>
+                                            <td>{{item[Object.keys(item)[0]]}}</td>
+                                            <td><a @click="removeRow(index)">Remove</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="text" id="medName" v-model="medName"></td>
+                                            <td><input type="number" id="medQty" v-model="medQty" min="1" max="10"></td>
+                                            <td><button class="button btn-primary" @click="addRow">Add row</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
-                            <button type="button" class="btn btn-primary mt-3 me-2"
-                                @click="addPrescription">Add</button>
-                            <button type="button" class="btn btn-primary mt-3" @click="clearInputs">Clear</button>
-                        </form>
+                            <div class="col-12">
+                                <button type="button" class="btn btn-primary mt-3 me-2"
+                                @click="addPrescription">Add Prescription</button>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </div>
@@ -152,10 +172,24 @@
                     errMsg: "",
                     err: false,
                     searched: false,
-                    prescriptionAddedModal: false
+                    prescriptionAddedModal: false,
+                    items: [],
+                    medName: "",
+                    medQty: ""
                 }
             },
             methods: {
+                addRow: function(){
+                    var first = this.medName
+                    var second = this.medQty
+                    var objC = '{"' + first + '": ' + second + '}'
+                    this.items.push(JSON.parse(objC));
+                    this.medName = ""
+                    this.medQty = ""
+                },
+                removeRow(index){
+                    this.items.splice(index, 1)
+                },
                 getPatientRecord() {
                     var name = document.getElementById('name').value
                     if (name.length != 0) {
@@ -201,61 +235,68 @@
 
                 },
                 addPrescription() {
-                    $(async () => {
-                        this.err = false
-                        this.errMsg = ""
-                        var doctorId = 3 //hard coded
-                        var patientId = 9 //hard coded
-                        var medDescription = document.getElementById("description").value
-                        var meds = document.getElementById("medicines").value
-                        // Change serviceURL to your own
-                        var name = document.getElementById('name').value
-                        var serviceURL = "http://localhost:5001/prescription/create";
-                        try {
-                            const response =
-                                await fetch(
-                                    serviceURL,
-                                    {
-                                        method: 'POST',
-                                        headers: {
-                                            'Accept': 'application/json', 'Content-Type': 'application/json'
-                                        },
-                                        body: JSON.stringify({
-                                            doctor_id: doctorId,
-                                            patient_id: patientId,
-                                            description: medDescription,
-                                            medicines: meds
-                                        })
-                                    }
-                                );
-                            const result = await response.json();
-                            if (response.status === 201) {
-                                // success case
-                                this.err = false
-                                $('#submitModal').modal('show')
+                    this.err = false
+                    this.errMsg = ""
+                    var doctorId = 3 //hard coded
+                    var patientId = 9 //hard coded
+                    var medDescription = document.getElementById("description").value
+                    var meds = this.items
+                    if (meds.length >0){
+                        $(async () => {
+                            meds = meds.reduce(((r, c) => Object.assign(r, c)), {})
+                            // Change serviceURL to your own
+                            var serviceURL = "http://localhost:5001/prescription/create";
+                            try {
+                                const response =
+                                    await fetch(
+                                        serviceURL,
+                                        {
+                                            method: 'POST',
+                                            headers: {
+                                                'Accept': 'application/json', 'Content-Type': 'application/json'
+                                            },
+                                            body: JSON.stringify({
+                                                doctor_id: doctorId,
+                                                patient_id: patientId,
+                                                description: medDescription,
+                                                medicines: JSON.stringify(meds)
+                                            })
+                                        }
+                                    );
+                                const result = await response.json();
+                                if (response.status === 201) {
+                                    // success case
+                                    this.err = false
+                                    $('#submitModal').modal({backdrop: 'static', keyboard: false})  
+                                    $('#submitModal').modal('show')
 
-                            } else if (response.status == 500) {
+                                } else if (response.status == 500) {
+                                    this.err = true
+                                    this.errMsg = result.message;
+                                } else {
+                                    // unexpected outcome, throw the error
+                                    throw response.status;
+                                }
+                            } catch (error) {
+                                // Errors when calling the service; such as network error, 
+                                // service offline, etc
                                 this.err = true
-                                this.errMsg = result.message;
-                            } else {
-                                // unexpected outcome, throw the error
-                                throw response.status;
-                            }
-                        } catch (error) {
-                            // Errors when calling the service; such as network error, 
-                            // service offline, etc
-                            this.err = true
-                            this.errMsg = 'There is a problem creating new prescription, please try again later.<br />' + error;
-                        } // error
-                    });
+                                this.errMsg = 'There is a problem creating new prescription, please try again later.<br />' + error;
+                            } // error
+                        });
+                    }else{
+                        this.err = true
+                        this.errMsg = "Please add medicine."
+                    }
+                    
 
                 },
                 clearInputs() {
-                    if (document.getElementById("description").value != "") {
+                    this.items = []
+                    this.medName =""
+                    this.medQty = ""
+                    if (document.getElementById("description") && document.getElementById("description").value){
                         document.getElementById("description").value = ""
-                    }
-                    if (document.getElementById("medicines").value != "") {
-                        document.getElementById("medicines").value = ""
                     }
                 },
                 closeModal() {
