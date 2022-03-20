@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Record</title>
+
+    <!-- CSS Stylesheet -->
+    <link href="./css/style.css" type="text/css" rel="stylesheet" />
+    <!-- Navbar CSS -->
+    <link rel="stylesheet" type="text/css" href="./css/navBarStyle.css">
+    <!-- Bootstrap CSS -->
+    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css' rel='stylesheet'
+        integrity='sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC' crossorigin='anonymous'>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- VueJS -->
+    <script src="https://unpkg.com/vue@next"></script>
+    <!-- Header Component -->
+    <script>
+        $(function () {
+            $("#mainNav").load("./assets/components/navbar.html");
+            $("#header").load("./assets/components/header.html");
+            $("#footer").load("./assets/components/footer.html");
+        });
+</script>
+    </script>
+</head>
+
+<body>
+    <!--<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav"></nav>-->
+    <div class="container-fluid" id="prescription-record">
+        <div class="row bg-light py-5 mb-4">
+            <div class="col text-center ">
+                <h1 class="text-uppercase">PAYMENT RECORDS</h1>
+            </div>
+        </div>
+    
+        <div class="row p-4">
+            <!-- Tabs - STARTS -->
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="unpaid-tab" data-bs-toggle="tab" data-bs-target="#unpaid"
+                        type="button" role="tab" aria-controls="unpaid" aria-selected="true" @click="getPaymentRecords">Unpaid</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="paid-tab" data-bs-toggle="tab" data-bs-target="#paid"
+                        type="button" role="tab" aria-controls="paid" aria-selected="false" @click="getPaymentRecords">Paid</button>
+                </li>
+            </ul>
+            <!-- Tabs - ENDS-->
+            <!-- Tabs Content - STARTS-->
+            <div class="tab-content px-0" id="myTabContent">
+                <div class="tab-pane fade show active" id="unpaid" role="tabpanel" aria-labelledby="unpaid-tab">
+                    <div class="border border-top-0">
+                        <br>
+                        <!--Spinner-->
+                        <div v-if="loading">
+                            <div class="d-flex justify-content-center mt-2">
+                                <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!--//Spinner-->
+                        <!-- Show Err Msg - STARTS -->
+                        <div v-if="err" class="row p-4">
+                            <div class="col-12 col-md-6 mx-auto">
+                                <div class="card border-danger">
+                                    <div class="card-body">
+                                        <p class="card-text" v-html="errMsg"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Show Err Msg - ENDS -->
+                        <!-- Unpaid Table - STARTS-->
+                        <div v-if="!err && !loading" class="table-responsive-md m-3">
+                            <table class="table table-hover">
+                            <thead>
+                              <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Prescription ID</th>
+                                <th scope="col">Medicines</th>
+                                <th scope="col">Subtotal</th>
+                                <th scope="col"></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr v-for="(item, index) in details" :key="index+1">
+                                <th scope="row" class="col-1">{{item.id}}</th>
+                                <td class="col-2">{{ item.prescription_id}}</td>
+                                <td class="col-4" v-html="formatMedicineAndQuantity(item.medicines)"></td>
+                                <td class="col-2 align-middle">${{ item.total}}</td>
+                                <td class="col-3 align-middle"><button type="button" class="btn btn-primary">Pay</button></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <!-- Unpaid Table - ENDS-->
+                        <br>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="paid" role="tabpanel" aria-labelledby="paid-tab">
+                    <div class="border border-top-0">
+                        <br>
+                        <!--Spinner-->
+                        <div v-if="loading">
+                            <div class="d-flex justify-content-center mt-2">
+                                <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!--//Spinner-->
+                        <!-- Show Err Msg - STARTS -->
+                        <div v-if="err" class="row p-4">
+                            <div class="col-12 col-md-6 mx-auto">
+                                <div class="card border-danger">
+                                    <div class="card-body">
+                                        <p class="card-text" v-html="errMsg"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Show Err Msg - ENDS -->
+                        <!-- Paid Table - STARTS-->
+                        <div v-if="!err && !loading" class="table-responsive-md m-3">
+                            <table class="table table-hover">
+                            <thead>
+                              <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Prescription ID</th>
+                                <th scope="col">Medicines</th>
+                                <th scope="col">Subtotal</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr v-for="(item, index) in details" :key="index+1">
+                                <th scope="row" class="col-1">{{item.id}}</th>
+                                <td class="col-2">{{ item.prescription_id}}</td>
+                                <td class="col-4" v-html="formatMedicineAndQuantity(item.medicines)"></td>
+                                <td class="col-5 align-middle">${{ item.total}}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <!-- Paid Table - ENDS-->
+                        <br>
+                    </div>
+                </div>
+            </div>
+            <!--Tab Content - ENDS-->
+        </div>
+    </div>
+    <!--<footer id="footer"></footer>-->
+    <!-- Bootstrap Javascript; at the end of the <body> -->
+    <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js'
+        integrity='sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM'
+        crossorigin='anonymous'></script>
+    <!-- Core theme JS-->
+    <script src="./js/scripts.js"></script>
+
+    <!--GET PATIENT RECORD - STARTS-->
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    details:[],
+                    errMsg: "",
+                    err: false,
+                    type: "pending",
+                    loading: true,
+                }
+            },
+            methods: {
+                getPaymentRecords() {
+                    $(async () => {
+                        
+                        var patientId = 1
+                        // Change serviceURL to your own
+                        var serviceURL = "http://localhost:5003/payment/" + $('.nav-tabs .active').text();
+                        try {
+                            const response =
+                                await fetch(
+                                    serviceURL, 
+                                    { 
+                                        method: 'POST',
+                                        headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
+                                        body: JSON.stringify({patient_id: patientId})
+                                    }
+                                );
+                            const result = await response.json();
+                            if (response.status === 200) {
+                                // success case
+                                this.loading = false
+                                this.err = false
+                                this.details = result.data;
+                                
+                            } else if (response.status == 404) {
+                                // No records
+                                this.loading = false
+                                this.err = true
+                                this.errMsg = "No records";
+                            } else {
+                                // unexpected outcome, throw the error
+                                this.loading = false
+                                this.err = true
+                                throw response.status;
+                            }
+                        } catch (error) {
+                            // Errors when calling the service; such as network error, 
+                            // service offline, etc
+                            this.loading = false
+                            this.err = true
+                            this.errMsg = 'There is a problem retrieving payment record, please try again later.<br />' + error;
+                        } // error
+                    });
+                }
+                ,
+                formatMedicineAndQuantity(text){
+                    var output = ""
+                    var medicineObj = JSON.parse(text);
+                    output += "<ul>"
+                    for(var name in medicineObj) {
+                        var value = medicineObj[name];
+                        output += "<li>" + value + 'x ' + name + "</li>"
+                    }
+                    output += "</ul>"
+                    return output
+                },
+                oneRecord(item){
+                    location.href = "www.yoursite.com"
+                }
+            },
+            created() {
+                this.getPaymentRecords()
+            }
+        });
+        const vm = app.mount("#prescription-record");
+    </script>
+
+</body>
+
+</html>

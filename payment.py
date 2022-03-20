@@ -52,13 +52,25 @@ def get_all_payment_by_status(status): # need status + patient_id
     patient_id = data["patient_id"]
 
     payment_details = Payment.query.filter_by(patient_id=patient_id, status=status)# assuming that sms will send payment_id at the end of the string
+    
     if payment_details:
-        return jsonify(
-            {
-            "code": 200,
-            "data": [payment.json() for payment in payment_details]
-            }
-        )
+        data = [payment.json() for payment in payment_details]
+        
+        if (len(data) == 0):
+            return jsonify(
+                {
+                    "code": 404,
+                    "message": "Payment record not found."
+                }
+            ), 404
+        else:
+            return jsonify(
+                {
+                "code": 200,
+                "data": data
+                }
+            )
+    
     return jsonify(
         {
             "code": 404,
