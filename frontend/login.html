@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient's Record</title>
+
+    <!-- CSS Stylesheet -->
+    <link href="./css/style.css" type="text/css" rel="stylesheet" />
+    <!-- Navbar CSS -->
+    <link rel="stylesheet" type="text/css" href="./css/navBarStyle.css">
+    <!-- Bootstrap CSS -->
+    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css' rel='stylesheet'
+        integrity='sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC' crossorigin='anonymous'>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- VueJS -->
+    <script src="https://unpkg.com/vue@next"></script>
+    <!-- Header Component -->
+    <script>
+        $(function () {
+            $("#mainNav").load("./assets/components/navbar.html");
+            $("#header").load("./assets/components/header.html");
+            $("#footer").load("./assets/components/footer.html");
+        });
+    </script>
+</head>
+
+<body>
+    <!--<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav"></nav>-->
+    <div class="container-fluid" id="login">
+        <div class="row bg-light py-5 mb-4">
+            <div class="col text-center ">
+                <h1 class="text-uppercase">Login</h1>
+            </div>
+        </div> 
+        <div class="row p-4">
+            <div class="col-md-6 col-12 mx-auto">
+                <!-- Tabs - STARTS -->
+                <ul class="nav nav-tabs justify-content-end" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="patient-tab" data-bs-toggle="tab" data-bs-target="#patient"
+                            type="button" role="tab" aria-controls="patient" aria-selected="true" @click="clearErr">Patient</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="doctor-tab" data-bs-toggle="tab" data-bs-target="#doctor"
+                            type="button" role="tab" aria-controls="doctor" aria-selected="false" @click="clearErr">Doctor</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="pharmacist-tab" data-bs-toggle="tab" data-bs-target="#pharmacist"
+                            type="button" role="tab" aria-controls="pharmacist" aria-selected="false" @click="clearErr">Pharmacist</button>
+                    </li>
+                </ul>
+                <!-- Tabs - ENDS-->
+                <div class="tab-content px-0" id="myTabContent">
+                    <!-- Patient Tabs Content - STARTS-->
+                    <div class="tab-pane fade show active" id="patient" role="tabpanel" aria-labelledby="patient-tab">
+                        <div class="border border-top-0">
+                            <br>
+                            <!-- Show Err Msg - STARTS -->
+                            <div v-if="err" class="row p-4">
+                                <div class="col-12 col-md-6 mx-auto">
+                                    <div class="card border-danger">
+                                        <div class="card-body">
+                                            <p class="card-text" v-html="errMsg"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Show Err Msg - ENDS -->
+                            <!-- Form - STARTS-->
+                            <form>
+                                <div class="m-3">
+                                  <label for="patientUsernameInput" class="form-label">Username</label>
+                                  <input type="text" class="form-control" id="patientUsernameInput" aria-describedby="username">
+                                </div>
+                                <div class="m-3">
+                                  <label for="patientPasswordInput" class="form-label">Password</label>
+                                  <input type="password" class="form-control" id="patientPasswordInput">
+                                </div>
+                                <div class="d-grid gap-2 m-3">
+                                    <button type="button" class="btn btn-primary" @click="checkPatient">Login</button>
+                                </div>
+                              </form>
+                            <!-- Form - ENDS-->
+                            <br>
+                        </div>
+                    </div>
+                    <!-- Patient Tabs Content - ENDS-->
+                    <!-- Doctor Tabs Content - STARTS-->
+                    <div class="tab-pane fade" id="doctor" role="tabpanel" aria-labelledby="doctor-tab">
+                        <div class="border border-top-0">
+                            <br>
+                            <!-- Show Err Msg - STARTS -->
+                            <div v-if="err" class="row p-4">
+                                <div class="col-12 col-md-6 mx-auto">
+                                    <div class="card border-danger">
+                                        <div class="card-body">
+                                            <p class="card-text" v-html="errMsg"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Show Err Msg - ENDS -->
+                            <!-- Form - STARTS-->
+                            <form>
+                                <div class="m-3">
+                                  <label for="doctorUsernameInput" class="form-label">Username</label>
+                                  <input type="text" class="form-control" id="doctorUsernameInput" aria-describedby="username">
+                                </div>
+                                <div class="m-3">
+                                  <label for="doctorPasswordInput" class="form-label">Password</label>
+                                  <input type="password" class="form-control" id="doctorPasswordInput">
+                                </div>
+                                <div class="d-grid gap-2 m-3">
+                                    <button type="button" class="btn btn-primary" @click="checkDoctor">Login</button>
+                                </div>
+                              </form>
+                            <!-- Form - ENDS-->
+                            <br>
+                        </div>
+                    </div>
+                    <!-- Doctor Tabs Content - STARTS-->
+                    <!-- Pharmacist Tabs Content - STARTS-->
+                    <div class="tab-pane fade" id="pharmacist" role="tabpanel" aria-labelledby="pharmacist-tab">
+                        <div class="border border-top-0">
+                            <br>
+                            <!-- Show Err Msg - STARTS -->
+                            <div v-if="err" class="row p-4">
+                                <div class="col-12 col-md-6 mx-auto">
+                                    <div class="card border-danger">
+                                        <div class="card-body">
+                                            <p class="card-text" v-html="errMsg"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Show Err Msg - ENDS -->
+                            <!-- Form - STARTS-->
+                            <form>
+                                <div class="m-3">
+                                  <label for="pharmacistUsernameInput" class="form-label">Username</label>
+                                  <input type="text" class="form-control" id="pharmacistUsernameInput" aria-describedby="username">
+                                </div>
+                                <div class="m-3">
+                                  <label for="pharmacistPasswordInput" class="form-label">Password</label>
+                                  <input type="password" class="form-control" id="pharmacistPasswordInput">
+                                </div>
+                                <div class="d-grid gap-2 m-3">
+                                    <button type="button" class="btn btn-primary" @click="checkPharmacist">Login</button>
+                                </div>
+                              </form>
+                            <!-- Form - ENDS-->
+                            <br>
+                        </div>
+                    </div>
+                    <!-- Pharmacist Tabs Content - ENDS-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--<footer id="footer"></footer>-->
+    <!-- Bootstrap Javascript; at the end of the <body> -->
+    <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js'
+        integrity='sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM'
+        crossorigin='anonymous'></script>
+    <!-- Core theme JS-->
+    <script src="./js/scripts.js"></script>
+
+    <!--GET PATIENT RECORD - STARTS-->
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    users: [
+                        {"patient":{"username": "patient", "password": "patient"}},
+                        {"doctor":{"username": "doctor", "password": "doctor"}},
+                        {"pharmacist":{"username": "pharmacist", "password": "pharmacist"}}
+                    ],
+                    err : false,
+                    errMsg : ""
+                }
+            },
+            methods: {
+                checkPatient() {
+                    this.err = false
+                    this.errMsg = ""
+                    var name = document.getElementById("patientUsernameInput").value
+                    var pwd = document.getElementById("patientPasswordInput").value
+                    if (this.users[0].patient.username == name && this.users[0].patient.password == pwd){
+                        //store id sesion here also
+                        location.href = 'http://localhost/esd-project/frontend/paymentRecords.html';
+                    }
+                    else{
+                        this.err = true
+                        this.errMsg = "Invalid Credentials"
+                    }
+                },
+                checkDoctor(){
+                    this.err = false
+                    this.errMsg = ""
+                    var name = document.getElementById("doctorUsernameInput").value
+                    var pwd = document.getElementById("doctorPasswordInput").value
+                    if (this.users[1].doctor.username == name && this.users[1].doctor.password == pwd){
+                        //store id sesion here also
+                        location.href = 'http://localhost/esd-project/frontend/searchPatients.html';
+                    }
+                    else{
+                        this.err = true
+                        this.errMsg = "Invalid Credentials"
+                    }
+                },
+                checkPharmacist(){
+                    this.err = false
+                    this.errMsg = ""
+                    var name = document.getElementById("pharmacistUsernameInput").value
+                    var pwd = document.getElementById("pharmacistPasswordInput").value
+                    if (this.users[2].pharmacist.username == name && this.users[2].pharmacist.password == pwd){
+                        //store id sesion here also
+                        location.href = 'http://localhost/esd-project/frontend/prescriptionRecords.html';
+                    }
+                    else{
+                        this.err = true
+                        this.errMsg = "Invalid Credentials"
+                    }
+                },
+                clearErr(){
+                    this.err = false
+                    this.errMsg = ""
+                }
+            },
+            created() {
+            }
+        });
+        const vm = app.mount("#login");
+    </script>
+
+</body>
+
+</html>
