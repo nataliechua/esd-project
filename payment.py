@@ -55,7 +55,7 @@ def get_all_payment_by_status(status): # need status + patient_id
     
     if payment_details:
         data = [payment.json() for payment in payment_details]
-        print("payment data: ", data)
+        
         if (len(data) == 0):
             return jsonify(
                 {
