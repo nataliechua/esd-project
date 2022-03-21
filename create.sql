@@ -164,20 +164,20 @@ CREATE TABLE payment (
 INSERT INTO payment
   (prescription_id,patient_id,medicines,total,order_id,status)
 VALUES
-  (1,'t1234567a','{"Cymbalta":1, "Omeprazole":2, "Fentanyl":1}',13.12,'dummy','paid'),
-  (2,'t1234568a','{"Ibuprofen":2}',1.90,'dummy','paid'),
+  (1,'t1234567a','{"Cymbalta":1, "Omeprazole":2, "Fentanyl":1}',16.83,'dummy','paid'),
+  (2,'t1234568a','{"Ibuprofen":2}',3.80,'dummy','paid'),
   (3,'t1234569a','{"Methotrexate":1, "Wellbutrin":1}',24.12,'dummy','paid'),
   (4,'t1234570a','{"Xanax":1, "Azithromycin":1}',15.00,'dummy','paid'),
   (5,'t1234571a','{"Clonazepam":1}',7.05,'dummy','paid'),
   (6,'t1234572a','{"Citalopram":1}',3.49,'dummy','paid'),
-  (7,'t1234573a','{"Imbruvica":2, "Gabapentin":1}',25.68,'dummy','unpaid'),
-  (8,'t1234574a','{"Naloxone":3}',1.32,'dummy','unpaid'),
-  (9,'t1234575a','{"Naproxen":2, "Metoprolol":4, "Gabapentin":2}',37.03,NULL,'paid'),
-  (10,'t1234576a','{"Amitriptyline":3}',6.18,NULL,'unpaid'),
-  (11,'t1234577a','{"Cyclobenzaprine":2, "Lexapro":1, "Amlodipine":3}',17.99,NULL,'unpaid'),
-  (12,'t1234578a','{"Acetaminophen":2}',11.56,NULL,'unpaid'),
+  (7,'t1234573a','{"Imbruvica":2, "Gabapentin":1}',38.86,'dummy','unpaid'),
+  (8,'t1234574a','{"Naloxone":3}',3.96,'dummy','unpaid'),
+  (9,'t1234575a','{"Naproxen":2, "Metoprolol":4, "Gabapentin":2}',95.08,NULL,'paid'),
+  (10,'t1234576a','{"Amitriptyline":3}',18.55,NULL,'unpaid'),
+  (11,'t1234577a','{"Cyclobenzaprine":2, "Lexapro":1, "Amlodipine":3}',45.88,NULL,'unpaid'),
+  (12,'t1234578a','{"Acetaminophen":2}',23.12,NULL,'unpaid'),
   (13,'t1234579a','{"Omeprazole":1}',3.71,NULL,'unpaid'),
-  (14,'t1234577a','{"Januvia":3}',14.32,NULL,'unpaid'),
-  (15,'t1234567a','{"Entresto":2, "Benzonatate":1, "Hydroxychloroquine":2, "Gabapentin":3}',41.66,NULL,'unpaid'),
-  (16,'t1234568a','{"Methadone":1, "Loratadine":2}',16.33,NULL,'unpaid'),
-  (17,'t1234569a','{"Adderall":4}',0.81,NULL,'unpaid');
+  (14,'t1234577a','{"Januvia":3}',42.97,NULL,'unpaid'),
+  (15,'t1234567a','{"Entresto":2, "Benzonatate":1, "Hydroxychloroquine":2, "Gabapentin":3}',91.80,NULL,'unpaid'),
+  (16,'t1234568a','{"Methadone":1, "Loratadine":2}',18.50,NULL,'unpaid'),
+  (17,'t1234569a','{"Adderall":4}',3.25,NULL,'unpaid');
