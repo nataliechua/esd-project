@@ -1,8 +1,8 @@
 # esd-project
 
 ## patient MS
-* GET - get specific patient info: http://localhost:5000/patient/<name>
-eg. http://localhost:5000/patient/Adele
+* GET - get specific patient info: http://localhost:5000/patient/<id>
+eg. http://localhost:5000/patient/t1234567a
 
 ## prescription MS
 * GET - get prescriptions by status: http://localhost:5001/prescription/<status>

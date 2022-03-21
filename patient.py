@@ -15,7 +15,7 @@ CORS(app)
 class Patient(db.Model):
     __tablename__ = 'patient'
 
-    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    id = db.Column(db.String(15), primary_key=True, nullable=False)
     name = db.Column(db.String(255), nullable=False)
     age = db.Column(db.Integer, nullable=False)
     allergies = db.Column(db.String(255))
@@ -39,9 +39,9 @@ class Patient(db.Model):
         "email": self.email}
 
 
-@app.route("/patient/<string:name>")
-def find_patient_by_name(name):
-    patient = Patient.query.filter_by(name=name).first() #here assume no duplicated names
+@app.route("/patient/<string:id>")
+def find_patient_by_id(id):
+    patient = Patient.query.filter_by(id=id).first()
     if patient:
         return jsonify(
             {

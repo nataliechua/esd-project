@@ -5,8 +5,8 @@ create database patient;
 use patient;
 
 CREATE TABLE patient (
-  id VARCHAR(255) PRIMARY KEY,
-  name VARCHAR(255),
+  id VARCHAR(15) PRIMARY KEY NOT NULL,
+  name VARCHAR(255) NOT NULL,
   age INT NOT NULL,
   allergies VARCHAR(255),
   hp VARCHAR(15) NOT NULL,
