@@ -77,7 +77,7 @@ def get_all_payment_by_status(status, patient_id):
 @app.route("/payment/create", methods=['POST'])
 def create_payment():
     data = request.get_json()
-    payment = Payment(id = None, **data, status='unpaid')
+    payment = Payment(id = None, **data, order_id= None, status='unpaid')
 
     try:
         db.session.add(payment)
