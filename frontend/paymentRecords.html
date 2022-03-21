@@ -181,17 +181,16 @@
                 getPaymentRecords() {
                     $(async () => {
                         
-                        var patientId = 1
+                        var patientId = "t1234567a" // *** change dis when login part is done
                         // Change serviceURL to your own
-                        var serviceURL = "http://localhost:5003/payment/" + $('.nav-tabs .active').text();
+                        var serviceURL = "http://localhost:5003/payment/" + $('.nav-tabs .active').text() + "/" +patientId;
                         try {
                             const response =
                                 await fetch(
                                     serviceURL, 
                                     { 
-                                        method: 'POST',
-                                        headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
-                                        body: JSON.stringify({patient_id: patientId})
+                                        method: 'GET',
+                                        headers: {'Accept': 'application/json', 'Content-Type': 'application/json'} 
                                     }
                                 );
                             const result = await response.json();

@@ -10,8 +10,8 @@
 		{
 			"name": "view payment by patient_id and status",
 			"request": {
-				"url": "http://localhost:5003/payment/paid",
-				"method": "POST",
+				"url": "http://localhost:5003/payment/paid/t1234567a",
+				"method": "GET",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -21,7 +21,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"patient_id\": 1\n}"
+					"raw": ""
 				},
 				"description": ""
 			},
