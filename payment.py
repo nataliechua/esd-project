@@ -44,14 +44,10 @@ class Payment(db.Model):
             "status": self.status
         }
 
-@app.route("/payment/<string:status>", methods=['POST'])
-def get_all_payment_by_status(status): # need status + patient_id
+@app.route("/payment/<string:status>/<string:patient_id>")
+def get_all_payment_by_status(status, patient_id): 
 
-    data = request.get_json()
-
-    patient_id = data["patient_id"]
-
-    payment_details = Payment.query.filter_by(patient_id=patient_id, status=status)# assuming that sms will send payment_id at the end of the string
+    payment_details = Payment.query.filter_by(patient_id=patient_id, status=status)
     
     if payment_details:
         data = [payment.json() for payment in payment_details]
@@ -81,7 +77,7 @@ def get_all_payment_by_status(status): # need status + patient_id
 @app.route("/payment/create", methods=['POST'])
 def create_payment():
     data = request.get_json()
-    payment = Payment(id = None, **data, status='unpaid')
+    payment = Payment(id = None, **data, order_id= None, status='unpaid')
 
     try:
         db.session.add(payment)

@@ -1,8 +1,8 @@
 # esd-project
 
 ## patient MS
-* GET - get specific patient info: http://localhost:5000/patient/<name>
-eg. http://localhost:5000/patient/Adele
+* GET - get specific patient info: http://localhost:5000/patient/<id>
+eg. http://localhost:5000/patient/t1234567a
 
 ## prescription MS
 * GET - get prescriptions by status: http://localhost:5001/prescription/<status>
@@ -21,7 +21,7 @@ eg.http://localhost:5002/inventory/Adderall
 example input see postman
 
 ## payment MS
-* POST - get payment by status and patient_id: http://localhost:5003/payment/<status>
+* GET - get payment by status and patient_id: http://localhost:5003/payment/<status>/<patient_id>
 example input see postman
 * POST - create payment: http://localhost:5003/payment/create
 * GET - get payment: http://localhost:5003/payment/<id>

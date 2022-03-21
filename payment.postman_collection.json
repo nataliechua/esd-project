@@ -10,8 +10,8 @@
 		{
 			"name": "view payment by patient_id and status",
 			"request": {
-				"url": "http://localhost:5003/payment/paid",
-				"method": "POST",
+				"url": "http://localhost:5003/payment/paid/t1234567a",
+				"method": "GET",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -21,7 +21,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"patient_id\": 1\n}"
+					"raw": ""
 				},
 				"description": ""
 			},
@@ -41,7 +41,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"prescription_id\": 1,\n\t\"patient_id\": 1,\n\t\"medicines\": \"{\\\"Cymbalta\\\":1, \\\"Omeprazole\\\":2, \\\"Fentanyl\\\":1}\",\n\t\"total\": 13.12,\n\t\"order_id\": \"dummy\"\n}"
+					"raw": "{\n\t\"prescription_id\": 1,\n\t\"patient_id\": \"t1234567a\",\n\t\"medicines\": \"{\\\"Cymbalta\\\":1, \\\"Omeprazole\\\":2, \\\"Fentanyl\\\":1}\",\n\t\"total\": 13.12\n}"
 				},
 				"description": ""
 			},
