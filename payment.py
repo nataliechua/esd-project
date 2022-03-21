@@ -47,7 +47,7 @@ class Payment(db.Model):
 @app.route("/payment/<string:status>/<string:patient_id>")
 def get_all_payment_by_status(status, patient_id): 
 
-    payment_details = Payment.query.filter_by(patient_id=patient_id, status=status)# assuming that sms will send payment_id at the end of the string
+    payment_details = Payment.query.filter_by(patient_id=patient_id, status=status)
     
     if payment_details:
         data = [payment.json() for payment in payment_details]
