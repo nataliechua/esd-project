@@ -4,7 +4,7 @@
 <link rel="icon" type="image/x-icon" href="../favicon.ico" />
 <div class="container" id="navApp">
     <!-- <a class="navbar-brand" href="#page-top"><img src="assets/img/navbar-logo.svg" alt="..." /></a> -->
-    <a class="navbar-brand" href="./"><img src="assets/img/logo-edited.png" alt="..." />WeCare</a>
+    <a class="navbar-brand" href="./">ESD Pharmacy</a>
     <!-- <a class="navbar-brand" href="#page-top">WeCare</a> -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
         aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -14,9 +14,9 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
 
-            <li class="nav-item"><a class="nav-link" href="./" id="home">Home</a></li>
+            <!-- <li class="nav-item"><a class="nav-link" href="./" id="home">Home</a></li>
             <li class="nav-item"><a class="nav-link" href="./forums.html" id="forums">Forums</a></li>
-            <li class="nav-item"><a class="nav-link" href="./overall.html" id="motivations">Motivations</a></li>
+            <li class="nav-item"><a class="nav-link" href="./overall.html" id="motivations">Motivations</a></li> -->
             <!--Logged In-->
             <li class="nav-item" v-if="loggedin">
                 <a class="nav-link" href="./profileSettings.html" id="settings">
@@ -26,7 +26,7 @@
             <li class="nav-item" v-if="loggedin"><a class="nav-link" v-on:click="logout" href="#">Log out</a></li>
             <!--Before logged In-->
             <li class="nav-item py-xs-md-2" v-if="loggedin==false"><a class="btn btn-primary btn-md text-uppercase" href="./login.html">Log In</a></li>
-            <li class="nav-item py-xs-md-2" v-if="loggedin==false"><a class="btn btn-primary btn-md text-uppercase" href="./signup.html">Sign Up</a></li>
+            <!-- <li class="nav-item py-xs-md-2" v-if="loggedin==false"><a class="btn btn-primary btn-md text-uppercase" href="./signup.html">Sign Up</a></li> -->
 
         </ul>
     </div>
