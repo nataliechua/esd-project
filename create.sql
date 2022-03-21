@@ -4,6 +4,7 @@ drop database if exists patient;
 create database patient;
 use patient;
 
+
 CREATE TABLE patient (
   id VARCHAR(255) PRIMARY KEY,
   name VARCHAR(255),
@@ -30,6 +31,35 @@ VALUES
   ('t1234579a','Angeline Jolie',30,'',91234567,'hello@gmail.com');
 
   
+-- create doctor table
+
+drop database if exists doctor;
+create database doctor;
+use doctor;
+
+CREATE TABLE doctor (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(255),
+  hp VARCHAR(15),
+  email VARCHAR(255)
+);
+INSERT INTO doctor
+  (name,hp,email)
+VALUES
+  ('Meredith Grey',12345678,'doctor@hospital.com'),
+  ('Owen Hunt',12345678,'doctor@hospital.com'),
+  ('Derek Shepherd',12345678,'doctor@hospital.com'),
+  ('Mark Sloan',12345678,'doctor@hospital.com'),
+  ('Alex Karev',12345678,'doctor@hospital.com'),
+  ('Jackson Avery',12345678,'doctor@hospital.com'),
+  ('Amelia Shepherd',12345678,'doctor@hospital.com'),
+  ('Callie Torres',12345678,'doctor@hospital.com'),
+  ('Izzie Stevens',12345678,'doctor@hospital.com'),
+  ('Andrew Deluca',12345678,'doctor@hospital.com'),
+  ('Cristina Yang',12345678,'doctor@hospital.com'),
+  ('Kai Bartley',12345678,'doctor@hospital.com');
+
+  
 -- create prescription table
 
 drop database if exists prescription;
@@ -42,28 +72,29 @@ CREATE TABLE prescription (
   patient_id VARCHAR(255) NOT NULL,
   description VARCHAR(65535),
   medicines VARCHAR(65535) NOT NULL,
-  status VARCHAR(255) NOT NULL
+  status VARCHAR(255) NOT NULL,
+  sendToPayment VARCHAR(255) NOT NULL
 );
 INSERT INTO prescription
-  (doctor_id,patient_id,description,medicines,status)
+  (doctor_id,patient_id,description,medicines,status,sendToPayment)
 VALUES
-  (1,'t1234567a','Runny nose, sore throat','{"Cymbalta":1, "Omeprazole":2, "Fentanyl":1}','pending'),
-  (2,'t1234568a','Covid','{"Ibuprofen":2}','pending'),
-  (3,'t1234569a','Diarrhea','{"Methotrexate":1, "Wellbutrin":1}','confirmed'),
-  (6,'t1234570a','Fever','{"Xanax":1, "Azithromycin":1}','pending'),
-  (4,'t1234571a','Headache','{"Clonazepam":1}','completed'),
-  (3,'t1234572a','Runny nose, sore throat','{"Citalopram":1}','pending'),
-  (2,'t1234573a','Flu','{"Imbruvica":2, "Gabapentin":1}','pending'),
-  (5,'t1234574a','Dry cough','{"Naloxone":3}','confirmed'),
-  (3,'t1234575a','Dizzy','{"Naproxen":2, "Metoprolol":4, "Gabapentin":2}','completed'),
-  (4,'t1234576a','Flu','{"Amitriptyline":3}','pending'),
-  (4,'t1234577a','Nausea','{"Cyclobenzaprine":2, "Lexapro":1, "Amlodipine":3}','completed'),
-  (2,'t1234578a','Fatigue','{"Acetaminophen":2}','completed'),
-  (4,'t1234579a','Knee pain','{"Omeprazole":1}','completed'),
-  (2,'t1234577a','Dizzy spells, nauseous','{"Januvia":3}','confirmed'),
-  (5,'t1234567a','Flu symptoms','{"Entresto":2, "Benzonatate":1, "Hydroxychloroquine":2, "Gabapentin":3}','confirmed'),
-  (5,'t1234568a','Food poisoning','{"Methadone":1, "Loratadine":2}','confirmed'),
-  (6,'t1234569a','Stomach flu','{"Adderall":4}','pending');
+  (1,'t1234567a','Runny nose, sore throat','{"Cymbalta":1, "Omeprazole":2, "Fentanyl":1}','pending','yes'),
+  (2,'t1234568a','Covid','{"Ibuprofen":2}','pending','yes'),
+  (3,'t1234569a','Diarrhea','{"Methotrexate":1, "Wellbutrin":1}','confirmed','yes'),
+  (6,'t1234570a','Fever','{"Xanax":1, "Azithromycin":1}','pending','no'),
+  (4,'t1234571a','Headache','{"Clonazepam":1}','completed','yes'),
+  (3,'t1234572a','Runny nose, sore throat','{"Citalopram":1}','pending','no'),
+  (2,'t1234573a','Flu','{"Imbruvica":2, "Gabapentin":1}','pending','no'),
+  (5,'t1234574a','Dry cough','{"Naloxone":3}','confirmed','yes'),
+  (3,'t1234575a','Dizzy','{"Naproxen":2, "Metoprolol":4, "Gabapentin":2}','completed','yes'),
+  (4,'t1234576a','Flu','{"Amitriptyline":3}','pending','no'),
+  (4,'t1234577a','Nausea','{"Cyclobenzaprine":2, "Lexapro":1, "Amlodipine":3}','completed','yes'),
+  (2,'t1234578a','Fatigue','{"Acetaminophen":2}','completed','yes'),
+  (4,'t1234579a','Knee pain','{"Omeprazole":1}','completed','yes'),
+  (2,'t1234577a','Dizzy spells, nauseous','{"Januvia":3}','confirmed','yes'),
+  (5,'t1234567a','Flu symptoms','{"Entresto":2, "Benzonatate":1, "Hydroxychloroquine":2, "Gabapentin":3}','confirmed','yes'),
+  (5,'t1234568a','Food poisoning','{"Methadone":1, "Loratadine":2}','confirmed','yes'),
+  (6,'t1234569a','Stomach flu','{"Adderall":4}','pending','no');
 
   
 -- create inventory table
@@ -161,23 +192,19 @@ CREATE TABLE payment (
   order_id VARCHAR(255),
   status VARCHAR(255) NOT NULL
 );
+
 INSERT INTO payment
   (prescription_id,patient_id,medicines,total,order_id,status)
 VALUES
   (1,'t1234567a','{"Cymbalta":1, "Omeprazole":2, "Fentanyl":1}',16.83,'dummy','paid'),
   (2,'t1234568a','{"Ibuprofen":2}',3.80,'dummy','paid'),
   (3,'t1234569a','{"Methotrexate":1, "Wellbutrin":1}',24.12,'dummy','paid'),
-  (4,'t1234570a','{"Xanax":1, "Azithromycin":1}',15.00,'dummy','paid'),
   (5,'t1234571a','{"Clonazepam":1}',7.05,'dummy','paid'),
-  (6,'t1234572a','{"Citalopram":1}',3.49,'dummy','paid'),
-  (7,'t1234573a','{"Imbruvica":2, "Gabapentin":1}',38.86,'dummy','unpaid'),
-  (8,'t1234574a','{"Naloxone":3}',3.96,'dummy','unpaid'),
-  (9,'t1234575a','{"Naproxen":2, "Metoprolol":4, "Gabapentin":2}',95.08,NULL,'paid'),
-  (10,'t1234576a','{"Amitriptyline":3}',18.55,NULL,'unpaid'),
+  (8,'t1234574a','{"Naloxone":3}',3.96,'dummy','paid'),
+  (9,'t1234575a','{"Naproxen":2, "Metoprolol":4, "Gabapentin":2}',95.08,NULL,'unpaid'),
   (11,'t1234577a','{"Cyclobenzaprine":2, "Lexapro":1, "Amlodipine":3}',45.88,NULL,'unpaid'),
   (12,'t1234578a','{"Acetaminophen":2}',23.12,NULL,'unpaid'),
   (13,'t1234579a','{"Omeprazole":1}',3.71,NULL,'unpaid'),
   (14,'t1234577a','{"Januvia":3}',42.97,NULL,'unpaid'),
   (15,'t1234567a','{"Entresto":2, "Benzonatate":1, "Hydroxychloroquine":2, "Gabapentin":3}',91.80,NULL,'unpaid'),
-  (16,'t1234568a','{"Methadone":1, "Loratadine":2}',18.50,NULL,'unpaid'),
-  (17,'t1234569a','{"Adderall":4}',3.25,NULL,'unpaid');
+  (16,'t1234568a','{"Methadone":1, "Loratadine":2}',18.50,NULL,'unpaid');
