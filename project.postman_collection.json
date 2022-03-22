@@ -6,206 +6,150 @@
 	},
 	"item": [
 		{
-			"name": "create prescription (everytime change input a bit)",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"doctor_id\": 3,\r\n    \"patient_id\": 8,\r\n    \"description\": \"Cough\",\r\n    \"medicines\": \"{\\\"Januvia\\\":1, \\\"Wellbutrin\\\":1}\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:5001/prescription/create",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5001",
-					"path": [
-						"prescription",
-						"create"
-					]
-				}
-			},
-			"response": [
+			"name": "patient MS",
+			"item": [
 				{
-					"name": "create prescription (everytime change input a bit)",
-					"originalRequest": {
-						"method": "POST",
+					"name": "get specific patient info by patient id",
+					"request": {
+						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"doctor_id\": 3,\r\n    \"patient_id\": 8,\r\n    \"description\": \"Cough\",\r\n    \"medicines\": \"{\\\"Januvia\\\":1, \\\"Wellbutrin\\\":1}\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "http://localhost:5001/prescription/create",
+							"raw": "http://localhost:5000/patient/t1234567a",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5001",
+							"port": "5000",
 							"path": [
-								"prescription",
-								"create"
+								"patient",
+								"t1234567a"
 							]
 						}
 					},
-					"status": "CREATED",
-					"code": 201,
-					"_postman_previewlanguage": "json",
-					"header": [
+					"response": [
 						{
-							"key": "Content-Type",
-							"value": "application/json"
-						},
-						{
-							"key": "Content-Length",
-							"value": "254"
-						},
-						{
-							"key": "Access-Control-Allow-Origin",
-							"value": "*"
-						},
-						{
-							"key": "Server",
-							"value": "Werkzeug/2.0.2 Python/3.8.1"
-						},
-						{
-							"key": "Date",
-							"value": "Sat, 19 Mar 2022 10:07:38 GMT"
+							"name": "sample response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/patient/t1234567a",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"patient",
+										"t1234567a"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "206"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.0.2 Python/3.8.1"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 22 Mar 2022 09:28:42 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"age\": 41,\n        \"allergies\": \"Amoxicillin, ampicillin\",\n        \"email\": \"hello@gmail.com\",\n        \"hp\": \"91234567\",\n        \"id\": \"t1234567a\",\n        \"name\": \"Kim Kardashian\"\n    }\n}"
 						}
-					],
-					"cookie": [],
-					"body": "{\n    \"code\": 201,\n    \"data\": {\n        \"description\": \"Cough\",\n        \"doctor_id\": 3,\n        \"id\": 18,\n        \"medicines\": \"{\\\"Januvia\\\":1, \\\"Wellbutrin\\\":1}\",\n        \"patient_id\": 8,\n        \"status\": \"pending\"\n    },\n    \"message\": \"Prescription created successfully.\"\n}"
+					]
 				}
 			]
 		},
 		{
-			"name": "update prescription (everytime change id and status)",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"status\": \"confirmed\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:5001/prescription/17",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5001",
-					"path": [
-						"prescription",
-						"17"
-					]
-				}
-			},
-			"response": [
+			"name": "inventory MS",
+			"item": [
 				{
-					"name": "update prescription (everytime change id and status)",
-					"originalRequest": {
-						"method": "PUT",
+					"name": "get specific medicine info by medicine name",
+					"request": {
+						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"status\": \"confirmed\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "http://localhost:5001/prescription/17",
+							"raw": "http://localhost:5002/inventory/Amlodipine",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5001",
+							"port": "5002",
 							"path": [
-								"prescription",
-								"17"
+								"inventory",
+								"Amlodipine"
 							]
 						}
 					},
-					"status": "OK",
-					"code": 200,
-					"_postman_previewlanguage": "json",
-					"header": [
+					"response": [
 						{
-							"key": "Content-Type",
-							"value": "application/json"
-						},
-						{
-							"key": "Content-Length",
-							"value": "191"
-						},
-						{
-							"key": "Access-Control-Allow-Origin",
-							"value": "*"
-						},
-						{
-							"key": "Server",
-							"value": "Werkzeug/2.0.2 Python/3.8.1"
-						},
-						{
-							"key": "Date",
-							"value": "Fri, 18 Mar 2022 04:51:14 GMT"
+							"name": "sample response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5002/inventory/Amlodipine",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5002",
+									"path": [
+										"inventory",
+										"Amlodipine"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "114"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.0.2 Python/3.8.1"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 22 Mar 2022 09:31:46 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"id\": 4,\n        \"name\": \"Amlodipine\",\n        \"price\": 12.69,\n        \"stock\": 60\n    }\n}"
 						}
-					],
-					"cookie": [],
-					"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"description\": \"Stomach flu\",\n        \"doctor_id\": 6,\n        \"id\": 17,\n        \"medicines\": \"{'Adderall':4}\",\n        \"patient_id\": 3,\n        \"status\": \"confirmed\"\n    }\n}"
-				}
-			]
-		},
-		{
-			"name": "update inventory",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"used_quantity\": 4\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:5002/inventory/Adderall",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5002",
-					"path": [
-						"inventory",
-						"Adderall"
 					]
-				}
-			},
-			"response": [
+				},
 				{
-					"name": "update inventory",
-					"originalRequest": {
+					"name": "update medicine inventory by medicine name",
+					"request": {
 						"method": "PUT",
 						"header": [],
 						"body": {
@@ -230,33 +174,696 @@
 							]
 						}
 					},
-					"status": "OK",
-					"code": 200,
-					"_postman_previewlanguage": "json",
-					"header": [
+					"response": [
 						{
-							"key": "Content-Type",
-							"value": "application/json"
-						},
-						{
-							"key": "Content-Length",
-							"value": "111"
-						},
-						{
-							"key": "Access-Control-Allow-Origin",
-							"value": "*"
-						},
-						{
-							"key": "Server",
-							"value": "Werkzeug/2.0.2 Python/3.8.1"
-						},
-						{
-							"key": "Date",
-							"value": "Fri, 18 Mar 2022 05:19:43 GMT"
+							"name": "sample response",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"used_quantity\": 4\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5002/inventory/Adderall",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5002",
+									"path": [
+										"inventory",
+										"Adderall"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "182"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.0.2 Python/3.8.1"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 22 Mar 2022 12:59:59 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"id\": 2,\n        \"name\": \"Adderall\",\n        \"price\": 14,\n        \"stock\": 63\n    },\n    \"message\": \"Inventory for medicine Adderall updated successfully.\"\n}"
 						}
-					],
-					"cookie": [],
-					"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"id\": 2,\n        \"name\": \"Adderall\",\n        \"price\": 14,\n        \"stock\": 63\n    }\n}"
+					]
+				}
+			]
+		},
+		{
+			"name": "prescription MS",
+			"item": [
+				{
+					"name": "get prescriptions by status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5001/prescription/pending",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"prescription",
+								"pending"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "sample response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5001/prescription/pending",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5001",
+									"path": [
+										"prescription",
+										"pending"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1807"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.0.2 Python/3.8.1"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 22 Mar 2022 09:35:47 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"prescriptions\": [\n            {\n                \"description\": \"Runny nose, sore throat\",\n                \"doctor_id\": 1,\n                \"id\": 1,\n                \"medicines\": \"{\\\"Cymbalta\\\":1, \\\"Omeprazole\\\":2, \\\"Fentanyl\\\":1}\",\n                \"patient_id\": \"t1234567a\",\n                \"sendToPayment\": \"yes\",\n                \"status\": \"pending\"\n            },\n            {\n                \"description\": \"Covid\",\n                \"doctor_id\": 2,\n                \"id\": 2,\n                \"medicines\": \"{\\\"Ibuprofen\\\":2}\",\n                \"patient_id\": \"t1234568a\",\n                \"sendToPayment\": \"yes\",\n                \"status\": \"pending\"\n            },\n            {\n                \"description\": \"Fever\",\n                \"doctor_id\": 6,\n                \"id\": 4,\n                \"medicines\": \"{\\\"Xanax\\\":1, \\\"Azithromycin\\\":1}\",\n                \"patient_id\": \"t1234570a\",\n                \"sendToPayment\": \"no\",\n                \"status\": \"pending\"\n            },\n            {\n                \"description\": \"Runny nose, sore throat\",\n                \"doctor_id\": 3,\n                \"id\": 6,\n                \"medicines\": \"{\\\"Citalopram\\\":1}\",\n                \"patient_id\": \"t1234572a\",\n                \"sendToPayment\": \"no\",\n                \"status\": \"pending\"\n            },\n            {\n                \"description\": \"Flu\",\n                \"doctor_id\": 2,\n                \"id\": 7,\n                \"medicines\": \"{\\\"Imbruvica\\\":2, \\\"Gabapentin\\\":1}\",\n                \"patient_id\": \"t1234573a\",\n                \"sendToPayment\": \"no\",\n                \"status\": \"pending\"\n            },\n            {\n                \"description\": \"Flu\",\n                \"doctor_id\": 4,\n                \"id\": 10,\n                \"medicines\": \"{\\\"Amitriptyline\\\":3}\",\n                \"patient_id\": \"t1234576a\",\n                \"sendToPayment\": \"no\",\n                \"status\": \"pending\"\n            },\n            {\n                \"description\": \"Stomach flu\",\n                \"doctor_id\": 6,\n                \"id\": 17,\n                \"medicines\": \"{\\\"Adderall\\\":4}\",\n                \"patient_id\": \"t1234569a\",\n                \"sendToPayment\": \"no\",\n                \"status\": \"pending\"\n            }\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "get prescriptions by status and sendToPayment",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5001/prescription/pending/no",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"prescription",
+								"pending",
+								"no"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "sample response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5001/prescription/pending/no",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5001",
+									"path": [
+										"prescription",
+										"pending",
+										"no"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1288"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.0.2 Python/3.8.1"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 22 Mar 2022 09:37:14 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"prescriptions\": [\n            {\n                \"description\": \"Fever\",\n                \"doctor_id\": 6,\n                \"id\": 4,\n                \"medicines\": \"{\\\"Xanax\\\":1, \\\"Azithromycin\\\":1}\",\n                \"patient_id\": \"t1234570a\",\n                \"sendToPayment\": \"no\",\n                \"status\": \"pending\"\n            },\n            {\n                \"description\": \"Runny nose, sore throat\",\n                \"doctor_id\": 3,\n                \"id\": 6,\n                \"medicines\": \"{\\\"Citalopram\\\":1}\",\n                \"patient_id\": \"t1234572a\",\n                \"sendToPayment\": \"no\",\n                \"status\": \"pending\"\n            },\n            {\n                \"description\": \"Flu\",\n                \"doctor_id\": 2,\n                \"id\": 7,\n                \"medicines\": \"{\\\"Imbruvica\\\":2, \\\"Gabapentin\\\":1}\",\n                \"patient_id\": \"t1234573a\",\n                \"sendToPayment\": \"no\",\n                \"status\": \"pending\"\n            },\n            {\n                \"description\": \"Flu\",\n                \"doctor_id\": 4,\n                \"id\": 10,\n                \"medicines\": \"{\\\"Amitriptyline\\\":3}\",\n                \"patient_id\": \"t1234576a\",\n                \"sendToPayment\": \"no\",\n                \"status\": \"pending\"\n            },\n            {\n                \"description\": \"Stomach flu\",\n                \"doctor_id\": 6,\n                \"id\": 17,\n                \"medicines\": \"{\\\"Adderall\\\":4}\",\n                \"patient_id\": \"t1234569a\",\n                \"sendToPayment\": \"no\",\n                \"status\": \"pending\"\n            }\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "create prescription",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"doctor_id\": 3,\r\n    \"patient_id\": 8,\r\n    \"description\": \"Cough\",\r\n    \"medicines\": \"{\\\"Januvia\\\":1, \\\"Wellbutrin\\\":1}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5001/prescription/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"prescription",
+								"create"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "sample response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"doctor_id\": 3,\r\n    \"patient_id\": 8,\r\n    \"description\": \"Cough\",\r\n    \"medicines\": \"{\\\"Januvia\\\":1, \\\"Wellbutrin\\\":1}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5001/prescription/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5001",
+									"path": [
+										"prescription",
+										"create"
+									]
+								}
+							},
+							"status": "CREATED",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "284"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.0.2 Python/3.8.1"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 22 Mar 2022 09:41:51 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 201,\n    \"data\": {\n        \"description\": \"Cough\",\n        \"doctor_id\": 3,\n        \"id\": 18,\n        \"medicines\": \"{\\\"Januvia\\\":1, \\\"Wellbutrin\\\":1}\",\n        \"patient_id\": \"8\",\n        \"sendToPayment\": \"no\",\n        \"status\": \"pending\"\n    },\n    \"message\": \"Prescription created successfully.\"\n}"
+						}
+					]
+				},
+				{
+					"name": "update prescription status by prescription id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\": \"confirmed\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5001/prescription/17",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"prescription",
+								"17"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "sample response",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"status\": \"confirmed\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5001/prescription/17",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5001",
+									"path": [
+										"prescription",
+										"17"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "302"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.0.2 Python/3.8.1"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 22 Mar 2022 13:04:45 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"description\": \"Stomach flu\",\n        \"doctor_id\": 6,\n        \"id\": 17,\n        \"medicines\": \"{\\\"Adderall\\\":4}\",\n        \"patient_id\": \"t1234569a\",\n        \"sendToPayment\": \"no\",\n        \"status\": \"confirmed\"\n    },\n    \"message\": \"Status for prescription id = 17 updated successfully.\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "payment MS",
+			"item": [
+				{
+					"name": "get specific prescription info by payment id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5003/payment/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5003",
+							"path": [
+								"payment",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "sample response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5003/payment/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5003",
+									"path": [
+										"payment",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "249"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.0.2 Python/3.8.1"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 22 Mar 2022 09:45:41 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"id\": 1,\n        \"medicines\": \"{\\\"Cymbalta\\\":1, \\\"Omeprazole\\\":2, \\\"Fentanyl\\\":1}\",\n        \"order_id\": \"dummy\",\n        \"patient_id\": \"t1234567a\",\n        \"prescription_id\": 1,\n        \"status\": \"paid\",\n        \"total\": 16.83\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "get prescriptions by patient_id and payment status",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5003/payment/t1234567a/paid",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5003",
+							"path": [
+								"payment",
+								"t1234567a",
+								"paid"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "sample response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:5003/payment/t1234567a/paid",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5003",
+									"path": [
+										"payment",
+										"t1234567a",
+										"paid"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "322"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.0.2 Python/3.8.1"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 22 Mar 2022 09:46:50 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"prescriptions\": [\n            {\n                \"id\": 1,\n                \"medicines\": \"{\\\"Cymbalta\\\":1, \\\"Omeprazole\\\":2, \\\"Fentanyl\\\":1}\",\n                \"order_id\": \"dummy\",\n                \"patient_id\": \"t1234567a\",\n                \"prescription_id\": 1,\n                \"status\": \"paid\",\n                \"total\": 16.83\n            }\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "record prescription in payment MS",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"prescription_id\": 100,\n\t\"patient_id\": \"t1234567a\",\n\t\"medicines\": \"{\\\"Benzonatate\\\":1, \\\"Naloxone\\\":2}\",\n\t\"total\": 13.12\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5003/payment/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5003",
+							"path": [
+								"payment",
+								"create"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "sample response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"prescription_id\": 100,\n\t\"patient_id\": \"t1234567a\",\n\t\"medicines\": \"{\\\"Benzonatate\\\":1, \\\"Naloxone\\\":2}\",\n\t\"total\": 13.12\n}"
+								},
+								"url": {
+									"raw": "http://localhost:5003/payment/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5003",
+									"path": [
+										"payment",
+										"create"
+									]
+								}
+							},
+							"status": "CREATED",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "289"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.0.2 Python/3.8.1"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 22 Mar 2022 13:07:30 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 201,\n    \"data\": {\n        \"id\": 13,\n        \"medicines\": \"{\\\"Benzonatate\\\":1, \\\"Naloxone\\\":2}\",\n        \"order_id\": null,\n        \"patient_id\": \"t1234567a\",\n        \"prescription_id\": 100,\n        \"status\": \"unpaid\",\n        \"total\": 13.12\n    },\n    \"message\": \"Prescription recorded successfully.\"\n}"
+						}
+					]
+				},
+				{
+					"name": "update prescription order_id and payment status by payment id",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"order_id\": \"dummy\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5003/payment/update/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5003",
+							"path": [
+								"payment",
+								"update",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "sample response",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"order_id\": \"dummy\"\n}"
+								},
+								"url": {
+									"raw": "http://localhost:5003/payment/6",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5003",
+									"path": [
+										"payment",
+										"6"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "356"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.0.2 Python/3.8.1"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 22 Mar 2022 13:11:26 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"id\": 6,\n        \"medicines\": \"{\\\"Naproxen\\\":2, \\\"Metoprolol\\\":4, \\\"Gabapentin\\\":2}\",\n        \"order_id\": \"dummy\",\n        \"patient_id\": \"t1234575a\",\n        \"prescription_id\": 9,\n        \"status\": \"paid\",\n        \"total\": 95.08\n    },\n    \"message\": \"Payment status and order_id for prescription which payment id = 6 updated successfully.\"\n}"
+						}
+					]
 				}
 			]
 		}

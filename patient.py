@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from os import environ
 from flask_cors import CORS
+import json
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root@localhost:3306/patient' 
@@ -52,7 +53,7 @@ def find_patient_by_id(id):
     return jsonify(
         {
             "code": 404,
-            "message": "Patient not found."
+            "message": "Patient which id = " + id + " not found."
         }
     ), 404
 

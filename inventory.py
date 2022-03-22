@@ -19,7 +19,7 @@ class Inventory(db.Model):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     name = db.Column(db.String(255), nullable=False)
     price = db.Column(db.Float, nullable=False)
-    stock = db.Column(db.Integer)
+    stock = db.Column(db.Integer, nullable=False)
 
     def __init__(self, id, name, price, stock):
         self.id = id
@@ -47,7 +47,7 @@ def find_medicine_by_name(name):
     return jsonify(
         {
             "code": 404,
-            "message": "Medicine not found."
+            "message": "Medicine " + name + " not found."
         }
     ), 404
 
@@ -63,7 +63,7 @@ def update_medicine_inventory(name):
                     "data": {
                         "name": name
                     },
-                    "message": "Medicine not found."
+                    "message": "Medicine " + name + " not found."
                 }
             ), 404
 
@@ -75,7 +75,8 @@ def update_medicine_inventory(name):
             return jsonify(
                 {
                     "code": 200,
-                    "data": medicine.json()
+                    "data": medicine.json(),
+                    "message": "Inventory for medicine " + name + " updated successfully."
                 }
             ), 200
     except Exception as e:
@@ -85,7 +86,7 @@ def update_medicine_inventory(name):
                 "data": {
                     "name": name
                 },
-                "message": "An error occurred while updating the medicine inventory. " + str(e)
+                "message": "An error occurred while updating medicine " + name + " inventory. " + str(e)
             }
         ), 500
 

@@ -31,7 +31,7 @@ VALUES
   ('t1234579a','Angeline Jolie',30,'',91234567,'hello@gmail.com');
 
   
--- create doctor table
+-- create doctor table, not using
 
 drop database if exists doctor;
 create database doctor;
@@ -69,7 +69,7 @@ use prescription;
 CREATE TABLE prescription (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   doctor_id INT NOT NULL,
-  patient_id VARCHAR(255) NOT NULL,
+  patient_id VARCHAR(15) NOT NULL,
   description VARCHAR(65535),
   medicines VARCHAR(65535) NOT NULL,
   status VARCHAR(255) NOT NULL,
@@ -105,9 +105,9 @@ use inventory;
 
 CREATE TABLE inventory (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(255),
-  price FLOAT,
-  stock INT
+  name VARCHAR(255) NOT NULL,
+  price FLOAT NOT NULL,
+  stock INT NOT NULL
 );
 INSERT INTO inventory
   (name,price,stock)
@@ -186,7 +186,7 @@ use payment;
 CREATE TABLE payment (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   prescription_id INT NOT NULL,
-  patient_id VARCHAR(255) NOT NULL,
+  patient_id VARCHAR(15) NOT NULL,
   medicines VARCHAR(65535) NOT NULL,
   total FLOAT NOT NULL,
   order_id VARCHAR(255),

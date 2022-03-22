@@ -18,18 +18,20 @@ class Prescription(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     doctor_id = db.Column(db.Integer, nullable=False)
-    patient_id = db.Column(db.Integer, nullable=False)
+    patient_id = db.Column(db.String(15), nullable=False)
     description = db.Column(db.String(65535))
     medicines = db.Column(db.String(65535), nullable=False)
     status = db.Column(db.String(255), nullable=False)
+    sendToPayment = db.Column(db.String(255), nullable=False)
 
-    def __init__(self, id, doctor_id, patient_id, description, medicines, status):
+    def __init__(self, id, doctor_id, patient_id, description, medicines, status, sendToPayment):
         self.id = id
         self.doctor_id = doctor_id
         self.patient_id = patient_id
         self.description = description
         self.medicines = medicines
         self.status = status
+        self.sendToPayment = sendToPayment
 
     def json(self):
         return {"id": self.id, 
@@ -37,11 +39,12 @@ class Prescription(db.Model):
         "patient_id": self.patient_id, 
         "description": self.description, 
         "medicines": self.medicines, 
-        "status": self.status}
+        "status": self.status,
+        "sendToPayment": self.sendToPayment}
 
 
 @app.route("/prescription/<string:status>")
-def get_all_by_status(status):
+def get_prescriptions_by_status(status):
     plist = Prescription.query.filter_by(status=status)
     if plist:
         return jsonify(
@@ -55,7 +58,27 @@ def get_all_by_status(status):
     return jsonify(
         {
             "code": 404,
-            "message": "There are no {status} prescriptions."
+            "message": "There are no " + status + " prescriptions."
+        }
+    ), 404
+
+
+@app.route("/prescription/<string:status>/<string:sendToPayment>")
+def get_prescritions_by_status_and_STP(status,sendToPayment):
+    plist = Prescription.query.filter_by(status=status, sendToPayment=sendToPayment)
+    if plist:
+        return jsonify(
+            {
+                "code": 200,
+                "data": {
+                    "prescriptions": [pres.json() for pres in plist]
+                }
+            }
+        )
+    return jsonify(
+        {
+            "code": 404,
+            "message": "There are no " + status + " and sendToPayment = " + sendToPayment + " prescriptions."
         }
     ), 404
 
@@ -63,7 +86,7 @@ def get_all_by_status(status):
 @app.route("/prescription/create", methods=['POST'])
 def create_prescription():
     data = request.get_json()
-    prescription = Prescription(id = None, **data, status='pending')
+    prescription = Prescription(id = None, **data, status='pending', sendToPayment='no')
 
     try:
         db.session.add(prescription)
@@ -88,8 +111,8 @@ def create_prescription():
     ), 201
 
 
-@app.route("/prescription/<string:id>", methods=['PUT'])
-def update_prescription(id):
+@app.route("/prescription/<int:id>", methods=['PUT'])
+def update_prescription_status(id):
     try:
         prescription = Prescription.query.filter_by(id=id).first()
         if not prescription:
@@ -99,7 +122,7 @@ def update_prescription(id):
                     "data": {
                         "id": id
                     },
-                    "message": "Prescription not found."
+                    "message": "Prescription id = " + str(id) + " not found."
                 }
             ), 404
 
@@ -111,7 +134,8 @@ def update_prescription(id):
             return jsonify(
                 {
                     "code": 200,
-                    "data": prescription.json()
+                    "data": prescription.json(),
+                    "message": "Status for prescription id = " + str(id) + " updated successfully."
                 }
             ), 200
     except Exception as e:
@@ -121,7 +145,7 @@ def update_prescription(id):
                 "data": {
                     "id": id
                 },
-                "message": "An error occurred while updating the prescription. " + str(e)
+                "message": "An error occurred while updating the prescription id = " + str(id) + ". " + str(e)
             }
         ), 500
 
