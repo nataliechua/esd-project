@@ -112,7 +112,7 @@ def create_prescription():
 
 
 @app.route("/prescription/<int:id>", methods=['PUT'])
-def update_prescription_status(id):
+def update_prescription_status_or_sendToPayment(id):
     try:
         prescription = Prescription.query.filter_by(id=id).first()
         if not prescription:
@@ -126,9 +126,9 @@ def update_prescription_status(id):
                 }
             ), 404
 
-        # update status
         data = request.get_json()
-        if data['status']:
+        # update status
+        if 'status' in data:
             prescription.status = data['status']
             db.session.commit()
             return jsonify(
@@ -138,6 +138,18 @@ def update_prescription_status(id):
                     "message": "Status for prescription id = " + str(id) + " updated successfully."
                 }
             ), 200
+        # update sendToPayment
+        if 'sendToPayment' in data:
+            prescription.sendToPayment = data['sendToPayment']
+            db.session.commit()
+            return jsonify(
+                {
+                    "code": 200,
+                    "data": prescription.json(),
+                    "message": "SendToPayment for prescription id = " + str(id) + " updated successfully."
+                }
+            ), 200
+        
     except Exception as e:
         return jsonify(
             {

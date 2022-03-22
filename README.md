@@ -20,9 +20,9 @@ eg. http://localhost:5001/prescription/pending
 eg. http://localhost:5001/prescription/pending/no
 * POST - create prescription: http://localhost:5001/prescription/create
 example input see postman
-* PUT - update prescription status by prescription id: http://localhost:5001/prescription/<id>
+* PUT - update prescription status or sendToPayment by prescription id: http://localhost:5001/prescription/<id>
 eg. http://localhost:5001/prescription/17
-example input see postman
+example inputs see postman
 
 
 ## payment MS

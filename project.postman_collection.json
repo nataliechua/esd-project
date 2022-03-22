@@ -542,6 +542,91 @@
 							"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"description\": \"Stomach flu\",\n        \"doctor_id\": 6,\n        \"id\": 17,\n        \"medicines\": \"{\\\"Adderall\\\":4}\",\n        \"patient_id\": \"t1234569a\",\n        \"sendToPayment\": \"no\",\n        \"status\": \"confirmed\"\n    },\n    \"message\": \"Status for prescription id = 17 updated successfully.\"\n}"
 						}
 					]
+				},
+				{
+					"name": "update prescription sendToPayment by prescription id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\": \"confirmed\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5001/prescription/17",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"prescription",
+								"17"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "sample response",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"sendToPayment\": \"yes\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5001/prescription/17",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5001",
+									"path": [
+										"prescription",
+										"17"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "308"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.0.2 Python/3.8.1"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 22 Mar 2022 14:17:01 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"description\": \"Stomach flu\",\n        \"doctor_id\": 6,\n        \"id\": 17,\n        \"medicines\": \"{\\\"Adderall\\\":4}\",\n        \"patient_id\": \"t1234569a\",\n        \"sendToPayment\": \"yes\",\n        \"status\": \"pending\"\n    },\n    \"message\": \"SendToPayment for prescription id = 17 updated successfully.\"\n}"
+						}
+					]
 				}
 			]
 		},
@@ -794,7 +879,7 @@
 							"raw": "{\n\t\"order_id\": \"dummy\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:5003/payment/update/1",
+							"raw": "http://localhost:5003/payment/6",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -802,8 +887,7 @@
 							"port": "5003",
 							"path": [
 								"payment",
-								"update",
-								"1"
+								"6"
 							]
 						}
 					},
