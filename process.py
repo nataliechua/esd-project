@@ -81,8 +81,8 @@ def send_to_paymentMS(prescription_id,patient_id,medicines,total):
 # the pharmacist UI pending page should invoke this when the comfirm buttom is pressed for each prescription
 # the UI should send to this route the confirmed presciption id using PUT in the form of {prescription_id: ...}
 # this route completes scenario2 12) to 16)
-@app.route("/confirmingPrescription", methods=['PUT'])
-def confirmingPrescription():
+@app.route("/confirmPrescription", methods=['PUT'])
+def confirmPrescription():
     data = request.get_json()
     prescription_id = data["prescription_id"]
     print('\n-----[START] Confirming for prescription id = ' + str(prescription_id) + '-----')
@@ -110,7 +110,7 @@ def confirmingPrescription():
                     print('-----Notified patient to collect medicine at counter via SMS [END]-----')
                     return jsonify({
                         "code": 200,
-                        "messsage": "Prescription id = " + prescription_id + " confirmed successfully."
+                        "messsage": "Prescription id = " + str(prescription_id) + " confirmed successfully."
                     })
 
 def update_inventory(medicines): # eg. medicines = {"Xanax":1, "Azithromycin":1}
@@ -129,6 +129,7 @@ def send_to_Rabbit(patient_hp): # eg. patient_hp = "91234567"
     print('[4] Sending ph to Rabbit')
     # send hp to Rabbit, if successful, return 200
     # code goes here
+    print('patient phone number is ' + patient_hp)
 
     return 200
 

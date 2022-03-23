@@ -1080,6 +1080,159 @@
 					]
 				}
 			]
+		},
+		{
+			"name": "process CMS",
+			"item": [
+				{
+					"name": "process pending prescriptions, complete senario2 3) to 8)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5100/processPendingPrescriptions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5100",
+							"path": [
+								"processPendingPrescriptions"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "sample response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5100/processPendingPrescriptions",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5100",
+									"path": [
+										"processPendingPrescriptions"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1812"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.0.2 Python/3.8.1"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 23 Mar 2022 04:55:29 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"prescriptions\": [\n            {\n                \"description\": \"Runny nose, sore throat\",\n                \"doctor_id\": 1,\n                \"id\": 1,\n                \"medicines\": \"{\\\"Cymbalta\\\":1, \\\"Omeprazole\\\":2, \\\"Fentanyl\\\":1}\",\n                \"patient_id\": \"t1234567a\",\n                \"sendToPayment\": \"yes\",\n                \"status\": \"pending\"\n            },\n            {\n                \"description\": \"Covid\",\n                \"doctor_id\": 2,\n                \"id\": 2,\n                \"medicines\": \"{\\\"Ibuprofen\\\":2}\",\n                \"patient_id\": \"t1234568a\",\n                \"sendToPayment\": \"yes\",\n                \"status\": \"pending\"\n            },\n            {\n                \"description\": \"Fever\",\n                \"doctor_id\": 6,\n                \"id\": 4,\n                \"medicines\": \"{\\\"Xanax\\\":1, \\\"Azithromycin\\\":1}\",\n                \"patient_id\": \"t1234570a\",\n                \"sendToPayment\": \"yes\",\n                \"status\": \"pending\"\n            },\n            {\n                \"description\": \"Runny nose, sore throat\",\n                \"doctor_id\": 3,\n                \"id\": 6,\n                \"medicines\": \"{\\\"Citalopram\\\":1}\",\n                \"patient_id\": \"t1234572a\",\n                \"sendToPayment\": \"yes\",\n                \"status\": \"pending\"\n            },\n            {\n                \"description\": \"Flu\",\n                \"doctor_id\": 2,\n                \"id\": 7,\n                \"medicines\": \"{\\\"Imbruvica\\\":2, \\\"Gabapentin\\\":1}\",\n                \"patient_id\": \"t1234573a\",\n                \"sendToPayment\": \"yes\",\n                \"status\": \"pending\"\n            },\n            {\n                \"description\": \"Flu\",\n                \"doctor_id\": 4,\n                \"id\": 10,\n                \"medicines\": \"{\\\"Amitriptyline\\\":3}\",\n                \"patient_id\": \"t1234576a\",\n                \"sendToPayment\": \"yes\",\n                \"status\": \"pending\"\n            },\n            {\n                \"description\": \"Stomach flu\",\n                \"doctor_id\": 6,\n                \"id\": 17,\n                \"medicines\": \"{\\\"Adderall\\\":4}\",\n                \"patient_id\": \"t1234569a\",\n                \"sendToPayment\": \"yes\",\n                \"status\": \"pending\"\n            }\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "confirm prescription, complete scenario2 12) to 16)",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"prescription_id\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5100/confirmPrescription",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5100",
+							"path": [
+								"confirmPrescription"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "sample response",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"prescription_id\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5100/confirmPrescription",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5100",
+									"path": [
+										"confirmPrescription"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "80"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.0.2 Python/3.8.1"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 23 Mar 2022 05:14:55 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"messsage\": \"Prescription id = 1 confirmed successfully.\"\n}"
+						}
+					]
+				}
+			]
 		}
 	]
 }

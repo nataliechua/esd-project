@@ -48,7 +48,7 @@ class Payment(db.Model):
 @app.route("/payment")
 def get_all_records():
     plist = Payment.query.all()
-    if plist.count():
+    if plist:
         return jsonify(
             {
             "code": 200,
