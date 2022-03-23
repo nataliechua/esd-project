@@ -7,7 +7,7 @@ from os import environ
 import requests
 from invokes import invoke_http
 
-import amqp_setup
+#import amqp_setup
 import pika
 import json
 
@@ -50,10 +50,10 @@ def processPendingPrescriptions():
                 if update_sendToPayment_result["code"] == 200:
                     print("-----Prescription id = " + str(prescription_id) + " successfully sent to payment MS-----")
 
-        # get all pending prescription
-        print('\n-----Getting all pending prescriptions [END]-----')
-        pending_prescriptions = invoke_http(get_pending_prescriptions_URL, method='GET')
-        return pending_prescriptions
+    # get all pending prescription
+    print('\n-----Getting all pending prescriptions [END]-----')
+    pending_prescriptions = invoke_http(get_pending_prescriptions_URL, method='GET')
+    return pending_prescriptions
 
 def calculate_total(medicines): # eg. medicines = {"Xanax":1, "Azithromycin":1}
     print('[1] Calculating total price')
@@ -126,19 +126,16 @@ def update_inventory(medicines): # eg. medicines = {"Xanax":1, "Azithromycin":1}
         return 200
 
 def send_to_Rabbit(patient_hp): # eg. patient_hp = "91234567"
-    # print('[4] Sending ph to Rabbit')
     # send hp to Rabbit, if successful, return 200
-    # code goes here
+    print('[4] Sending ph to Rabbit')
     message='info: +65' + str(patient_hp)
     amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key="order.message", 
             body=message, properties=pika.BasicProperties(delivery_mode = 2))
     # print('patient phone number is ' + patient_hp)
-    print("\nMessage published to RabbitMQ Exchange.\n")
-
-
+    # print("\nMessage published to RabbitMQ Exchange.\n")
     return 200
-
 # send_to_Rabbit(98443918)
+
 
 if __name__ == "__main__":
     print("This is flask " + os.path.basename(__file__) +
