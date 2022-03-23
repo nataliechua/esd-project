@@ -45,6 +45,26 @@ class Payment(db.Model):
         }
 
 
+@app.route("/payment")
+def get_all_records():
+    plist = Payment.query.all()
+    if plist:
+        return jsonify(
+            {
+            "code": 200,
+            "data": {
+                    "prescription records": [p.json() for p in plist]
+                }
+            }
+        )
+    return jsonify(
+        {
+            "code": 404,
+            "message": "There are no prescription records."
+        }
+    ), 404
+
+
 @app.route("/payment/<int:id>")
 def get_prescription_by_paymentId(id):
     prescription = Payment.query.filter_by(id=id).first() # assuming that sms will send payment_id at the end of the string

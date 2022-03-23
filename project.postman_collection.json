@@ -550,7 +550,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"status\": \"confirmed\"\r\n}",
+							"raw": "{\r\n    \"sendToPayment\": \"yes\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -633,6 +633,71 @@
 		{
 			"name": "payment MS",
 			"item": [
+				{
+					"name": "get all prescription records in payment MS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5003/payment",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5003",
+							"path": [
+								"payment"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "sample response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5003/payment",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5003",
+									"path": [
+										"payment"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "2988"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.0.2 Python/3.8.1"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 23 Mar 2022 03:35:03 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"prescription records\": [\n            {\n                \"id\": 1,\n                \"medicines\": \"{\\\"Cymbalta\\\":1, \\\"Omeprazole\\\":2, \\\"Fentanyl\\\":1}\",\n                \"order_id\": \"dummy\",\n                \"patient_id\": \"t1234567a\",\n                \"prescription_id\": 1,\n                \"status\": \"paid\",\n                \"total\": 16.83\n            },\n            {\n                \"id\": 2,\n                \"medicines\": \"{\\\"Ibuprofen\\\":2}\",\n                \"order_id\": \"dummy\",\n                \"patient_id\": \"t1234568a\",\n                \"prescription_id\": 2,\n                \"status\": \"paid\",\n                \"total\": 3.8\n            },\n            {\n                \"id\": 3,\n                \"medicines\": \"{\\\"Methotrexate\\\":1, \\\"Wellbutrin\\\":1}\",\n                \"order_id\": \"dummy\",\n                \"patient_id\": \"t1234569a\",\n                \"prescription_id\": 3,\n                \"status\": \"paid\",\n                \"total\": 24.12\n            },\n            {\n                \"id\": 4,\n                \"medicines\": \"{\\\"Clonazepam\\\":1}\",\n                \"order_id\": \"dummy\",\n                \"patient_id\": \"t1234571a\",\n                \"prescription_id\": 5,\n                \"status\": \"paid\",\n                \"total\": 7.05\n            },\n            {\n                \"id\": 5,\n                \"medicines\": \"{\\\"Naloxone\\\":3}\",\n                \"order_id\": \"dummy\",\n                \"patient_id\": \"t1234574a\",\n                \"prescription_id\": 8,\n                \"status\": \"paid\",\n                \"total\": 3.96\n            },\n            {\n                \"id\": 6,\n                \"medicines\": \"{\\\"Naproxen\\\":2, \\\"Metoprolol\\\":4, \\\"Gabapentin\\\":2}\",\n                \"order_id\": null,\n                \"patient_id\": \"t1234575a\",\n                \"prescription_id\": 9,\n                \"status\": \"unpaid\",\n                \"total\": 95.08\n            },\n            {\n                \"id\": 7,\n                \"medicines\": \"{\\\"Cyclobenzaprine\\\":2, \\\"Lexapro\\\":1, \\\"Amlodipine\\\":3}\",\n                \"order_id\": null,\n                \"patient_id\": \"t1234577a\",\n                \"prescription_id\": 11,\n                \"status\": \"unpaid\",\n                \"total\": 45.88\n            },\n            {\n                \"id\": 8,\n                \"medicines\": \"{\\\"Acetaminophen\\\":2}\",\n                \"order_id\": null,\n                \"patient_id\": \"t1234578a\",\n                \"prescription_id\": 12,\n                \"status\": \"unpaid\",\n                \"total\": 23.12\n            },\n            {\n                \"id\": 9,\n                \"medicines\": \"{\\\"Omeprazole\\\":1}\",\n                \"order_id\": null,\n                \"patient_id\": \"t1234579a\",\n                \"prescription_id\": 13,\n                \"status\": \"unpaid\",\n                \"total\": 3.71\n            },\n            {\n                \"id\": 10,\n                \"medicines\": \"{\\\"Januvia\\\":3}\",\n                \"order_id\": null,\n                \"patient_id\": \"t1234577a\",\n                \"prescription_id\": 14,\n                \"status\": \"unpaid\",\n                \"total\": 42.97\n            },\n            {\n                \"id\": 11,\n                \"medicines\": \"{\\\"Entresto\\\":2, \\\"Benzonatate\\\":1, \\\"Hydroxychloroquine\\\":2, \\\"Gabapentin\\\":3}\",\n                \"order_id\": null,\n                \"patient_id\": \"t1234567a\",\n                \"prescription_id\": 15,\n                \"status\": \"unpaid\",\n                \"total\": 91.8\n            },\n            {\n                \"id\": 12,\n                \"medicines\": \"{\\\"Methadone\\\":1, \\\"Loratadine\\\":2}\",\n                \"order_id\": null,\n                \"patient_id\": \"t1234568a\",\n                \"prescription_id\": 16,\n                \"status\": \"unpaid\",\n                \"total\": 18.5\n            }\n        ]\n    }\n}"
+						}
+					]
+				},
 				{
 					"name": "get specific prescription info by payment id",
 					"request": {

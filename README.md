@@ -26,6 +26,7 @@ example inputs see postman
 
 
 ## payment MS
+* GET - get all prescription records in payment MS: http://localhost:5003/payment
 * GET - get specific prescription info by payment id: http://localhost:5003/payment/<id>
 eg. http://localhost:5003/payment/1
 * GET - get prescriptions by patient_id and payment status: http://localhost:5003/payment/<patient_id>/<status>
