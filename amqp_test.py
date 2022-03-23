@@ -20,4 +20,5 @@ def send_message():
 
     print("\nMessage published to RabbitMQ Exchange.\n")
 
-send_message()
+# send_message()
+

@@ -45,7 +45,7 @@ def twilio_send(number):
 
     message = client.messages \
                     .create(
-                        body="Dear Patient, please note that you have an outstanding payment to be made to esd-team6 clinic from your last visit.",
+                        body="Dear Patient, please note that your medicine is ready for collection at the esd-team6 clinic.",
                         from_='+17087251094',
                         to=number
                     )
@@ -58,3 +58,5 @@ if __name__ == "__main__":  # execute this program only if it is run as a script
     print("\nThis is " + os.path.basename(__file__), end='')
     print(": monitoring routing key '{}' in exchange '{}' ...".format(monitorBindingKey, amqp_setup.exchangename))
     receiveOrderLog()
+
+
