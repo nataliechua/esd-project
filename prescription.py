@@ -46,7 +46,7 @@ class Prescription(db.Model):
 @app.route("/prescription/<string:status>")
 def get_prescriptions_by_status(status):
     plist = Prescription.query.filter_by(status=status)
-    if plist:
+    if plist.count():
         return jsonify(
             {
                 "code": 200,
@@ -66,7 +66,7 @@ def get_prescriptions_by_status(status):
 @app.route("/prescription/<string:status>/<string:sendToPayment>")
 def get_prescritions_by_status_and_STP(status,sendToPayment):
     plist = Prescription.query.filter_by(status=status, sendToPayment=sendToPayment)
-    if plist:
+    if plist.count():
         return jsonify(
             {
                 "code": 200,

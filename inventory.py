@@ -37,7 +37,7 @@ class Inventory(db.Model):
 @app.route("/inventory")
 def get_all_medicines():
     mlist = Inventory.query.all()
-    if mlist:
+    if mlist.count():
         return jsonify(
             {
             "code": 200,

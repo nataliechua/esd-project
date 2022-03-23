@@ -21,15 +21,27 @@ CORS(app)
 # SECOND APPROACH
 # tried to use api routes to fetch data but didn't return any result
 
-pres_URL = "http://localhost:5001/prescription/<string:status>"
-inventory_URL = "http://localhost:5002/inventory/price/<string:name>"
+# pres_URL = "http://localhost:5001/prescription/<string:status>"
+# inventory_URL = "http://localhost:5002/inventory/price/<string:name>"
 
 # not related to the process required in complex microservice
 # just wanted to check if the route is working in this complex microservice
-@app.route("/process_prescription/<string:status>", methods=['GET'])
-def process_prescription(status):
-    result = invoke_http(pres_URL, method='GET', json=status)
-    return result
+# @app.route("/process_prescription/<string:status>", methods=['GET'])
+# def process_prescription(status):
+#     result = invoke_http(pres_URL, method='GET', json=status)
+#     return result
+
+@app.route("/test")
+def test():
+    get_unsend_pending_prescriptions_URL = "http://localhost:5001/prescription/pending/no" #GET
+    unsend_pending_prescriptions_result = invoke_http(get_unsend_pending_prescriptions_URL, method='GET')
+
+    unsend_prescriptions = unsend_pending_prescriptions_result["data"]["prescriptions"]
+    for unsend_prescription in unsend_prescriptions:
+        medicines = unsend_prescription["medicines"]
+        print(medicines)
+    return unsend_pending_prescriptions_result
+
 
 if __name__ == "__main__":
     print("This is flask " + os.path.basename(__file__) +

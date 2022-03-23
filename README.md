@@ -38,3 +38,11 @@ example input see postman
 eg. http://localhost:5003/payment/6
 example input see postman
 
+
+# process CMS
+* GET - complete senario2 3) to 8): http://localhost:5100/processPendingPrescriptions
+pharmacist UI pending page invokes this when loads and get all the pending prescriptions
+* PUT - complete scenario2 12) to 16): http://localhost:5100/confirmingPrescription
+pharmacist UI pending page invokes this when the comfirm buttom is pressed for each prescription
+sample UI input: {prescription_id: 1}
+

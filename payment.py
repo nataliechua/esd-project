@@ -48,7 +48,7 @@ class Payment(db.Model):
 @app.route("/payment")
 def get_all_records():
     plist = Payment.query.all()
-    if plist:
+    if plist.count():
         return jsonify(
             {
             "code": 200,
@@ -86,7 +86,7 @@ def get_prescription_by_paymentId(id):
 @app.route("/payment/<string:patient_id>/<string:status>")
 def get_prescriptions_by_patientId_and_payment_status(patient_id, status): 
     plist = Payment.query.filter_by(patient_id=patient_id, status=status)
-    if plist:
+    if plist.count():
         return jsonify(
             {
                 "code": 200,
