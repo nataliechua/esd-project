@@ -34,6 +34,26 @@ class Inventory(db.Model):
         "stock": self.stock}
 
 
+@app.route("/inventory")
+def get_all_medicines():
+    mlist = Inventory.query.all()
+    if mlist:
+        return jsonify(
+            {
+            "code": 200,
+            "data": {
+                    "medicines": [m.json() for m in mlist]
+                }
+            }
+        )
+    return jsonify(
+        {
+            "code": 404,
+            "message": "There are no medicines in inventory."
+        }
+    ), 404
+
+
 @app.route("/inventory/<string:name>")
 def find_medicine_by_name(name):
     medicine = Inventory.query.filter_by(name=name).first() #here assume no duplicated names

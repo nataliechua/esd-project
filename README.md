@@ -6,6 +6,7 @@ eg. http://localhost:5000/patient/t1234567a
 
 
 ## inventory MS
+* GET - get all medicines info in inventory MS: http://localhost:5002/inventory
 * GET - get specific medicine info by medicine name: http://localhost:5002/inventory/<name>
 eg. http://localhost:5002/inventory/Amlodipine
 * PUT - update medicine inventory by medicine name: http://localhost:5002/inventory/<name>
