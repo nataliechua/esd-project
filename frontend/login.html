@@ -73,8 +73,8 @@
                             <!-- Form - STARTS-->
                             <form>
                                 <div class="m-3">
-                                  <label for="patientUsernameInput" class="form-label">Username</label>
-                                  <input type="text" class="form-control" id="patientUsernameInput" aria-describedby="username">
+                                  <label for="patientIdInput" class="form-label">ID</label>
+                                  <input type="text" class="form-control" id="patientIdInput" aria-describedby="ID">
                                 </div>
                                 <div class="m-3">
                                   <label for="patientPasswordInput" class="form-label">Password</label>
@@ -175,7 +175,6 @@
             data() {
                 return {
                     users: [
-                        {"patient":{"username": "patient", "password": "patient"}},
                         {"doctor":{"username": "doctor", "password": "doctor"}},
                         {"pharmacist":{"username": "pharmacist", "password": "pharmacist"}}
                     ],
@@ -187,16 +186,49 @@
                 checkPatient() {
                     this.err = false
                     this.errMsg = ""
-                    var name = document.getElementById("patientUsernameInput").value
+                    var id = document.getElementById("patientIdInput").value
+                    id = id.toLowerCase()
                     var pwd = document.getElementById("patientPasswordInput").value
-                    if (this.users[0].patient.username == name && this.users[0].patient.password == pwd){
-                        //store id sesion here also
-                        location.href = 'http://localhost/esd-project/frontend/paymentRecords.html';
-                    }
-                    else{
-                        this.err = true
-                        this.errMsg = "Invalid Credentials"
-                    }
+                    $(async () => {
+                            // Change serviceURL to your own
+                            this.err = false
+                            this.errMsg = ""
+                            var serviceURL = "http://localhost:5000/patient/" + id;
+                            try {
+                                const response =
+                                    await fetch(
+                                        serviceURL, { method: 'GET' }
+                                    );
+                                const result = await response.json();
+                                if (response.status === 200) {
+                                    // success case
+                                    this.searched = true
+                                    this.err = false
+                                    if (pwd == "patient"){
+                                        //store id sesion here also
+                                        location.href = 'http://localhost/esd-project/frontend/paymentRecords.html';
+                                    }else{
+                                        this.err = true
+                                        this.errMsg = "Invalid Credentials"
+                                    }
+
+                                } else if (response.status == 404) {
+                                    // No Such Patient Found
+                                    this.err = true
+                                    this.searched = false
+                                    this.errMsg = result.message;
+                                } else {
+                                    // unexpected outcome, throw the error
+                                    throw response.status;
+                                }
+                            } catch (error) {
+                                // Errors when calling the service; such as network error, 
+                                // service offline, etc
+                                this.err = true
+                                this.searched = false
+                                this.errMsg = 'There is a problem retrieving patients data, please try again later.<br />' + error;
+                            } // error
+                    });
                 },
                 checkDoctor(){
                     this.err = false
