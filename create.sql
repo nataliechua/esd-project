@@ -196,15 +196,15 @@ CREATE TABLE payment (
 INSERT INTO payment
   (prescription_id,patient_id,medicines,total,order_id,status)
 VALUES
-  (1,'t1234567a','{"Cymbalta":1, "Omeprazole":2, "Fentanyl":1}',16.83,'dummy','paid'),
-  (2,'t1234568a','{"Ibuprofen":2}',3.80,'dummy','paid'),
-  (3,'t1234569a','{"Methotrexate":1, "Wellbutrin":1}',24.12,'dummy','paid'),
+  (1,'t1234567a','{"Cymbalta":1, "Omeprazole":2, "Fentanyl":1}',37.19,'dummy','paid'),
+  (2,'t1234568a','{"Ibuprofen":2}',10.92,'dummy','paid'),
+  (3,'t1234569a','{"Methotrexate":1, "Wellbutrin":1}',7.88,'dummy','paid'),
   (5,'t1234571a','{"Clonazepam":1}',7.05,'dummy','paid'),
-  (8,'t1234574a','{"Naloxone":3}',3.96,'dummy','paid'),
-  (9,'t1234575a','{"Naproxen":2, "Metoprolol":4, "Gabapentin":2}',95.08,NULL,'unpaid'),
-  (11,'t1234577a','{"Cyclobenzaprine":2, "Lexapro":1, "Amlodipine":3}',45.88,NULL,'unpaid'),
-  (12,'t1234578a','{"Acetaminophen":2}',23.12,NULL,'unpaid'),
-  (13,'t1234579a','{"Omeprazole":1}',3.71,NULL,'unpaid'),
-  (14,'t1234577a','{"Januvia":3}',42.97,NULL,'unpaid'),
-  (15,'t1234567a','{"Entresto":2, "Benzonatate":1, "Hydroxychloroquine":2, "Gabapentin":3}',91.80,NULL,'unpaid'),
-  (16,'t1234568a','{"Methadone":1, "Loratadine":2}',18.50,NULL,'unpaid');
+  (8,'t1234574a','{"Naloxone":3}',21.6,'dummy','paid'),
+  (9,'t1234575a','{"Naproxen":2, "Metoprolol":4, "Gabapentin":2}',67.8,NULL,'unpaid'),
+  (11,'t1234577a','{"Cyclobenzaprine":2, "Lexapro":1, "Amlodipine":3}',66.36,NULL,'unpaid'),
+  (12,'t1234578a','{"Acetaminophen":2}',20.74,NULL,'unpaid'),
+  (13,'t1234579a','{"Omeprazole":1}',6.19,NULL,'unpaid'),
+  (14,'t1234577a','{"Januvia":3}',18.84,NULL,'unpaid'),
+  (15,'t1234567a','{"Entresto":2, "Benzonatate":1, "Hydroxychloroquine":2, "Gabapentin":3}',31.26,NULL,'unpaid'),
+  (16,'t1234568a','{"Methadone":1, "Loratadine":2}',35.10,NULL,'unpaid');
