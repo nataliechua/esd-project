@@ -8,7 +8,7 @@
     <title>Patient's Record</title>
 
     <!-- CSS Stylesheet -->
-    <link href="./css/style.css" type="text/css" rel="stylesheet" />
+    <link href="./css/myStyle.css" type="text/css" rel="stylesheet" />
     <!-- Navbar CSS -->
     <link rel="stylesheet" type="text/css" href="./css/navBarStyle.css">
     <!-- Bootstrap CSS -->
@@ -29,7 +29,7 @@
 </head>
 
 <body>
-    <!--<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav"></nav>-->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav"></nav>
     <div class="container-fluid" id="login">
         <div class="row bg-light py-5 mb-4">
             <div class="col text-center ">
@@ -161,7 +161,7 @@
             </div>
         </div>
     </div>
-    <!--<footer id="footer"></footer>-->
+    <footer id="footer"></footer>
     <!-- Bootstrap Javascript; at the end of the <body> -->
     <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js'
         integrity='sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM'
@@ -235,7 +235,7 @@
                     this.errMsg = ""
                     var name = document.getElementById("doctorUsernameInput").value
                     var pwd = document.getElementById("doctorPasswordInput").value
-                    if (this.users[1].doctor.username == name && this.users[1].doctor.password == pwd){
+                    if (this.users[0].doctor.username == name && this.users[0].doctor.password == pwd){
                         //store id sesion here also
                         location.href = 'http://localhost/esd-project/frontend/searchPatients.html';
                     }
@@ -249,7 +249,7 @@
                     this.errMsg = ""
                     var name = document.getElementById("pharmacistUsernameInput").value
                     var pwd = document.getElementById("pharmacistPasswordInput").value
-                    if (this.users[2].pharmacist.username == name && this.users[2].pharmacist.password == pwd){
+                    if (this.users[1].pharmacist.username == name && this.users[1].pharmacist.password == pwd){
                         //store id sesion here also
                         location.href = 'http://localhost/esd-project/frontend/prescriptionRecords.html';
                     }
