@@ -25,16 +25,6 @@
             $("#header").load("./assets/components/header.html");
             $("#footer").load("./assets/components/footer.html");
         });
-        $(document).ready(function(){
-            $('button[data-bs-toggle="tab"]').on('show.bs.tab', function(e) {
-                localStorage.setItem('activeTab', $(e.target).attr('data-bs-target'));
-            });
-            var activeTab = localStorage.getItem('activeTab');
-            console.log(activeTab)
-            if(activeTab){
-                $('#myTab button[data-bs-target="' + activeTab + '"]').tab('show');
-            }
-        });
 </script>
     </script>
 </head>
@@ -48,14 +38,14 @@
             </div>
         </div>
         
-        <!-- Prescription Added Modal - STARTS-->
+        <!-- Prescription Modal - STARTS-->
         <div class="modal fade" id="submitModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
             aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLongTitle">Success</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="closeModal">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="closeModal()">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -68,18 +58,39 @@
                 </div>
             </div>
         </div>
-        <!-- Prescription Added Modal - ENDS-->
+        <!-- Prescription Modal - ENDS-->
+        <!-- Prescription Modal - STARTS-->
+        <div class="modal fade" id="confirmedModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+            aria-hidden="true" data-backdrop="static">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Success</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="closeConfirmedModal()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Prescription Successfully Updated!
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" @click="closeConfirmedModal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Prescription Modal - ENDS-->
     
         <div class="row p-4">
             <!-- Tabs - STARTS -->
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="pending-tab" data-bs-toggle="tab" data-bs-target="#pending"
-                        type="button" role="tab" aria-controls="pending" aria-selected="true" @click="getPendingPrescriptions">Pending</button>
+                        type="button" role="tab" aria-controls="pending" aria-selected="true" @click="getPendingPrescriptions('pending')">Pending</button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="confirmed-tab" data-bs-toggle="tab" data-bs-target="#confirmed"
-                        type="button" role="tab" aria-controls="confirmed" aria-selected="false" @click="getPendingPrescriptions">Confirmed</button>
+                        type="button" role="tab" aria-controls="confirmed" aria-selected="false" @click="getPendingPrescriptions('confirmed')">Confirmed</button>
                 </li>
             </ul>
             <!-- Tabs - ENDS-->
@@ -128,7 +139,7 @@
                                 <td class="col-1">{{ item.doctor_id}}</td>
                                 <td class="col-4">{{ item.description}}</td>
                                 <td class="col-3" v-html="formatMedicineAndQuantity(item.medicines)"></td>
-                                <td class="col-2 align-middle"><button type="button" class="btn btn-primary" @click="updatePatient(item)">Confirm</button></td>
+                                <td class="col-2 align-middle"><button type="button" class="btn btn-primary" :id="item.id" @click="updatePatient(item)">Confirmed</button></td>
                               </tr>
                             </tbody>
                           </table>
@@ -180,7 +191,7 @@
                                 <td class="col-1">{{ item.doctor_id}}</td>
                                 <td class="col-4">{{ item.description}}</td>
                                 <td class ="col-3" v-html="formatMedicineAndQuantity(item.medicines)"></td>
-                                <td class="col-2 align-middle"><button type="button" class="btn btn-primary" @click="updateStatusToCompleted(item)">Complete</button></td>
+                                <td class="col-2 align-middle"><button type="button" class="btn btn-primary" @click="updateStatusToCompleted(item)">Completed</button></td>
                               </tr>
                             </tbody>
                           </table>
@@ -209,15 +220,18 @@
                     details:[],
                     errMsg: "",
                     err: false,
-                    type: "pending",
                     loading: true
                 }
             },
             methods: {
-                getPendingPrescriptions() {
-                    $(async () => {
+                getPendingPrescriptions(typeValue) {
+                    this.loading = true
+                    this.err = false
+                    this.errMsg = ""
+                    if (typeValue == "confirmed"){
+                        $(async () => {
                         // Change serviceURL to your own
-                        var serviceURL = "http://localhost:5001/prescription/" + $('.nav-tabs .active').text();
+                        var serviceURL = "http://localhost:5001/prescription/confirmed";
                         try {
                             const response =
                                 await fetch(
@@ -252,7 +266,48 @@
                             this.err = true
                             this.errMsg = 'There is a problem retrieving prescription record, please try again later.<br />' + error;
                         } // error
-                    });
+                        });
+                    }else{
+                        $(async () => {
+                        // Change serviceURL to your own
+                        var serviceURL = "http://localhost:5100/processPendingPrescriptions";
+                        try {
+                            const response =
+                                await fetch(
+                                    serviceURL, 
+                                    { 
+                                        method: 'GET',
+                                        headers: {'Accept': 'application/json', 'Content-Type': 'application/json'} 
+                                    }
+                                );
+                            const result = await response.json();
+                            if (response.status === 200) {
+                                // success case
+                                this.loading = false
+                                this.err = false
+                                this.details = result.data.prescriptions;
+                                console.log(this.details)
+                                
+                            } else if (response.status == 404) {
+                                // No records
+                                this.loading = false
+                                this.err = true
+                                this.errMsg = result.message;
+                            } else {
+                                // unexpected outcome, throw the error
+                                this.loading = false
+                                this.err = true
+                                throw response.status;
+                            }
+                        } catch (error) {
+                            // Errors when calling the service; such as network error, 
+                            // service offline, etc
+                            this.loading = false
+                            this.err = true
+                            this.errMsg = 'There is a problem retrieving prescription record, please try again later.<br />' + error;
+                        } // error
+                        });
+                    }
                 }
                 ,
                 formatMedicineAndQuantity(text){
@@ -267,8 +322,57 @@
                     return output
                 },
                 updatePatient(prescriptionDetails){
-                    $('#submitModal').modal({backdrop: 'static', keyboard: false})  
-                    $('#submitModal').modal('show')
+                    
+                    $(async () => {
+                        var button = document.getElementById(prescriptionDetails.id)
+                        button.setAttribute("disabled", "");
+                        button.innerHTML = "<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span> Loading...";
+                        var id = prescriptionDetails.id
+                        // Change serviceURL to your own
+                        var serviceURL = "http://localhost:5100/confirmPrescription";
+                        try {
+                            const response =
+                                await fetch(
+                                    serviceURL,
+                                    {
+                                        method: 'PUT',
+                                        headers: {
+                                            'Accept': 'application/json', 'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify({
+                                            prescription_id: id
+                                        })
+                                    }
+                                );
+                            const result = await response.json();
+                            if (response.status === 200) {
+                                // success case
+                                this.loading = false
+                                this.err = false
+                                $('#confirmedModal').modal({backdrop: 'static', keyboard: false})  
+                                $('#confirmedModal').modal('show')
+
+                            } else if (response.status == 500) {
+                                this.loading = false
+                                this.err = true
+                                this.errMsg = result.message;
+                            } else {
+                                // unexpected outcome, throw the error
+                                this.loading = false
+                                this.err = true
+                                throw response.status;
+                            }
+                        } catch (error) {
+                            // Errors when calling the service; such as network error, 
+                            // service offline, etc
+                            this.loading = false
+                            this.err = true
+                            this.errMsg = 'There is a problem update prescription status to confirmed, please try again later.<br />' + error;
+                        } // error
+                    });
+                    
+                    button.removeAttribute("disabled");
+                    button.innerText = "Confirmed";
                 },
                 updateStatusToCompleted(item){
                     $(async () => {
@@ -294,6 +398,7 @@
                                 // success case
                                 this.loading = false
                                 this.err = false
+                                $('#submitModal').modal({backdrop: 'static', keyboard: false}) 
                                 $('#submitModal').modal('show')
 
                             } else if (response.status == 500) {
@@ -317,8 +422,12 @@
                 },
                 closeModal() {
                     $('#submitModal').modal('hide')
-                    location.reload();
-                }
+                    this.getPendingPrescriptions("confirmed")
+                },
+                closeConfirmedModal() {
+                    $('#confirmedModal').modal('hide')
+                    this.getPendingPrescriptions("pending")
+                },
             },
             created() {
                 this.getPendingPrescriptions()
