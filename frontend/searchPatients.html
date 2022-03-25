@@ -39,7 +39,7 @@
         <!-- Search Function - STARTS -->
         <div class="row p-4">
             <div class="input-group">
-                <input id="name" type="search" class="form-control rounded" placeholder="Search for a patient record"
+                <input id="name" type="search" class="form-control rounded" placeholder="Key in patient's ID"
                     aria-label="Search" aria-describedby="search-addon" />
                 <button type="button" class="btn btn-outline-primary"
                     @click="getPatientRecord();clearInputs()">Search</button>
@@ -137,7 +137,7 @@
                                         <tr>
                                             <td><input type="text" id="medName" v-model="medName"></td>
                                             <td><input type="number" id="medQty" v-model="medQty" min="1" max="10"></td>
-                                            <td><button class="button btn-primary" @click="addRow">Add row</button></td>
+                                            <td><button class="button btn-primary" @click="addRow">Add medicine</button></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -230,7 +230,7 @@
                         });
                     } else {
                         this.err = true
-                        this.errMsg = "Please enter a patient name."
+                        this.errMsg = "Please enter a patient ID."
                     }
 
 
@@ -239,7 +239,7 @@
                     this.err = false
                     this.errMsg = ""
                     var doctorId = 3 //hard coded
-                    var patientId = 9 //hard coded
+                    var patientId = document.getElementById('name').value //hard coded
                     var medDescription = document.getElementById("description").value
                     var meds = this.items
                     if (meds.length >0){
