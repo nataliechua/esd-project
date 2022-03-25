@@ -134,7 +134,7 @@ def send_to_Rabbit(patient_hp): # eg. patient_hp = "91234567"
     # print('patient phone number is ' + patient_hp)
     # print("\nMessage published to RabbitMQ Exchange.\n")
     return 200
-send_to_Rabbit(98443918)
+# send_to_Rabbit(98443918)
 
 
 if __name__ == "__main__":
