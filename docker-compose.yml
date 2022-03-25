@@ -1,0 +1,168 @@
+# WHAT THIS FILE IS DOING
+    # create images and start containers for inventory.py; patient.py; payment.py; prescription.py
+    # start RabbitMQ container
+    # run amqp_setup.py which set up exchange and queue for RabbitMQ
+    # create images and start containers for process.py; twilio_message.py(acts like queue)
+
+# HOW TO RUN THIS COMPOSE FILE
+    # 1) in terminal change directory to current 
+    # 2) create and start containers: docker-compose up -d
+        # A default network named esd-project_default is created.
+        # Containers named docker-<containerName>-1 is created.
+# OTHER USEFUL COMMAND ABOUT COMPOSE
+    # check containers status: docker-compose ps
+    # stop containers: docker-compose stop
+    # start containers: docker-compose start
+    # stop and remove containers: docker-compose down
+# THINGS TO NOTE
+    # After setting up, we can open a browser window and use the URL http://localhost:15672 
+    # to visit the RabbitMQ management website to check if it is running.
+    # The default username / password = guest / guest
+
+# USEFUL COMMAND (MAY NOT USE)
+    # list avaliable networks: docker network ls
+    # list all images: docker image ls
+    # remove image: docker rmi <image id>
+    # show logs of container: docker logs <containerid>
+    # show realtime logs of container: docker logs -f <containerid>
+    # show realtime logs of a service: docker-compose logs -f <servicename>
+
+
+# CODES START HERE
+version: "3.8"
+
+volumes:
+  rabbitmq_data:
+
+services:
+
+  ##################################
+  # Patient MS
+  ##################################
+  patient:
+    build:
+      context: ./
+      dockerfile: patient.Dockerfile
+    image: <dockerid>/patient:esd
+    restart: always
+    environment:
+      dbURL: mysql+mysqlconnector://is213@host.docker.internal:3306/patient
+      PYTHONUNBUFFERED: 1
+    ports:
+      - "5000:5000"
+
+  ##################################
+  # Prescription MS
+  ##################################
+  prescription:
+    build:
+      context: ./
+      dockerfile: prescription.Dockerfile
+    image: <dockerid>/prescription:esd
+    restart: always
+    environment:
+      dbURL: mysql+mysqlconnector://is213@host.docker.internal:3306/prescription
+      PYTHONUNBUFFERED: 1
+    ports:
+      - "5001:5001"
+
+  ##################################
+  # Payment MS
+  ##################################
+  payment:
+    build:
+      context: ./
+      dockerfile: payment.Dockerfile
+    image: <dockerid>/payment:esd
+    restart: always
+    environment:
+      dbURL: mysql+mysqlconnector://is213@host.docker.internal:3306/payment
+      PYTHONUNBUFFERED: 1
+    ports:
+      - "5003:5003"
+ 
+  ###################################
+  # Inventory MS
+  ###################################
+  inventory:
+    build:
+      context: ./
+      dockerfile: inventory.Dockerfile
+    image: <dockerid>/inventory:esd 
+    #:esd will be set as the tag for the image, instead of using the default image name: <folder>_<service>
+    restart: always
+    environment:
+      dbURL: mysql+mysqlconnector://is213@host.docker.internal:3306/inventory
+      PYTHONUNBUFFERED: 1
+      # It is to ensure the output of the print statements in Python programs 
+      # are sent straight to the terminal screen and not buffered
+
+  ####################################
+  # RabbitMQ: The messaging broker   
+  ####################################
+  rabbitmq:
+    image: rabbitmq:3-management
+    hostname: esd-rabbit
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes: 
+      - rabbitmq_data:/var/lib/rabbitmq
+
+  #################################################
+  # Twilio Message MS
+  #################################################
+  twilio_message:
+    build:
+      context: ./
+      dockerfile: twilio_message.Dockerfile
+    image: <dockerid>/twilio_message:esd
+    restart: always
+    depends_on:
+      - rabbitmq
+    environment:
+      rabbit_host: rabbitmq
+      rabbit_port: 5672
+      PYTHONUNBUFFERED: 1
+
+  ###############################################
+  # Process CMS
+  ###############################################
+  process:
+    build:
+      context: ./
+      dockerfile: process.Dockerfile
+    image: <dockerid>/process:esd
+    restart: always
+    depends_on:
+      - patient
+      - inventory
+      - prescription
+      - payment
+      - rabbitmq
+      - twilio_message
+    environment:
+      rabbit_host: rabbitmq
+      rabbit_port: 5672
+      get_medicine_info_URL: http://inventory:5002/inventory/ #+name GET
+      update_inventory_URL: http://inventory:5002/inventory/ #+name PUT
+      get_patient_info_URL: http://patient:5000/patient/ #+patientId GET
+      get_pending_prescriptions_URL: http://prescription:5001/prescription/pending #GET
+      get_unsend_pending_prescriptions_URL: http://prescription:5001/prescription/pending/no #GET
+      update_prescription_URL: http://prescription:5001/prescription/ #+prescriptionId PUT
+      record_prescription_in_paymentMS_URL: http://payment:5003/payment/create #POST
+      PYTHONUNBUFFERED: 1
+    ports:
+      - "5100:5100"
+
+
+# MSs published their ports to frontend (can be called from localhost, the links in Readme work in docker.compose):
+# patient, prescription, payment, rabbitMQ, twilio, process
+# MSs that don't published their ports to frontend (cannot be called from localhost, the links in Readme cannot work in docker.compose)):
+# inventory(connect to process via internal netwrok), twilio_message(connect to rabbit via internal netwrok)
+# eg. we use inventory as the hostname of the inventory service. http://inventory:5002/inventory/
+
+
+
+

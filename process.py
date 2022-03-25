@@ -14,13 +14,13 @@ import json
 app = Flask(__name__)
 CORS(app)
 
-get_patient_info_URL = "http://localhost:5000/patient/" #+patientId GET
-get_medicine_info_URL = "http://localhost:5002/inventory/" #+name GET
-update_inventory_URL = "http://localhost:5002/inventory/" #+name PUT
-get_pending_prescriptions_URL = "http://localhost:5001/prescription/pending" #GET
-get_unsend_pending_prescriptions_URL = "http://localhost:5001/prescription/pending/no" #GET
-update_prescription_URL = "http://localhost:5001/prescription/" #+prescriptionId PUT
-record_prescription_in_paymentMS_URL = "http://localhost:5003/payment/create" #POST
+get_patient_info_URL = environ.get('get_patient_info_URL') or "http://localhost:5000/patient/" #+patientId GET
+get_medicine_info_URL = environ.get('get_medicine_info_URL') or "http://localhost:5002/inventory/" #+name GET
+update_inventory_URL = environ.get('update_inventory_URL') or "http://localhost:5002/inventory/" #+name PUT
+get_pending_prescriptions_URL = environ.get('get_pending_prescriptions_URL') or "http://localhost:5001/prescription/pending" #GET
+get_unsend_pending_prescriptions_URL = environ.get('get_unsend_pending_prescriptions_URL') or "http://localhost:5001/prescription/pending/no" #GET
+update_prescription_URL = environ.get('update_prescription_URL') or "http://localhost:5001/prescription/" #+prescriptionId PUT
+record_prescription_in_paymentMS_URL = environ.get('record_prescription_in_paymentMS_URL') or "http://localhost:5003/payment/create" #POST
 
 
 # the pharmacist UI pending page should invoke this when loads and then get all the pending prescriptions
@@ -139,6 +139,6 @@ def send_to_Rabbit(patient_hp): # eg. patient_hp = "91234567"
 
 if __name__ == "__main__":
     print("This is flask " + os.path.basename(__file__) +
-          " for placing an order...")
+          " for proessing prescriptions and medicines...")
     app.run(host="0.0.0.0", port=5100, debug=True)
 
