@@ -45,7 +45,7 @@ def twilio_send(number):
 
     message = client.messages \
                     .create(
-                        body="Dear Patient, please note that your medicine is ready for collection at the esd-team6 clinic.",
+                        body="Dear Patient, please note that your medicine is ready for collection at ESDT6 Pharmacy",
                         from_='+17087251094',
                         to=number
                     )
