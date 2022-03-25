@@ -436,10 +436,30 @@
                 },
             },
             created() {
+
+                if (getCookie("user_type") == null || getCookie("user_type") != "pharmacist") {
+                    location.href = "/frontend/login.html";
+                }
                 this.getPendingPrescriptions()
             }
         });
         const vm = app.mount("#prescription-record");
+
+        function getCookie(cname) {
+            let name = cname + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for(let i = 0; i <ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+                }
+            }
+            return null;
+        }
     </script>
 
 </body>

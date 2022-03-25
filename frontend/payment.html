@@ -107,6 +107,10 @@
         },
         created() {
 
+            if (getCookie("user_type") == null || getCookie("user_type") != "patient") {
+                location.href = "/frontend/login.html";
+            }
+            
             const queryString = window.location.search;
             const urlParams = new URLSearchParams(queryString);
 
@@ -120,18 +124,25 @@
                 axios.get('http://localhost:5003/payment/' + this.id) 
                 .then(response => {
                     console.log("data: "+ JSON.stringify(response.data.data) ); 
-                    // check payment status
-                    if (response.data.data.status == "paid") { // *** TODO: also validate if the logged in user is the billed user
-                        this.containId = false;
-                        this.errorMsg = "You have already made your payment. Thank you!";
-                    }
-                    else {
-                        
-                        this.total = response.data.data.total;
-                        const json = response.data.data.medicines;
-                        this.medicines = JSON.parse(json);
 
-                        this.initPayPalButton(this.total, this.id); // initialize paypal button
+                    var patient_id = getCookie("user_id");
+                    if (response.data.data.patient_id == patient_id) {
+                        // check payment status
+                        if (response.data.data.status == "paid" || getCookie("user_type") != "patient") { // *** TODO: also validate if the logged in user is the billed user
+                            this.containId = false;
+                            this.errorMsg = "You have already made your payment. Thank you!";
+                        }
+                        else {
+                            
+                            this.total = response.data.data.total;
+                            const json = response.data.data.medicines;
+                            this.medicines = JSON.parse(json);
+
+                            this.initPayPalButton(this.total, this.id); // initialize paypal button
+                        }
+                    } 
+                    else {
+                        location.href = "/frontend/paymentRecords.html";
                     }
                 })
                 .catch(error => {
@@ -149,7 +160,7 @@
             }
         },
         computed: {
-            
+
         },
         methods: {
             
@@ -192,7 +203,7 @@
                         const data ={
                             "order_id": uuid// order id from paypal 
                         };
-                        axios.put('http://localhost:5003/payment/update/'+id, data)
+                        axios.put('http://localhost:5003/payment/'+id, data)
                         .then(response => {
                             let result = response.data;
                             console.log("Success: "+ result);
@@ -228,6 +239,22 @@
     })
 
     const vm = app.mount('#app');
+
+    function getCookie(cname) {
+            let name = cname + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for(let i = 0; i <ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+                }
+            }
+            return null;
+        }
     </script>
 </body>
 </html>
