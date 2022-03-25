@@ -58,6 +58,34 @@ def find_patient_by_id(id):
     ), 404
 
 
+@app.route("/patient/create", methods=['POST'])
+def create_patient():
+    data = request.get_json()
+    patient = Patient(**data)
+
+    try:
+        db.session.add(patient)
+        db.session.commit()
+    except Exception as e:
+        return jsonify(
+            {
+                "code": 500,
+                "message": "An error occurred while creating the patient. " + str(e)
+            }
+        ), 500
+    
+    print(json.dumps(patient.json(), default=str)) # convert a JSON object to a string and print
+    print()
+
+    return jsonify(
+        {
+            "code": 201,
+            "message": "Patient created successfully.",
+            "data": patient.json()
+        }
+    ), 201
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
 

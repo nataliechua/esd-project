@@ -74,6 +74,91 @@
 							"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"age\": 41,\n        \"allergies\": \"Amoxicillin, ampicillin\",\n        \"email\": \"hello@gmail.com\",\n        \"hp\": \"91234567\",\n        \"id\": \"t1234567a\",\n        \"name\": \"Kim Kardashian\"\n    }\n}"
 						}
 					]
+				},
+				{
+					"name": "create patient",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"t1234580a\",\r\n    \"name\": \"Yu Yiling\",\r\n    \"age\": 22,\r\n    \"allergies\": \"\",\r\n    \"hp\": 86440327,\r\n    \"email\": \"hello@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/patient/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"patient",
+								"create"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "sample response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"t1234580a\",\r\n    \"name\": \"Yu Yiling\",\r\n    \"age\": 22,\r\n    \"allergies\": \"\",\r\n    \"hp\": 86440327,\r\n    \"email\": \"hello@gmail.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/patient/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"patient",
+										"create"
+									]
+								}
+							},
+							"status": "CREATED",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "225"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.0.2 Python/3.8.1"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 25 Mar 2022 06:35:47 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 201,\n    \"data\": {\n        \"age\": 22,\n        \"allergies\": \"\",\n        \"email\": \"hello@gmail.com\",\n        \"hp\": \"86440327\",\n        \"id\": \"t1234580a\",\n        \"name\": \"Yu Yiling\"\n    },\n    \"message\": \"Patient created successfully.\"\n}"
+						}
+					]
 				}
 			]
 		},
