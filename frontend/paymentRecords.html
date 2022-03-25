@@ -181,9 +181,10 @@
                 getPaymentRecords() {
                     $(async () => {
                         
-                        var patientId = "t1234567a" // *** change dis when login part is done
+                        var patientId = getCookie('user_id') // *** change dis when login part is done
                         // Change serviceURL to your own
-                        var serviceURL = "http://localhost:5003/payment/" + $('.nav-tabs .active').text() + "/" +patientId;
+                        var serviceURL = "http://localhost:5003/payment/"+ patientId+ "/"  + $('.nav-tabs .active').text();
+                        
                         try {
                             const response =
                                 await fetch(
@@ -195,10 +196,12 @@
                                 );
                             const result = await response.json();
                             if (response.status === 200) {
+                                
+                                console.log("hi: " + JSON.stringify(result.data["prescriptions"][0]))
                                 // success case
                                 this.loading = false
                                 this.err = false
-                                this.details = result.data;
+                                this.details = result.data["prescriptions"];
                                 
                             } else if (response.status == 404) {
                                 // No records
@@ -237,10 +240,31 @@
                 }
             },
             created() {
-                this.getPaymentRecords()
+                this.getPaymentRecords();
+                if (getCookie("user_type") == null  || getCookie("user_type") != "patient") {
+                    location.href = "/frontend/login.html";
+                }
             }
         });
         const vm = app.mount("#prescription-record");
+
+
+        // cookie function
+        function getCookie(cname) {
+            let name = cname + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for(let i = 0; i <ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+                }
+            }
+            return null;
+        }
     </script>
 
 </body>

@@ -15,6 +15,10 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <!-- VueJS -->
+    <script src="https://unpkg.com/vue@next"></script>
+    <!-- Axios -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
     <script>
         $(function () {
             $("#mainNav").load("./assets/components/navbar.html");
@@ -42,5 +46,42 @@
         crossorigin='anonymous'></script>
     <!-- Core theme JS-->
     <script src="./js/scripts.js"></script>
+
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+
+                }
+            },
+            methods: {
+
+            },
+            created() {
+
+                if (getCookie("user_type") == null || getCookie("user_type") != "patient") {
+
+                    location.href = "/frontend/login.html";
+                }
+            }
+        });
+        const vm = app.mount("#record");
+
+        function getCookie(cname) {
+            let name = cname + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for(let i = 0; i <ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+                }
+            }
+            return null;
+        }
+    </script>
 </body>
 </html>

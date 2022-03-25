@@ -30,7 +30,7 @@
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav"></nav>
-    <div class="container-fluid" id="login">
+    <div class="container-fluid wrapper" id="login">
         <div class="row bg-light py-5 mb-4">
             <div class="col text-center ">
                 <h1 class="text-uppercase">Login</h1>
@@ -182,6 +182,23 @@
                     errMsg : ""
                 }
             },
+            created() {
+                // check credentials  
+                if (getCookie('user_type') != null) {
+
+                    var user_type = getCookie('user_type');
+                    if (user_type == "patient") {
+                        location.href = '/frontend/paymentRecords.html';
+                    }
+                    else if (user_type == "doctor") {
+                        location.href = '/frontend/searchPatients.html';
+                    }
+                    else if (user_type == "pharmacist") {
+                        location.href = '/frontend/prescriptionRecords.html';
+                    }
+                }
+
+            },
             methods: {
                 checkPatient() {
                     this.err = false
@@ -206,7 +223,10 @@
                                     this.err = false
                                     if (pwd == "patient"){
                                         //store id sesion here also
-                                        location.href = 'http://localhost/esd-project/frontend/paymentRecords.html';
+                                        setCookie('user_id', id);
+                                        setCookie('user_type', "patient");
+
+                                        location.href = '/frontend/paymentRecords.html';
                                     }else{
                                         this.err = true
                                         this.errMsg = "Invalid Credentials"
@@ -237,7 +257,9 @@
                     var pwd = document.getElementById("doctorPasswordInput").value
                     if (this.users[0].doctor.username == name && this.users[0].doctor.password == pwd){
                         //store id sesion here also
-                        location.href = 'http://localhost/esd-project/frontend/searchPatients.html';
+                        setCookie('user_type', "doctor");
+
+                        location.href = '/frontend/searchPatients.html';
                     }
                     else{
                         this.err = true
@@ -251,7 +273,9 @@
                     var pwd = document.getElementById("pharmacistPasswordInput").value
                     if (this.users[1].pharmacist.username == name && this.users[1].pharmacist.password == pwd){
                         //store id sesion here also
-                        location.href = 'http://localhost/esd-project/frontend/prescriptionRecords.html';
+                        setCookie('user_type', "pharmacist");
+
+                        location.href = '/frontend/prescriptionRecords.html';
                     }
                     else{
                         this.err = true
@@ -262,11 +286,32 @@
                     this.err = false
                     this.errMsg = ""
                 }
-            },
-            created() {
             }
         });
         const vm = app.mount("#login");
+
+        // setCookie
+        function setCookie(cname, cvalue) {
+            const d = new Date();
+            d.setDate(d.getDate() + 1); // expire in 1 day
+            let expires = "expires="+ d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";";
+        }
+        function getCookie(cname) {
+            let name = cname + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for(let i = 0; i <ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+                }
+            }
+            return null;
+        }
     </script>
 
 </body>
