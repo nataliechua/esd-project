@@ -46,7 +46,7 @@ pharmacist UI pending page invokes this when loads and get all the pending presc
 pharmacist UI pending page invokes this when the comfirm buttom is pressed for each prescription
 sample UI input: {prescription_id: 1}
 
-## Login MS
+## Login System
 * Patient - id: (use any Patient's ID) (e.g. t1234567a) ; pwd: patient
 * Doctor - username: doctor ; pwd: doctor
 * Pharmacist - username: pharmacist ; pwd: pharmacist
