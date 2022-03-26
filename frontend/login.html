@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Patient's Record</title>
+    <title>Login</title>
 
     <!-- CSS Stylesheet -->
     <link href="./css/myStyle.css" type="text/css" rel="stylesheet" />
@@ -83,6 +83,10 @@
                                 <div class="d-grid gap-2 m-3">
                                     <button type="button" class="btn btn-primary" @click="checkPatient">Login</button>
                                 </div>
+                                <hr class="mx-3">
+                                <div class="d-grid gap-2 m-3">
+                                    <button type="button" class="btn btn-primary" @click="directSignup">Sign up</button>
+                                </div>
                               </form>
                             <!-- Form - ENDS-->
                             <br>
@@ -114,6 +118,7 @@
                                   <label for="doctorPasswordInput" class="form-label">Password</label>
                                   <input type="password" class="form-control" id="doctorPasswordInput">
                                 </div>
+                                
                                 <div class="d-grid gap-2 m-3">
                                     <button type="button" class="btn btn-primary" @click="checkDoctor">Login</button>
                                 </div>
@@ -188,13 +193,13 @@
 
                     var user_type = getCookie('user_type');
                     if (user_type == "patient") {
-                        location.href = '/frontend/paymentRecords.html';
+                        location.href = './paymentRecords.html';
                     }
                     else if (user_type == "doctor") {
-                        location.href = '/frontend/searchPatients.html';
+                        location.href = './searchPatients.html';
                     }
                     else if (user_type == "pharmacist") {
-                        location.href = '/frontend/prescriptionRecords.html';
+                        location.href = './prescriptionRecords.html';
                     }
                 }
 
@@ -285,6 +290,9 @@
                 clearErr(){
                     this.err = false
                     this.errMsg = ""
+                },
+                directSignup(){
+                    location.href = '/frontend/signup.html';
                 }
             }
         });

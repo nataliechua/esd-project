@@ -4,7 +4,7 @@
 <link rel="icon" type="image/x-icon" href="../favicon.ico" />
 <div class="container" id="navApp">
     <!-- <a class="navbar-brand" href="#page-top"><img src="assets/img/navbar-logo.svg" alt="..." /></a> -->
-    <a class="navbar-brand" href="./login.html">ESD Pharmacy</a>
+    <a class="navbar-brand" href="./login.html">ESDT6 Pharmacy</a>
     <!-- <a class="navbar-brand" href="#page-top">WeCare</a> -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
         aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -21,6 +21,7 @@
             <li class="nav-item" v-if="loggedin"><a class="nav-link" v-on:click="logout" href="#">Log out</a></li>
             <!--Before logged In-->
             <li class="nav-item py-xs-md-2" v-if="loggedin==false"><a class="btn btn-primary btn-md text-uppercase" href="./login.html">Log In</a></li>
+            <li class="nav-item py-xs-md-2" v-if="loggedin==false"><a class="btn btn-primary btn-md text-uppercase" href="./signup.html">Sign Up</a></li>
             <!-- <li class="nav-item py-xs-md-2" v-if="loggedin==false"><a class="btn btn-primary btn-md text-uppercase" href="./signup.html">Sign Up</a></li> -->
 
         </ul>
