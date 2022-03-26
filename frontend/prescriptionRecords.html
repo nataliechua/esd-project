@@ -34,7 +34,7 @@
     <div class="container-fluid wrapper" id="prescription-record">
         <div class="row bg-light py-5 mb-4">
             <div class="col text-center ">
-                <h1 class="text-uppercase">PRESCRIPTION RECORD</h1>
+                <h1 class="text-uppercase">PRESCRIPTION RECORDS</h1>
             </div>
         </div>
         
@@ -127,7 +127,7 @@
                             <table class="table table-hover">
                             <thead>
                               <tr>
-                                <th scope="col">#</th>
+                                <th scope="col"></th>
                                 <th scope="col">Patient ID</th>
                                 <th scope="col">Doctor ID</th>
                                 <th scope="col">Description</th>
@@ -136,8 +136,8 @@
                               </tr>
                             </thead>
                             <tbody>
-                              <tr v-for="(item, index) in details" :key="index+1">
-                                <th scope="row" class="col-1">{{index+1}}</th>
+                              <tr v-for="(item, index) in details" :key="item.id">
+                                <th scope="row" class="col-1">{{item.id}}</th>
                                 <td class="col-1">{{ item.patient_id}}</td>
                                 <td class="col-1">{{ item.doctor_id}}</td>
                                 <td class="col-4">{{ item.description}}</td>
