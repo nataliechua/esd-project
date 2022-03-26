@@ -2,33 +2,43 @@
     # create images and start containers for inventory.py; patient.py; payment.py; prescription.py
     # start RabbitMQ container
     # run amqp_setup.py which set up exchange and queue for RabbitMQ
-    # create images and start containers for process.py; twilio_message.py(acts like queue)
+    # create images and start containers for twilio_message.py(acts like queue); process.py
 
-# HOW TO RUN THIS COMPOSE FILE
-    # 1) in terminal change directory to current 
-    # 2) create and start containers: docker-compose up -d
-        # A default network named esd-project_default is created.
-        # Containers named docker-<containerName>-1 is created.
-# OTHER USEFUL COMMAND ABOUT COMPOSE
-    # check containers status: docker-compose ps
-    # stop containers: docker-compose stop
-    # start containers: docker-compose start
-    # stop and remove containers: docker-compose down
-# THINGS TO NOTE
-    # After setting up, we can open a browser window and use the URL http://localhost:15672 
-    # to visit the RabbitMQ management website to check if it is running.
-    # The default username / password = guest / guest
+# HOW TO RUN OUR APP AND THIS COMPOSE FILE
+    # PREPARATION
+        # 1) start WAMP(MySQL) and docker(stop/remove the previous same-name containers before running, see useful commands below)
+        # 2) import sql database (remember to allow remote database access in order to run containers, if never did see lab 3)
+        # 3) change all <dockerid> in this file to your own docker id
+        # 4) in twilio_message.py line 42/43, enter twillio SID and TOKEN
+        # 5) put the frontend folder in www localhost to access
 
-# USEFUL COMMAND (MAY NOT USE)
-    # list avaliable networks: docker network ls
-    # list all images: docker image ls
-    # remove image: docker rmi <image id>
-    # show logs of container: docker logs <containerid>
-    # show realtime logs of container: docker logs -f <containerid>
-    # show realtime logs of a service: docker-compose logs -f <servicename>
+    # RUN FILE
+        # 1) in terminal change directory to current
+        # 2) create and start containers: docker-compose up -d
+            # A default network named esd-project_default is created.
+            # Containers named docker-<containerName>-1 is created.
+            # Containers join their default networks which names equal to their services' names
+        # 3) OPTIONAL: show realtime logs of a service: docker-compose logs -f <servicename>
+        # 4) OPTIONAL: IF WANT TO SEE RabbitMQ management website
+            # go http://localhost:15672 
+            # The default username / password = guest / guest
+        # 5) you can now go through our app by front end
+            # OPTIONAL BUT IMPORTANT: to see all senarios, you better signup a patient info using your own phone num in order to receive msg (if hp have added in twilio account)
+        # 6) stop and remove containers: docker-compose down
+
+    # OTHER USEFUL COMMANDS
+        # check containers status: docker-compose ps
+        # stop containers: docker-compose stop
+        # start containers: docker-compose start
+
+        # list all images: docker image ls
+        # remove image: docker rmi <image id>
+        # list all containers (stopped and running): docker ps –a
+        # delete container: docker rm -f <containerid>
+        # show logs of container: docker logs <containerid>
+        # show realtime logs of container: docker logs -f <containerid>
 
 
-# CODES START HERE
 version: "3.8"
 
 volumes:
@@ -98,7 +108,7 @@ services:
       # are sent straight to the terminal screen and not buffered
 
   ####################################
-  # RabbitMQ: The messaging broker   
+  # RabbitMQ: The messaging broker
   ####################################
   rabbitmq:
     image: rabbitmq:3-management
@@ -158,10 +168,10 @@ services:
 
 
 # MSs published their ports to frontend (can be called from localhost, the links in Readme work in docker.compose):
-# patient, prescription, payment, rabbitMQ, twilio, process
+    # patient, prescription, payment, rabbitMQ, twilio, process
 # MSs that don't published their ports to frontend (cannot be called from localhost, the links in Readme cannot work in docker.compose)):
-# inventory(connect to process via internal netwrok), twilio_message(connect to rabbit via internal netwrok)
-# eg. we use inventory as the hostname of the inventory service. http://inventory:5002/inventory/
+    # inventory(connect to process via internal netwrok), twilio_message(connect to rabbit via internal netwrok)
+    # eg. we use inventory as the hostname of the inventory service. http://inventory:5002/inventory/
 
 
 
