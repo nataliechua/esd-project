@@ -43,11 +43,11 @@
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="unpaid-tab" data-bs-toggle="tab" data-bs-target="#unpaid"
-                        type="button" role="tab" aria-controls="unpaid" aria-selected="true" @click="getPaymentRecords">Unpaid</button>
+                        type="button" role="tab" aria-controls="unpaid" aria-selected="true" @click="getPaymentRecords('Unpaid')">Unpaid</button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="paid-tab" data-bs-toggle="tab" data-bs-target="#paid"
-                        type="button" role="tab" aria-controls="paid" aria-selected="false" @click="getPaymentRecords">Paid</button>
+                        type="button" role="tab" aria-controls="paid" aria-selected="false" @click="getPaymentRecords('Paid')">Paid</button>
                 </li>
             </ul>
             <!-- Tabs - ENDS-->
@@ -68,7 +68,7 @@
                         <!-- Show Err Msg - STARTS -->
                         <div v-if="err" class="row p-4">
                             <div class="col-12 col-md-6 mx-auto">
-                                <div class="card border-danger">
+                                <div :class="[errorClass, isCard]">
                                     <div class="card-body">
                                         <p class="card-text" v-html="errMsg"></p>
                                     </div>
@@ -120,7 +120,7 @@
                         <!-- Show Err Msg - STARTS -->
                         <div v-if="err" class="row p-4">
                             <div class="col-12 col-md-6 mx-auto">
-                                <div class="card border-danger">
+                                <div :class="[errorClass, isCard]">
                                     <div class="card-body">
                                         <p class="card-text" v-html="errMsg"></p>
                                     </div>
@@ -173,17 +173,21 @@
                     details:[],
                     errMsg: "",
                     err: false,
-                    type: "pending",
                     loading: true,
+                    errorClass: "border-danger",
+                    isCard: "card"
                 }
             },
             methods: {
-                getPaymentRecords() {
+                getPaymentRecords(paymentType) {
+                    this.loading = true
+                    this.details = []
                     $(async () => {
                         
                         var patientId = getCookie('user_id') // *** change dis when login part is done
                         // Change serviceURL to your own
-                        var serviceURL = "http://localhost:5003/payment/"+ patientId+ "/"  + $('.nav-tabs .active').text();
+                        var serviceURL = "http://localhost:5003/payment/"+ patientId+ "/"  + paymentType;
+    
                         
                         try {
                             const response =
@@ -206,12 +210,14 @@
                             } else if (response.status == 404) {
                                 // No records
                                 this.loading = false
+                                this.errorClass = "border-secondary"
                                 this.err = true
                                 this.errMsg = "No records";
                             } else {
                                 // unexpected outcome, throw the error
                                 this.loading = false
                                 this.err = true
+                                this.errorClass = "border-danger"
                                 throw response.status;
                             }
                         } catch (error) {
@@ -219,9 +225,11 @@
                             // service offline, etc
                             this.loading = false
                             this.err = true
+                            this.errorClass = "border-danger"
                             this.errMsg = 'There is a problem retrieving payment record, please try again later.<br />' + error;
                         } // error
                     });
+                    this.loading = false
                 }
                 ,
                 formatMedicineAndQuantity(text){

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient's Record</title>
+
+    <!-- CSS Stylesheet -->
+    <link href="./css/myStyle.css" type="text/css" rel="stylesheet" />
+    <!-- Navbar CSS -->
+    <link rel="stylesheet" type="text/css" href="./css/navBarStyle.css">
+    <!-- Bootstrap CSS -->
+    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css' rel='stylesheet'
+        integrity='sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC' crossorigin='anonymous'>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- VueJS -->
+    <script src="https://unpkg.com/vue@next"></script>
+    <!-- Header Component -->
+    <script>
+        $(function () {
+            $("#mainNav").load("./assets/components/navbar.html");
+            $("#header").load("./assets/components/header.html");
+            $("#footer").load("./assets/components/footer.html");
+        });
+    </script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav"></nav>
+    <div class="container-fluid" id="signup">
+        <div class="row bg-light py-5 mb-4">
+            <div class="col text-center ">
+                <h1 class="text-uppercase">Sign Up</h1>
+            </div>
+        </div> 
+        <div class="row p-4">
+           <div class="col-md-6 col-12 mx-auto">
+                <!-- Show Err Msg - STARTS -->
+                <div v-if="err" class="row">
+                    <div class="col-12 mx-auto mb-3">
+                        <div class="card border-danger">
+                            <div class="card-body">
+                                <p class="card-text" v-html="errMsg"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Show Err Msg - ENDS -->
+                <form>
+                    <div class="form-group">
+                        <label for="userId">ID</label>
+                        <input type="text" class="form-control" required id="userId" placeholder="t0012345b">
+                    </div>
+                    <div class="form-group mt-3">
+                        <label for="userName">Name</label>
+                        <input type="text" class="form-control" required id="userName" placeholder="">
+                    </div>
+                    <div class="form-group mt-3">
+                        <label for="userAge">Age</label>
+                        <input type="number" class="form-control" required id="userAge" placeholder="">
+                    </div>
+                    <div class="form-group mt-3">
+                        <label for="userAllergies">Allergies</label>
+                        <textarea class="form-control" id="userAllergies" rows="3"></textarea>
+                    </div>
+                    <div class="form-group mt-3">
+                        <label for="userHp">Hp</label>
+                        <input type="number" class="form-control" required id="userHp" placeholder="">
+                    </div>
+                    <div class="form-group mt-3">
+                        <label for="userEmail">Email</label>
+                        <input type="email" class="form-control" required id="userEmail" placeholder="example@gmail.com">
+                    </div>
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="button" id="signupbtn" class="btn btn-primary" @click="createPatient">Sign Up</button>
+                    </div>
+                </form>
+           </div> 
+        </div>
+    </div>
+    <footer id="footer"></footer>
+    <!-- Bootstrap Javascript; at the end of the <body> -->
+    <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js'
+        integrity='sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM'
+        crossorigin='anonymous'></script>
+    <!-- Core theme JS-->
+    <script src="./js/scripts.js"></script>
+
+    <!--GET PATIENT RECORD - STARTS-->
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    err: false,
+                    errMsg: "",
+                }
+            },
+            methods: {
+                checkPatient(){
+                    $(async () => {
+                            // Change serviceURL to your own
+                            this.err = false
+                            this.errMsg = ""
+                            var serviceURL = "http://localhost:5000/patient/" + name;
+                            try {
+                                const response =
+                                    await fetch(
+                                        serviceURL, { method: 'GET' }
+                                    );
+                                const result = await response.json();
+                                if (response.status === 200) {
+                                    // success case
+                                    this.searched = true
+                                    this.err = false
+                                    this.details = result.data;
+
+                                } else if (response.status == 404) {
+                                    // No Such Patient Found
+                                    this.err = true
+                                    this.searched = false
+                                    this.errMsg = result.message;
+                                } else {
+                                    // unexpected outcome, throw the error
+                                    throw response.status;
+                                }
+                            } catch (error) {
+                                // Errors when calling the service; such as network error, 
+                                // service offline, etc
+                                this.err = true
+                                this.searched = false
+                                this.errMsg = 'There is a problem retrieving patients data, please try again later.<br />' + error;
+                            } // error
+                        });
+                },
+                createPatient() {
+                    var button = document.getElementById("signupbtn")
+                    button.setAttribute("disabled", "");
+                    button.innerHTML = "<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span> Loading...";
+                    var userId = document.getElementById("userId").value
+                    userId = userId.toLowerCase()
+                    var userName = document.getElementById("userName").value
+                    var userAge = document.getElementById("userAge").value
+                    var userAllergies = document.getElementById("userAllergies").value
+                    var userHp = document.getElementById("userHp").value
+                    var userEmail = document.getElementById("userEmail").value
+                    if (!(userId.length == 0 && userName.length == 0 && userAge.length == 0 && userHp.length == 0)){
+                        $(async () => {
+                        
+                        // Change serviceURL to your own
+                        var serviceURL = "http://localhost:5000/patient/create";
+                        try {
+                            const response =
+                                await fetch(
+                                    serviceURL,
+                                    {
+                                        method: 'POST',
+                                        headers: {
+                                            'Accept': 'application/json', 'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify({
+                                            id: userId,
+                                            name: userName,
+                                            age: userAge,
+                                            allergies: userAllergies,
+                                            hp: userHp,
+                                            email: userEmail
+                                            })
+                                        }
+                                    );
+                                const result = await response.json();
+                                if (response.status === 201) {
+                                    // success case
+                                    this.err = false
+                                    //store user ID and redirect to patient
+                                    setCookie('user_id', userId);
+                                    setCookie('user_type', "patient");
+
+                                    location.href = '/frontend/paymentRecords.html';
+
+                                } else if (response.status == 500) {
+                                    this.err = true
+                                    this.errMsg = result.message;
+                                } else {
+                                    // unexpected outcome, throw the error
+                                    throw response.status;
+                                }
+                            } catch (error) {
+                                // Errors when calling the service; such as network error, 
+                                // service offline, etc
+                                this.err = true
+                                this.errMsg = 'There is a problem creating new patient, please try again later.<br />' + error;
+                            } // error
+                            
+                        }
+                            
+                        );
+                    }
+                    else{
+                        this.err = true
+                        this.errMsg = 'There are missing fields. Please enter ID, Name, Age, Hp.'
+                    }
+                    button.removeAttribute("disabled")
+                    button.innerText = "Sign Up"
+                    $('html,body').scrollTop(0);
+                },
+            },
+            created() {
+                if (getCookie('user_type') != null) {
+
+                    var user_type = getCookie('user_type');
+                    if (user_type == "patient") {
+                        location.href = './paymentRecords.html';
+                    }
+                }
+            }
+        });
+        const vm = app.mount("#signup");
+        // setCookie
+        function setCookie(cname, cvalue) {
+            const d = new Date();
+            d.setDate(d.getDate() + 1); // expire in 1 day
+            let expires = "expires="+ d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";";
+        }
+        function getCookie(cname) {
+            let name = cname + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for(let i = 0; i <ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+                }
+            }
+            return null;
+        }
+    </script>
+
+</body>
+
+</html>
