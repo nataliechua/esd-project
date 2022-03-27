@@ -180,10 +180,12 @@
             },
             methods: {
                 getPaymentRecords(paymentType) {
+                    if (!(paymentType)){
+                        paymentType = "Unpaid"
+                    }
                     this.loading = true
                     this.details = []
                     $(async () => {
-                        
                         var patientId = getCookie('user_id') // *** change dis when login part is done
                         // Change serviceURL to your own
                         var serviceURL = "http://localhost:5003/payment/"+ patientId+ "/"  + paymentType;
