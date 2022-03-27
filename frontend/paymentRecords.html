@@ -180,6 +180,9 @@
             },
             methods: {
                 getPaymentRecords(paymentType) {
+                    if (!(paymentType)){
+                        paymentType = "Unpaid"
+                    }
                     this.loading = true
                     this.details = []
                     $(async () => {
