@@ -129,7 +129,7 @@ def send_to_Rabbit(patient_hp): # eg. patient_hp = "91234567"
     # send hp to Rabbit, if successful, return 200
     print('[4] Sending ph to Rabbit')
     message='info: +65' + str(patient_hp)
-    amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key="order.message", 
+    amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key="sendph", 
             body=message, properties=pika.BasicProperties(delivery_mode = 2))
     # print('patient phone number is ' + patient_hp)
     # print("\nMessage published to RabbitMQ Exchange.\n")
