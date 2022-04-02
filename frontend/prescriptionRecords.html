@@ -237,7 +237,7 @@
                     if (typeValue == "confirmed"){
                         $(async () => {
                         // Change serviceURL to your own
-                        var serviceURL = "http://localhost:5001/prescription/confirmed";
+                        var serviceURL = "http://localhost:8000/api/v1/prescription/confirmed";
                         try {
                             const response =
                                 await fetch(
@@ -276,7 +276,7 @@
                     }else{
                         $(async () => {
                         // Change serviceURL to your own
-                        var serviceURL = "http://localhost:5100/processPendingPrescriptions";
+                        var serviceURL = "http://localhost:8000/api/v1/processPendingPrescriptions";
                         try {
                             const response =
                                 await fetch(
@@ -335,7 +335,7 @@
                         button.innerHTML = "<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span> Loading...";
                         var id = prescriptionDetails.id
                         // Change serviceURL to your own
-                        var serviceURL = "http://localhost:5100/confirmPrescription";
+                        var serviceURL = "http://localhost:8000/api/v1/confirmPrescription";
                         try {
                             const response =
                                 await fetch(
@@ -384,7 +384,7 @@
                     $(async () => {
                         var id = item.id
                         // Change serviceURL to your own
-                        var serviceURL = "http://localhost:5001/prescription/" + id;
+                        var serviceURL = "http://localhost:8000/api/v1/prescription/" + id;
                         try {
                             const response =
                                 await fetch(

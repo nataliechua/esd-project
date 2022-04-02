@@ -104,7 +104,7 @@
                             // Change serviceURL to your own
                             this.err = false
                             this.errMsg = ""
-                            var serviceURL = "http://localhost:5000/patient/" + name;
+                            var serviceURL = "http://localhost:8000/api/v1/patient/" + name;
                             try {
                                 const response =
                                     await fetch(
@@ -150,7 +150,8 @@
                         $(async () => {
                         
                         // Change serviceURL to your own
-                        var serviceURL = "http://localhost:5000/patient/create";
+                        var serviceURL = "http://localhost:8000/api/v1/patient/create";
+                        // var serviceURL = "http://localhost:5000/patient/create";
                         try {
                             const response =
                                 await fetch(

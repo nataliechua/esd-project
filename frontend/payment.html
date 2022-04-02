@@ -121,7 +121,7 @@
                 this.id = urlParams.get('id');
 
                 // call by /frontend/payment.html?id=1
-                axios.get('http://localhost:5003/payment/' + this.id) 
+                axios.get('http://localhost:8000/api/v1/payment/' + this.id) 
                 .then(response => {
                     console.log("data: "+ JSON.stringify(response.data.data) ); 
 
@@ -203,7 +203,7 @@
                         const data ={
                             "order_id": uuid// order id from paypal 
                         };
-                        axios.put('http://localhost:5003/payment/'+id, data)
+                        axios.put('http://localhost:8000/api/v1/payment/'+id, data)
                         .then(response => {
                             let result = response.data;
                             console.log("Success: "+ result);

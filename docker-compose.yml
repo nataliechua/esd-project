@@ -8,7 +8,7 @@
     # PREPARATION
         # 1) start WAMP(MySQL) and docker(stop/remove the previous same-name containers before running, see useful commands below)
         # 2) import sql database (remember to allow remote database access in order to run containers, if never did see lab 3)
-        # 3) change all valeriewoon in this file to your own docker id
+        # 3) change all <dockerid> in this file to your own docker id
         # 4) in twilio_message.py line 42/43, enter twillio SID and TOKEN
         # 5) put the frontend folder in www localhost to access
 
@@ -43,6 +43,14 @@ version: "3.8"
 
 volumes:
   rabbitmq_data:
+  # for Kong
+  pgdata: 
+  kongadata:
+
+# for Kong
+networks:
+  kong-net:
+    driver: bridge
 
 services:
 
@@ -53,7 +61,7 @@ services:
     build:
       context: ./
       dockerfile: patient.Dockerfile
-    image: valeriewoon/patient:esd
+    image: <dockerid>/patient:esd
     restart: always
     environment:
       dbURL: mysql+mysqlconnector://is213@host.docker.internal:3306/patient
@@ -68,7 +76,7 @@ services:
     build:
       context: ./
       dockerfile: prescription.Dockerfile
-    image: valeriewoon/prescription:esd
+    image: <dockerid>/prescription:esd
     restart: always
     environment:
       dbURL: mysql+mysqlconnector://is213@host.docker.internal:3306/prescription
@@ -83,7 +91,7 @@ services:
     build:
       context: ./
       dockerfile: payment.Dockerfile
-    image: valeriewoon/payment:esd
+    image: <dockerid>/payment:esd
     restart: always
     environment:
       dbURL: mysql+mysqlconnector://is213@host.docker.internal:3306/payment
@@ -98,7 +106,7 @@ services:
     build:
       context: ./
       dockerfile: inventory.Dockerfile
-    image: valeriewoon/inventory:esd 
+    image: <dockerid>/inventory:esd 
     #:esd will be set as the tag for the image, instead of using the default image name: <folder>_<service>
     restart: always
     environment:
@@ -127,7 +135,7 @@ services:
     build:
       context: ./
       dockerfile: twilio_message.Dockerfile
-    image: valeriewoon/twilio_message:esd
+    image: <dockerid>/twilio_message:esd
     restart: always
     depends_on:
       - rabbitmq
@@ -143,7 +151,7 @@ services:
     build:
       context: ./
       dockerfile: process.Dockerfile
-    image: valeriewoon/process:esd
+    image: <dockerid>/process:esd
     restart: always
     depends_on:
       - patient
@@ -152,6 +160,11 @@ services:
       - payment
       - rabbitmq
       - twilio_message
+      - kong-database
+      - kong-migration
+      - kong
+      - konga
+
     environment:
       rabbit_host: rabbitmq
       rabbit_port: 5672
@@ -166,6 +179,85 @@ services:
     ports:
       - "5100:5100"
 
+  #######################################
+  # Postgres: The database used by Kong
+  #######################################
+  kong-database:
+    image: postgres:9.6
+    restart: always
+    # networks:
+    #   - kong-net
+    environment:
+      POSTGRES_DB: kong
+      POSTGRES_USER: kong
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "kong"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  #######################################
+  # Kong database migration
+  #######################################
+  kong-migration:
+    image: kong:2.0.4
+    command: "kong migrations bootstrap"
+    restart: on-failure
+    # networks:
+    #   - kong-net
+    environment:
+      KONG_DATABASE: postgres
+      KONG_PG_HOST: kong-database
+      KONG_PG_USER: kong
+      KONG_PG_PASSWORD: password
+    depends_on:
+      - kong-database
+
+  #######################################
+  # Kong: The API Gateway
+  #######################################
+  kong:
+    image: kong:2.0.4
+    restart: always
+    # networks:
+    #   - kong-net
+    environment:
+      KONG_DATABASE: postgres
+      KONG_PG_HOST: kong-database
+      KONG_PG_USER: kong
+      KONG_PG_PASSWORD: password
+      KONG_PROXY_LISTEN: 0.0.0.0:8000
+      KONG_ADMIN_LISTEN: 0.0.0.0:8001
+    depends_on:
+      - kong-migration
+    ports:
+      - "8000:8000"
+  
+  #######################################
+  # Konga: Kong GUI
+  #######################################
+  konga:
+    image: pantsel/konga
+    restart: always
+    # networks:
+    #     - kong-net
+    environment:
+      DB_ADAPTER: postgres
+      DB_HOST: kong-database
+      DB_USER: kong
+      DB_PASSWORD: password
+      DB_DATABASE: konga_db
+    depends_on:
+      - kong
+    ports:
+      - "1337:1337"
+    volumes:
+      - kongadata:/app/kongadata
 
 # MSs published their ports to frontend (can be called from localhost, the links in Readme work in docker.compose):
     # patient, prescription, payment, rabbitMQ, twilio, process

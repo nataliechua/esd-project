@@ -188,7 +188,7 @@
                     $(async () => {
                         var patientId = getCookie('user_id') // *** change dis when login part is done
                         // Change serviceURL to your own
-                        var serviceURL = "http://localhost:5003/payment/"+ patientId+ "/"  + paymentType;
+                        var serviceURL = "http://localhost:8000/api/v1/payment/"+ patientId+ "/"  + paymentType;
     
                         
                         try {
