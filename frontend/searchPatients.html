@@ -206,13 +206,13 @@
                                         serviceURL, { method: 'GET' }
                                     );
                                 const result = await response.json();
-                                if (response.status === 200) {
+                                if (result.code === 200) {
                                     // success case
                                     this.searched = true
                                     this.err = false
                                     this.details = result.data;
 
-                                } else if (response.status == 404) {
+                                } else if (result.code == 404) {
                                     // No Such Patient Found
                                     this.err = true
                                     this.searched = false
@@ -266,13 +266,13 @@
                                         }
                                     );
                                 const result = await response.json();
-                                if (response.status === 201) {
+                                if (result.code === 201) {
                                     // success case
                                     this.err = false
                                     $('#submitModal').modal({backdrop: 'static', keyboard: false})  
                                     $('#submitModal').modal('show')
 
-                                } else if (response.status == 500) {
+                                } else if (result.code == 500) {
                                     this.err = true
                                     this.errMsg = result.message;
                                 } else {

@@ -190,7 +190,6 @@
                         // Change serviceURL to your own
                         var serviceURL = "http://localhost:8000/api/v1/payment/"+ patientId+ "/"  + paymentType;
     
-                        
                         try {
                             const response =
                                 await fetch(
@@ -201,20 +200,18 @@
                                     }
                                 );
                             const result = await response.json();
-                            if (response.status === 200) {
-                                
-                                console.log("hi: " + JSON.stringify(result.data["prescriptions"][0]))
+                            if (result.code === 200) {
                                 // success case
                                 this.loading = false
                                 this.err = false
                                 this.details = result.data["prescriptions"];
                                 
-                            } else if (response.status == 404) {
+                            } else if (result.code == 404) {
                                 // No records
                                 this.loading = false
                                 this.errorClass = "border-secondary"
                                 this.err = true
-                                this.errMsg = "No records";
+                                this.errMsg = "No Records Found.";
                             } else {
                                 // unexpected outcome, throw the error
                                 this.loading = false

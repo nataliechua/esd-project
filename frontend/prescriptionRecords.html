@@ -114,7 +114,7 @@
                         <!-- Show Err Msg - STARTS -->
                         <div v-if="err" class="row p-4">
                             <div class="col-12 col-md-6 mx-auto">
-                                <div class="card border-danger">
+                                <div :class="[errorClass, isCard]">
                                     <div class="card-body">
                                         <p class="card-text" v-html="errMsg"></p>
                                     </div>
@@ -169,7 +169,7 @@
                         <!-- Show Err Msg - STARTS -->
                         <div v-if="err" class="row p-4">
                             <div class="col-12 col-md-6 mx-auto">
-                                <div class="card border-danger">
+                                <div :class="[errorClass, isCard]">
                                     <div class="card-body">
                                         <p class="card-text" v-html="errMsg"></p>
                                     </div>
@@ -226,7 +226,9 @@
                     details:[],
                     errMsg: "",
                     err: false,
-                    loading: true
+                    loading: true,
+                    errorClass: "border-danger",
+                    isCard: "card"
                 }
             },
             methods: {
@@ -248,21 +250,23 @@
                                     }
                                 );
                             const result = await response.json();
-                            if (response.status === 200) {
+                            if (result.code === 200) {
                                 // success case
                                 this.loading = false
                                 this.err = false
                                 this.details = result.data.prescriptions;
                                 
-                            } else if (response.status == 404) {
+                            } else if (result.code == 404) {
                                 // No records
                                 this.loading = false
                                 this.err = true
+                                this.errorClass = "border-secondary"
                                 this.errMsg = result.message;
                             } else {
                                 // unexpected outcome, throw the error
                                 this.loading = false
                                 this.err = true
+                                this.errorClass = "border-danger"
                                 throw response.status;
                             }
                         } catch (error) {
@@ -270,6 +274,7 @@
                             // service offline, etc
                             this.loading = false
                             this.err = true
+                            this.errorClass = "border-danger"
                             this.errMsg = 'There is a problem retrieving prescription record, please try again later.<br />' + error;
                         } // error
                         });
@@ -287,29 +292,31 @@
                                     }
                                 );
                             const result = await response.json();
-                            if (response.status === 200) {
+                            if (result.code === 200) {
                                 // success case
                                 this.loading = false
                                 this.err = false
                                 this.details = result.data.prescriptions;
-                                console.log(this.details)
                                 
-                            } else if (response.status == 404) {
+                            } else if (result.code == 404) {
                                 // No records
                                 this.loading = false
                                 this.err = true
                                 this.errMsg = result.message;
+                                this.errorClass = "border-secondary"
                             } else {
                                 // unexpected outcome, throw the error
                                 this.loading = false
                                 this.err = true
                                 throw response.status;
+                                this.errorClass = "border-danger"
                             }
                         } catch (error) {
                             // Errors when calling the service; such as network error, 
                             // service offline, etc
                             this.loading = false
                             this.err = true
+                            this.errorClass = "border-danger"
                             this.errMsg = 'There is a problem retrieving prescription record, please try again later.<br />' + error;
                         } // error
                         });
@@ -351,14 +358,14 @@
                                     }
                                 );
                             const result = await response.json();
-                            if (response.status === 200) {
+                            if (result.code === 200) {
                                 // success case
                                 this.loading = false
                                 this.err = false
                                 $('#confirmedModal').modal({backdrop: 'static', keyboard: false})  
                                 $('#confirmedModal').modal('show')
 
-                            } else if (response.status == 500) {
+                            } else if (result.code == 500) {
                                 this.loading = false
                                 this.err = true
                                 this.errMsg = result.message;
@@ -400,14 +407,14 @@
                                     }
                                 );
                             const result = await response.json();
-                            if (response.status === 200) {
+                            if (result.code === 200) {
                                 // success case
                                 this.loading = false
                                 this.err = false
                                 $('#submitModal').modal({backdrop: 'static', keyboard: false}) 
                                 $('#submitModal').modal('show')
 
-                            } else if (response.status == 500) {
+                            } else if (result.code == 500) {
                                 this.loading = false
                                 this.err = true
                                 this.errMsg = result.message;

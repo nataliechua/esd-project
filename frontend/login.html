@@ -222,7 +222,7 @@
                                         serviceURL, { method: 'GET' }
                                     );
                                 const result = await response.json();
-                                if (response.status === 200) {
+                                if (result.code === 200) {
                                     // success case
                                     this.searched = true
                                     this.err = false
@@ -237,7 +237,7 @@
                                         this.errMsg = "Invalid Credentials"
                                     }
 
-                                } else if (response.status == 404) {
+                                } else if (result.code == 404) {
                                     // No Such Patient Found
                                     this.err = true
                                     this.searched = false
