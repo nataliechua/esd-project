@@ -198,8 +198,7 @@
                             // Change serviceURL to your own
                             this.err = false
                             this.errMsg = ""
-                            var serviceURL = "http://localhost:8000/api/v1/patient/" + name;
-                            // var serviceURL = "http://localhost:5000/patient/" + name;
+                            var serviceURL = "http://localhost:5000/patient/" + name;
                             try {
                                 const response =
                                     await fetch(
@@ -247,7 +246,7 @@
                         $(async () => {
                             meds = meds.reduce(((r, c) => Object.assign(r, c)), {})
                             // Change serviceURL to your own
-                            var serviceURL = "http://localhost:8000/api/v1/prescription/create";
+                            var serviceURL = "http://localhost:5001/prescription/create";
                             try {
                                 const response =
                                     await fetch(

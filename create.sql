@@ -83,7 +83,7 @@ VALUES
   (3,'t1234569a','Diarrhea','{"Methotrexate":1, "Wellbutrin":1}','confirmed','yes'),
   (6,'t1234570a','Fever','{"Xanax":1, "Azithromycin":1}','pending','no'),
   (4,'t1234571a','Headache','{"Clonazepam":1}','completed','yes'),
-  (3,'t1234572a','Runny nose, sore throat','{"Citalopram":1}','pending','no'),
+  (3,'t1234572a','Runny nose, sore throat','{"Brilinta":1}','pending','no'),
   (2,'t1234573a','Flu','{"Imbruvica":2, "Gabapentin":1}','pending','no'),
   (5,'t1234574a','Dry cough','{"Naloxone":3}','confirmed','yes'),
   (3,'t1234575a','Dizzy','{"Naproxen":2, "Metoprolol":4, "Gabapentin":2}','completed','yes'),
