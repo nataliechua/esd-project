@@ -6,13 +6,13 @@ ESDT6 Pharmacy is a pharmacy that assesses and prescribes prescription drugs bas
 
 ## Note before running our APP
 1. For one part of senario 2 sending SMS to patient by Twilio to inform them about medicine collection, in order for patient to get the message, the patient's number need to be registered inside our twilio account as a caller. Thus if you want to receive SMS as a patient, please contact the team to add your number in the account. Otherwise, the current Twilio will not send the message for collection to your phone.
-2. If you want to test each microservice individually by its own [API endpoints](https://drive.google.com/drive/u/1/folders/1kpU5b04oDoB0SYhtcUaB6DPn06s1nv4a) or the Postman file we provided, please replace steps 7 to 12 in the next section to the following
-    7. in terminal: python run *microservice_name*.py, eg. python run patient.py
-    8. real logs of each microservice can be seen in the corresponding terminal
-    9. OPTIONAL: IF WANT TO SEE RabbitMQ management website
-        - go http://localhost:15672 
-        - The default username / password = guest / guest
-    10. use can now test each microservice's endpoints via Postman
+2. If you want to test each microservice individually by its own [API endpoints](https://drive.google.com/drive/u/1/folders/1kpU5b04oDoB0SYhtcUaB6DPn06s1nv4a) or the Postman file we provided, please replace steps 7 to 12 in the next section to the following <br>
+    7. in terminal: python run *microservice_name*.py, eg. python run patient.py <br>
+    8. real logs of each microservice can be seen in the corresponding terminal <br>
+    9. OPTIONAL: IF WANT TO SEE RabbitMQ management website <br>
+        - go http://localhost:15672 <br>
+        - The default username / password = guest / guest <br>
+    10. use can now test each microservice's endpoints via Postman <br>
     11. if finished testing, simply delete all the terminals
 
 ## What you need to do before running our APP
@@ -36,43 +36,43 @@ ESDT6 Pharmacy is a pharmacy that assesses and prescribes prescription drugs bas
 ## API endpoints
 The following is a brief summary for our API endpoints. For detailed infomation, pls visit [API documents](https://drive.google.com/drive/u/1/folders/1kpU5b04oDoB0SYhtcUaB6DPn06s1nv4a) or see project.postman_collection.json via Postman
 ### patient MS
-* GET - get specific patient info by patient id: http://localhost:5000/patient/*id*
+* GET - get specific patient info by patient id: http://localhost:5000/patient/*id* <br>
 eg. http://localhost:5000/patient/t1234567a
-* POST - create patient: http://localhost:5000/patient/create
+* POST - create patient: http://localhost:5000/patient/create <br>
 sample input see postman
 ### inventory MS
 * GET - get all medicines info in inventory MS: http://localhost:5002/inventory
-* GET - get specific medicine info by medicine name: http://localhost:5002/inventory/*name*
+* GET - get specific medicine info by medicine name: http://localhost:5002/inventory/*name* <br>
 eg. http://localhost:5002/inventory/Amlodipine
-* PUT - update medicine inventory by medicine name: http://localhost:5002/inventory/*name*
-eg. http://localhost:5002/inventory/Adderall
+* PUT - update medicine inventory by medicine name: http://localhost:5002/inventory/*name* <br>
+eg. http://localhost:5002/inventory/Adderall <br>
 sample input see postman
 ### prescription MS
-* GET - get prescriptions by status: http://localhost:5001/prescription/*status*
+* GET - get prescriptions by status: http://localhost:5001/prescription/*status* <br>
 eg. http://localhost:5001/prescription/pending
-* GET - get prescriptions by status and sendToPayment: http://localhost:5001/prescription/*status*/*sendToPayment*
+* GET - get prescriptions by status and sendToPayment: http://localhost:5001/prescription/*status*/*sendToPayment* <br>
 eg. http://localhost:5001/prescription/pending/no
-* POST - create prescription: http://localhost:5001/prescription/create
+* POST - create prescription: http://localhost:5001/prescription/create <br>
 sample input see postman
-* PUT - update prescription status or sendToPayment by prescription id: http://localhost:5001/prescription/*id*
-eg. http://localhost:5001/prescription/17
+* PUT - update prescription status or sendToPayment by prescription id: http://localhost:5001/prescription/*id* <br>
+eg. http://localhost:5001/prescription/17 <br>
 sample inputs see postman
 ### payment MS
 * GET - get all prescription records in payment MS: http://localhost:5003/payment
-* GET - get specific prescription info by payment id: http://localhost:5003/payment/*id*
+* GET - get specific prescription info by payment id: http://localhost:5003/payment/*id* <br>
 eg. http://localhost:5003/payment/1
-* GET - get prescriptions by patient_id and payment status: http://localhost:5003/payment/*patient_id*/*status*
+* GET - get prescriptions by patient_id and payment status: http://localhost:5003/payment/*patient_id*/*status* <br>
 eg. http://localhost:5003/payment/t1234567a/paid
-* POST - record prescription in payment MS: http://localhost:5003/payment/create
+* POST - record prescription in payment MS: http://localhost:5003/payment/create <br>
 sample input see postman
-* PUT - update prescription order_id and payment status by payment id: http://localhost:5003/payment/*id*
-eg. http://localhost:5003/payment/6
+* PUT - update prescription order_id and payment status by payment id: http://localhost:5003/payment/*id* <br>
+eg. http://localhost:5003/payment/6 <br>
 sample input see postman
 ### process CMS
-* GET - complete senario2 3) to 8): http://localhost:5100/processPendingPrescriptions
+* GET - complete senario2 3) to 8): http://localhost:5100/processPendingPrescriptions <br>
 pharmacist UI pending page invokes this when loads and get all the pending prescriptions
-* PUT - complete scenario2 12) to 16): http://localhost:5100/confirmPrescription
-pharmacist UI pending page invokes this when the comfirm buttom is pressed for each prescription
+* PUT - complete scenario2 12) to 16): http://localhost:5100/confirmPrescription <br>
+pharmacist UI pending page invokes this when the comfirm buttom is pressed for each prescription <br>
 sample UI input: {prescription_id: 1}
 
 
