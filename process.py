@@ -45,7 +45,7 @@ def processPendingPrescriptions():
             if send_result["code"] == 201:
                 update_sendToPayment_to_yes_input = {"sendToPayment": "yes"}
                 update_sendToPayment_URL = update_prescription_URL + str(prescription_id)
-                print('[3] Updating sendToPayment to yes')
+                print('[3/3] Updating sendToPayment to yes')
                 update_sendToPayment_result = invoke_http(update_sendToPayment_URL, method='PUT', json=update_sendToPayment_to_yes_input)
                 if update_sendToPayment_result["code"] == 200:
                     print("-----Prescription id = " + str(prescription_id) + " successfully sent to payment MS-----")
@@ -56,7 +56,7 @@ def processPendingPrescriptions():
     return pending_prescriptions
 
 def calculate_total(medicines): # eg. medicines = {"Xanax":1, "Azithromycin":1}
-    print('[1] Calculating total price')
+    print('[1/3] Calculating total price')
     medicines = json.loads(medicines)
     total = 0 #assume no consulting fee and always have medicines
     for medicine, quantity in medicines.items():
@@ -67,7 +67,7 @@ def calculate_total(medicines): # eg. medicines = {"Xanax":1, "Azithromycin":1}
     return round(total,2)
 
 def send_to_paymentMS(prescription_id,patient_id,medicines,total):
-    print('[2] Sending prescription to payment MS')
+    print('[2/3] Sending prescription to payment MS')
     input = {
         "prescription_id": prescription_id,
         "patient_id": patient_id,
@@ -89,7 +89,7 @@ def confirmPrescription():
 
     update_status_to_confirmed_input = {"status": "confirmed"}
     update_status_URL = update_prescription_URL + str(prescription_id)
-    print('[1] Updating states to confirmed')
+    print('[1/4] Updating states to confirmed')
     update_status_result = invoke_http(update_status_URL, method='PUT', json=update_status_to_confirmed_input)
     if update_status_result["code"] == 200:
 
@@ -100,7 +100,7 @@ def confirmPrescription():
         update_inventory_result = update_inventory(medicines)
         if update_inventory_result == 200:
             # retrieve patient's phone number
-            print('[3] Retrieving patient phone number')
+            print('[3/4] Retrieving patient phone number')
             patient_info_result = invoke_http(get_patient_info_URL + patient_id, method='GET')
             if patient_info_result["code"] == 200:
                 patient_hp = patient_info_result["data"]["hp"]
@@ -114,7 +114,7 @@ def confirmPrescription():
                     })
 
 def update_inventory(medicines): # eg. medicines = {"Xanax":1, "Azithromycin":1}
-    print('[2] Updating inventory')
+    print('[2/4] Updating inventory')
     medicines = json.loads(medicines)
     updated = 0
     for medicine, quantity in medicines.items():
@@ -127,7 +127,7 @@ def update_inventory(medicines): # eg. medicines = {"Xanax":1, "Azithromycin":1}
 
 def send_to_Rabbit(patient_hp): # eg. patient_hp = "91234567"
     # send hp to Rabbit, if successful, return 200
-    print('[4] Sending ph to Rabbit')
+    print('[4/4] Sending ph to Rabbit')
     message='info: +65' + str(patient_hp)
     amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key="sendph", 
             body=message, properties=pika.BasicProperties(delivery_mode = 2))

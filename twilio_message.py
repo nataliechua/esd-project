@@ -39,8 +39,8 @@ def twilio_send(number):
     print("Number is received by twilio_send function"+ " " + number)
     number=number[6:]
     print(number)
-    account_sid = os.environ['TWILIO_ACCOUNT_SID']='ACb439cfbd32321ec9c5155a497b3a0518'
-    auth_token = os.environ['TWILIO_AUTH_TOKEN']='8794277a116a7098ad00f1f4f8b097fb'
+    account_sid = os.environ['TWILIO_ACCOUNT_SID']=''
+    auth_token = os.environ['TWILIO_AUTH_TOKEN']=''
     client = Client(account_sid, auth_token)
 
     message = client.messages \

@@ -192,8 +192,8 @@
                               </tr>
                             </thead>
                             <tbody>
-                              <tr v-for="(item, index) in details" :key="index+1">
-                                <th scope="row" class="col-1">{{index+1}}</th>
+                              <tr v-for="(item, index) in details" :key="item.id">
+                                <th scope="row" class="col-1">{{item.id}}</th>
                                 <td class="col-1">{{ item.patient_id}}</td>
                                 <td class="col-1">{{ item.doctor_id}}</td>
                                 <td class="col-4">{{ item.description}}</td>
