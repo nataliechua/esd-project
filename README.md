@@ -1,6 +1,6 @@
 # ESD project - Group 6
 ## About
-ESDT6 Pharmacy is a pharmacy that assesses and prescribes prescription drugs based on the patient's medical condition and distributes them to the patient at the counter. Our two staff will be the doctor and the pharmacist. The doctor is responsible for checking the allergies of the patients and creating prescriptions in the system, while the pharmacist is responsible for preparing the prescription drugs and verifying the patient has made the payment before dispensing it to them.
+ESDT6 Pharmacy is a pharmacy that assesses and prescribes prescription drugs based on the patient's medical conditions and distributes them to the patient at the counter. Our two staffs will be the doctor and the pharmacist. The doctor is responsible for checking the allergies of the patient and creating prescriptions in the system, while the pharmacist is responsible for preparing the prescription drugs and verifying the patient has made the payment before dispensing it to them.
 - To know more about our project and different senarios, please refer to Report.
 - For a big overview about our project senarios flows, please refer to ESD project flow.PNG
 
