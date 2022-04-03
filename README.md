@@ -57,7 +57,7 @@ sample input see postman
 * PUT - update prescription status or sendToPayment by prescription id: http://localhost:5001/prescription/*id* <br>
 eg. http://localhost:5001/prescription/17 <br>
 sample inputs see postman
-### payment microservice
+### payment service
 * GET - get all prescription records in payment MS: http://localhost:5003/payment
 * GET - get specific prescription info by payment id: http://localhost:5003/payment/*id* <br>
 eg. http://localhost:5003/payment/1
