@@ -96,7 +96,7 @@
             <div v-else>
                 <h1 class="text-center">{{errorMsg}}</h1>
             </div>
-            
+            <div id="paymentMsg" class="text-center text-danger"></div>
             <!--//Table-->
         </div>
     </div>
@@ -160,7 +160,6 @@
                 .catch(error => {
                     this.containId = false;
                     this.errorMsg = "An error has occurred. Please try again.";
-                    //console.log('There was an error: ' + error.message);
                 })
                 .finally(() => {
                     this.loading = false;
@@ -217,7 +216,7 @@
                             let result = response.data;
                         })
                         .catch(error => {
-                            console.log('There was an error: ' + error.message);
+                            document.getElementById("paymentMsg").innerHTML = "An error has occurred. Please try again."; 
                         })
                         .finally(()=>{
                             window.location.replace("paymentSuccess.html"); 
@@ -227,14 +226,11 @@
                     });
                 },
                 onCancel: function(data) { // cancal payment
-                    // console.log(data);
-                    // this.containId = false;
-                    // this.errorMsg = "An error has occurred. Please try again."; 
-                    
+
                 },
                 onError: function(err) { // prevents buyer checkout
                 
-                    //console.log(err);
+                    document.getElementById("paymentMsg").innerHTML = "An error has occurred. Please try again."; 
                 }
                 }).render('#paypal-payment-button');
             },
