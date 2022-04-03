@@ -10,8 +10,8 @@ ESDT6 Pharmacy is a pharmacy that assesses and prescribes prescription drugs bas
     7. in terminal: python run *microservice_name*.py, eg. python run patient.py <br>
     8. real logs of each microservice can be seen in the corresponding terminal <br>
     9. OPTIONAL: IF WANT TO SEE RabbitMQ management website <br>
-    <tab> - go http://localhost:15672 <br>
-    <tab> - The default username / password = guest / guest <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;- go http://localhost:15672 <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;- The default username / password = guest / guest <br>
     10. use can now test each microservice's endpoints via Postman <br>
     11. if finished testing, simply delete all the terminals
 
