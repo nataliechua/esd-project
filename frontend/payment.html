@@ -127,7 +127,8 @@
             const urlParams = new URLSearchParams(queryString);
             
             this.loading = true
-            
+            this.containId = false
+
             if (urlParams.get('id') != null){ 
 
                 
@@ -146,6 +147,7 @@
                         }
                         else {
                             
+                            this.containId = true;
                             this.total = response.data.data.total;
                             const json = response.data.data.medicines;
                             this.medicines = JSON.parse(json);
