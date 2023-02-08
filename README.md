@@ -5,7 +5,7 @@ ESDT6 Pharmacy is a pharmacy that assesses and prescribes prescription drugs bas
 - For a big overview about our project senarios flows, please refer to ESD project flow.PNG
 
 ## Note before running our APP
-1. For one part of senario 2 sending SMS to patient by Twilio to inform them about medicine collection, in order for patient to get the message, the patient's number need to be registered inside our twilio account as a caller. Thus if you want to receive SMS as a patient, please contact the team to add your number in the account. Otherwise, the current Twilio will not send the message for collection to your phone.
+1. For one part of scenario 2 sending SMS to patient by Twilio to inform them about medicine collection, in order for patient to get the message, the patient's number need to be registered inside our twilio account as a caller. Thus if you want to receive SMS as a patient, please contact the team to add your number in the account. Otherwise, the current Twilio will not send the message for collection to your phone.
 2. If you want to test each microservice individually by its own [API endpoints](https://drive.google.com/drive/u/1/folders/1kpU5b04oDoB0SYhtcUaB6DPn06s1nv4a) or the Postman file we provided, please replace steps 7 to 12 in the next section to the followings: <br>
     7. in terminal: python run *microservice_name*.py, eg. python run patient.py <br>
     8. real logs of each microservice can be seen in the corresponding terminal <br>
