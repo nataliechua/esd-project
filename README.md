@@ -1,8 +1,8 @@
 # ESD project - Group 6
 ## About
 ESDT6 Pharmacy is a pharmacy that assesses and prescribes prescription drugs based on the patient's medical conditions and distributes them to the patient at the counter. Our two staffs will be the doctor and the pharmacist. The doctor is responsible for checking the allergies of the patient and creating prescriptions in the system, while the pharmacist is responsible for preparing the prescription drugs and verifying the patient has made the payment before dispensing it to them.
-- To know more about our project and different senarios, please refer to Report.
-- For a big overview about our project senarios flows, please refer to ESD project flow.PNG
+- To know more about our project and different scenarios, please refer to Report.
+- For a big overview about our project scenario flows, please refer to ESD project flow.PNG
 
 ## Note before running our APP
 1. For one part of scenario 2 sending SMS to patient by Twilio to inform them about medicine collection, in order for patient to get the message, the patient's number need to be registered inside our twilio account as a caller. Thus if you want to receive SMS as a patient, please contact the team to add your number in the account. Otherwise, the current Twilio will not send the message for collection to your phone.
@@ -27,10 +27,10 @@ ESDT6 Pharmacy is a pharmacy that assesses and prescribes prescription drugs bas
 9. OPTIONAL: IF WANT TO SEE RabbitMQ management website
    - go http://localhost:15672 
    - The default username / password = guest / guest
-10. you can now go through our app for all the senarios by accessing http://localhost/frontend/login.html
-    - for information about current login system accounts to be used in our senarios, see secret.txt
-    - for medicines that doctors can prescript to patients in senario 1, see medicineList.pdf
-    - for information about paypal sandbox accounts you can use in senario 3, see secret.txt
+10. you can now go through our app for all the scenarios by accessing http://localhost/frontend/login.html
+    - for information about current login system accounts to be used in our scenarios, see secret.txt
+    - for medicines that doctors can prescript to patients in scenario 1, see medicineList.pdf
+    - for information about paypal sandbox accounts you can use in scenario 3, see secret.txt
 12. once you finish running through our app, stop and remove containers in terminal: docker-compose down
 
 ## API endpoints
@@ -69,7 +69,7 @@ sample input see postman
 eg. http://localhost:5003/payment/6 <br>
 sample input see postman
 ### process complex microservice
-* GET - complete senario2 3) to 8): http://localhost:5100/processPendingPrescriptions <br>
+* GET - complete scenario2 3) to 8): http://localhost:5100/processPendingPrescriptions <br>
 pharmacist UI pending page invokes this when loads and get all the pending prescriptions
 * PUT - complete scenario2 12) to 16): http://localhost:5100/confirmPrescription <br>
 pharmacist UI pending page invokes this when the comfirm buttom is pressed for each prescription <br>
